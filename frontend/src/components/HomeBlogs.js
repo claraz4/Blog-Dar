@@ -16,7 +16,7 @@ export default function HomeBlogs({ title, blogs }) {
 
     return (
         <div className="home-blogs--container">
-            <h6>{props.title}</h6>
+            <h6>{title}</h6>
             <div>
                 {blogsElement}
             </div>
