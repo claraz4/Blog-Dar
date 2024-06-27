@@ -14,8 +14,6 @@ export default function Home() {
                 title="Popular Posts"
                 blogs={popularBlogs}
             />
-
-            
         </div>
     )
 }
