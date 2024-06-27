@@ -4,7 +4,7 @@
     flex-direction: column;
     justify-content: center;
     margin-bottom: 40px;
-    margin-top: 70px;
+    margin-top: 90px;
 }
 
 .home-blogs--full-title {
@@ -13,6 +13,10 @@
     justify-content: space-between;
     margin-bottom: 15px;
     align-items: center;
+}
+
+.popular-blogs {
+    margin-top: 20px;
 }
 
 .home-blogs--full-title button {
@@ -26,7 +30,7 @@
 
 .blog-box--container {
     box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
-    width: 300px;
+    width: -webkit-fill-available;
     border-radius: 10px;
     height: 360px;
     padding: 15px;
@@ -98,7 +102,7 @@
 
 .home-blogs {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     column-gap: 30px;
     row-gap: 30px;
     justify-items: center;

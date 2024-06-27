@@ -1,10 +1,10 @@
 import React from 'react';
 import BlogBox from './BlogBox';
-import './HomeBlogs.css'; // Import the CSS file
 
-export default function HomeBlogs({ title, blogs }) {
+export default function HomeBlogs({ title, blogs, addClass }) {
     const [blogsElement, setBlogsElement] = React.useState([]);
     const [showMore, setShowMore] = React.useState(false);
+    console.log(addClass)
 
     React.useEffect(() => {
         let blogsEdited = [...blogs];
@@ -26,7 +26,7 @@ export default function HomeBlogs({ title, blogs }) {
     }, [showMore])
 
     return (
-        <div className="home-blogs--container">
+        <div className={`home-blogs--container${addClass !== "" ? ` ${addClass}`: ""}`}>
             <div className="home-blogs--full-title">
                 <h6 className="home-blogs--title">{title}</h6>
                 <button className="green-button">Show All Posts</button>
