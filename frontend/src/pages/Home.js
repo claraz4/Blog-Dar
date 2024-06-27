@@ -12,6 +12,7 @@ export default function Home() {
             <HomeBlogs
                 blogs={blogs}
             />
+            <p style={{ fontSize: '30px', textAlign: 'center' }}> Categories</p>
         </div>
     )
 }
