@@ -88,7 +88,7 @@ export default function WriteBlog() {
             <div className="form--subcontainer">
                 <label>Content</label>
                 {paragraphsElement}
-                <button type="button" onClick={addParagraph}>Add a paragraph</button>
+                <button type="button" onClick={addParagraph} className="green-button">Add a paragraph</button>
             </div>
         </form>
     )

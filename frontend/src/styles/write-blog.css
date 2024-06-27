@@ -1,15 +1,80 @@
 .form--container {
+    margin: auto;
     margin-top: 100px;
+    width: 70%;
 }
 
 .form--subcontainer {
     display: flex;
     flex-direction: column;
     margin-bottom: 30px;
+    width: 100%;
 }
 
 .new-paragraph--all-title {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.new-paragraph--all-title h6 {
+    margin: 0;
+    font-size: 1rem;
+}
+
+.form--subcontainer label {
+    font-size: 1.7rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: var(--green);
+}
+
+.form--subcontainer select,
+.form--subcontainer input,
+.form--subcontainer textarea {
+    padding: 10px;
+    width: 100%;
+    border: 1.3px var(--grey) solid;
+    height: fit-content;
+    border-radius: 10px;
+    color: var(--grey) !important;
+    box-sizing: border-box;
+    outline-color: var(--green);
+    font-family: 'Segoe UI';
+}
+
+.form--subcontainer textarea {
+    height: 100px;
+    width: 100%;
+}
+
+.form-paragraph {
+    border: 1.3px var(--green) solid;
+    border-radius: 15px;
+    padding: 20px;
+    padding-top: 10px;
+}
+
+.no-margin {
+    margin: 0;
+}
+
+.small-bottom-margin {
+    margin-bottom: 10px;
+}
+
+.form-paragraph--subtitle {
+    font-size: 1.2rem !important;
+}
+
+.form-paragraph {
+    margin-bottom: 20px;
+}
+
+#remove-paragraph--button {
+    font-size: 0.8rem;
+    padding-left: 10px;
+    padding-right: 10px;
 }

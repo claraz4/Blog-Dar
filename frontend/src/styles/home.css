@@ -86,7 +86,7 @@
 
 .blog-box-author,
 .blog-box-date {
-    color: #97989F;
+    color: var(--grey);
     font-size: 0.8rem;
     font-size: 0.8rem;
     letter-spacing: 0.5px;
