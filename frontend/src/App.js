@@ -1,6 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
-import BlogBox from "./components/BlogBox";
 import SingleBlog from "./pages/SingleBlog";
 import NavBar from "./components/NavBar";
 import WriteBlog from "./pages/WriteBlog";

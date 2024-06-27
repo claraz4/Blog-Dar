@@ -1,0 +1,15 @@
+.form--container {
+    margin-top: 100px;
+}
+
+.form--subcontainer {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 30px;
+}
+
+.new-paragraph--all-title {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
