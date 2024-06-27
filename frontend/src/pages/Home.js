@@ -1,18 +1,19 @@
 import HomeBlogs from "../components/HomeBlogs";
 import blogs from '../data/blogs';
+import popularBlogs from "../data/popularBlogs";
 
 export default function Home() {
     return (
         <div>
-            <p style={{ fontSize: '30px', textAlign: 'center' }}> Recent posts</p>
             <HomeBlogs
+                title="Latest Posts"
                 blogs={blogs}
             />
-            <p style={{ fontSize: '30px', textAlign: 'center' }}> Popular posts</p>
+            
             <HomeBlogs
-                blogs={blogs}
+                title="Popular Posts"
+                blogs={popularBlogs}
             />
-            <p style={{ fontSize: '30px', textAlign: 'center' }}> Categories</p>
         </div>
     )
 }
