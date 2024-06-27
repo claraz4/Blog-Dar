@@ -6,16 +6,16 @@ export default function Home() {
     return (
         <div>
             <HomeBlogs
-                title="Latest Blogs"
+                title="Latest Posts"
                 blogs={blogs}
-                addClass={""}
             />
             
             <HomeBlogs
-                title="Popular Blogs"
+                title="Popular Posts"
                 blogs={popularBlogs}
-                addClass={"popular-blogs"}
             />
+
+            
         </div>
     )
 }

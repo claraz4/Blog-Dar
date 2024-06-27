@@ -1,24 +1,30 @@
+//Importing Express
 const express = require('express')
 
-require('dotenv').config()
+//Importing dotenv that allows to load environment variables from a .env file into process.env
+require('dotenv').config() 
 
+//Importing Mongoose to connect to the database on mongodb atlas
 const mongoose = require('mongoose')
-//init app and middleware
-const app = express()
 
-const workoutRoutes = require('./routes/workouts')
+//Creating the Express App
+const app = express() 
 
-const userRoutes = require('./routes/user')
+const blogRoutes = require('./routes/blog')
 
-app.use(express.json())
+//Middleware build into Express to parse incoming JSON requests
+app.use(express.json());
 
-app.use('/workouts', workoutRoutes);
-app.use('/user', userRoutes);
+app.use('/blogs', blogRoutes)
 
+//Connect to the database
 mongoose.connect(process.env.URI)
     .then(() => {
-        app.listen(process.env.Port, () => {
-            console.log('Listening on port ', process.env.port)
+        // Start the server and listen on the specified port
+        app.listen(process.env.PORT, () => {
+            // Callback function that runs when the server starts listening
+            console.log('Listening on port ', process.env.PORT)
+            console.log('Connection to the Database is successful')
         })
     }).catch((error) => {
         console.log(error)
