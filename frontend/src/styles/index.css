@@ -21,7 +21,7 @@ body {
   margin-bottom: 100px;
 }
 
-.blue-button {
+.green-button {
   background-color: var(--green);
   color: white;
   border-radius: 10px;
@@ -31,7 +31,8 @@ body {
   align-self: center;
 }
 
-.blue-button:hover {
+.green-button:hover {
   cursor: pointer;
   background-color: var(--green-hover);
+  border: none;
 }
