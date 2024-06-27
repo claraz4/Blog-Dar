@@ -1,10 +1,10 @@
 import React from 'react';
-import './NavBar.css'; 
+import './NavBar.css';
 
 const NavBar = () => {
     return (
         <div className="topnav">
-             <div className="nav-title">The Blog Mix</div> {/* Add title here */}
+            <div className="nav-title">The Blog Mix</div>
             <a className="active" href="#home">
                 <div className="icon-text">
                     <span className="material-symbols-outlined">home</span>
@@ -19,8 +19,8 @@ const NavBar = () => {
             </a>
             <a href="#contact">
                 <div className="icon-text">
-                    <span className="material-symbols-outlined">contact_mail</span>
-                    <span className="text">Contact</span>
+                    <span className="material-symbols-outlined">person</span>
+                    <span className="text">Account</span>
                 </div>
             </a>
             <a href="#about">
