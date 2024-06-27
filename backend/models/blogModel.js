@@ -30,10 +30,11 @@ const blogSchema = new Schema({
     nbOfDislikes:{
         type:Number,
         default: 0
+    },
+    datePublished:{
+        type:Date,
+        default: Date.now()
     }
-    // datePublished:{
-
-    // }
 }, {timestamps:true} 
 )
 

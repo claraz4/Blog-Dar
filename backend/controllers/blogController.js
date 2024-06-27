@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const blog = require('../models/blogModel')
 
 const getBlogs = async (req, res) => {
-    const blogs = await blog.find({}).sort({createdAt:-1})
+    const blogs = await blog.find({}).sort({createdAt:-1}) // descending order newest to oldest
     res.status(200).json(blogs)
 };
 
@@ -18,6 +18,17 @@ const getSingleBlog = async (req,res) => {
     }else{
         res.status(200).json(Blog)
     }
+}
+
+const getBlogByCategory = async (req,res) => {
+    const {category} = req.params
+    const categories = category.split(',');
+
+    const Blog = await blog.find({category: { $in: categories }})
+    if(!Blog){
+        return res.status(404).json({error: 'No such blog'})
+    }
+    return res.status(200).json(Blog)
 }
 
 const createBlog = async (req,res) => {
@@ -58,4 +69,4 @@ const updateBlog = async (req,res) => {
     return res.status(200).json(Blog)
 }
 
-module.exports = {getBlogs, getSingleBlog, createBlog, deleteBlog, updateBlog}
+module.exports = {getBlogs, getSingleBlog, getBlogByCategory, createBlog, deleteBlog, updateBlog}
