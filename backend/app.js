@@ -11,11 +11,14 @@ const mongoose = require('mongoose')
 const app = express() 
 
 const blogRoutes = require('./routes/blog')
+const userRoutes = require('./routes/user')
 
 //Middleware build into Express to parse incoming JSON requests
 app.use(express.json());
 
 app.use('/blogs', blogRoutes)
+
+app.use('/user', userRoutes)
 
 //Connect to the database
 mongoose.connect(process.env.URI)
