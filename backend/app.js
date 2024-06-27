@@ -10,12 +10,12 @@ const mongoose = require('mongoose')
 //Creating the Express App
 const app = express() 
 
-const router = express.Router()
+const blogRoutes = require('./routes/blog')
 
 //Middleware build into Express to parse incoming JSON requests
 app.use(express.json());
-//This middleware is built into Express and allows your app to parse JSON bodies from incoming requests.
-app.use('/', router)
+
+app.use('/blogs', blogRoutes)
 
 //Connect to the database
 mongoose.connect(process.env.URI)
@@ -29,8 +29,3 @@ mongoose.connect(process.env.URI)
     }).catch((error) => {
         console.log(error)
     })
-
-// Get Method to View the text 'Welcome'
-router.get('/', (req,res) => {
-    res.json('Welcome')
-})
