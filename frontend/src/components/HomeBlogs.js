@@ -4,7 +4,6 @@ import BlogBox from './BlogBox';
 export default function HomeBlogs({ title, blogs, addClass }) {
     const [blogsElement, setBlogsElement] = React.useState([]);
     const [showMore, setShowMore] = React.useState(false);
-    console.log(addClass)
 
     React.useEffect(() => {
         let blogsEdited = [...blogs];

@@ -16,18 +16,18 @@ export default function FormParagraph({ id, content, setContent, removeParagraph
     }
 
     return (
-        <div>
+        <div className="form-paragraph">
             <div className="new-paragraph--all-title">
-                <h6>New Paragraph</h6>
-                {totalParagraphs === id && id > 0 && <button type="button" onClick={removeParagraph} name={id}>Remove</button>}
+                <h6>Paragraph {id/2 + 1}</h6>
+                {totalParagraphs === id && id > 0 && <button type="button" className="green-button" id="remove-paragraph--button" onClick={removeParagraph} name={id}>Remove</button>}
             </div>
-            <div className="form--subcontainer">
-                <label htmlFor={subtitleHTML}> Subtitle</label>
+            <div className="form--subcontainer small-bottom-margin">
+                <label htmlFor={subtitleHTML} className="form-paragraph--subtitle">Subtitle</label>
                 <input type="text" placeholder="Subtitle" name={subtitleHTML} onChange={handleContent} value={content[id]}  id={id} />
             </div>
 
-            <div className="form--subcontainer">
-                <label htmlFor={contentHTML}>Body</label>
+            <div className="form--subcontainer no-margin">
+                <label htmlFor={contentHTML} className="form-paragraph--subtitle">Body</label>
                 <textarea placeholder="Content" name={contentHTML} onChange={handleContent} value={content[id + 1]} id={id + 1} />
             </div>
         </div>  
