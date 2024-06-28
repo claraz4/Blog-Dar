@@ -1,7 +1,6 @@
 const express = require('express')
 
 const {getBlogs, getSingleBlog, getBlogByCategory, createBlog, deleteBlog, updateBlog} = require('../controllers/blogController');
-const { create } = require('../models/blogModel');
 // 1 point means folder in directory backend
 //2 points means folder is in same folder as backend
 
