@@ -21,14 +21,15 @@ body {
   max-width: 470px;
   width: 100%;
   border-radius: 12px;
-  padding: 20px 30px 120px;
+  padding: 20px 0px 120px;
   background: #333;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  margin: auto; /* Center horizontally */
+  margin: auto; 
   display: flex;
   flex-direction: column;
-  align-items: center; /* Center items vertically */
+  align-items: center; 
+  border-radius: 40px;
 }
 
 .form header {
