@@ -3,7 +3,6 @@ import months from '../data/months';
 import { Link } from "react-router-dom";
 
 export default function BlogBox({ blog }) {
-    console.log('here')
     const { title, author, category, datePublished } = blog;
     const date = new Date(datePublished);
 
@@ -18,8 +17,8 @@ export default function BlogBox({ blog }) {
                 <div className="category-likes--container">
                     <p className="blog-box-category">{category}</p>
                     <div className="likes--container">
-                        <span class="material-symbols-rounded thumb-up">thumb_up</span>
-                        <span class="material-symbols-rounded thumb-up">thumb_down</span>
+                        <span className="material-symbols-rounded thumb-up">thumb_up</span>
+                        <span className="material-symbols-rounded thumb-up">thumb_down</span>
                     </div>
                 </div>
                 <h6 className="blog-box-title">{title}</h6>

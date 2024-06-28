@@ -3,12 +3,12 @@ import RevealOnScroll from "../components/RevealOnScroll";
 import { LoadingContext } from "../context/LoadingContext";
 import popularBlogs from "../data/popularBlogs";
 import React from 'react';
-import Spinner from 'react-bootstrap/Spinner';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import Loader from "../components/Loader";
 
 export default function Home() {
-    const [latestBlogs, setLatestBlogs] = React.useState([]);
     const { isLoading, dispatch } = React.useContext(LoadingContext);
+    // const { allBlogs:latestBlogs, dispatch:blogsDispatch } = React.useContext(BlogsContext);
+    const [latestBlogs, setLatestBlogs] = React.useState([]);
 
     // Fetch latest blogs
     const fetchLatest = async () => {
@@ -16,8 +16,12 @@ export default function Home() {
             dispatch({ type: 'LOAD' });
             const res = await fetch('/blogs/');
             const data = await res.json();
-            setLatestBlogs(data);
-            dispatch({ type: 'STOP_LOAD' });
+
+            if (res.ok) {
+                // blogsDispatch({ type: 'UPDATE', newBlogs: data });
+                setLatestBlogs(data);
+                dispatch({ type: 'STOP_LOAD' });
+            }
         } catch (error) {
             console.log(error);
         }
@@ -44,12 +48,7 @@ export default function Home() {
                 />
             </RevealOnScroll>
 
-            {isLoading && 
-            <div className="spinner">
-                <Spinner animation="border" role="status">
-                    <span className="visually-hidden">Loading...</span>
-                </Spinner>
-            </div>}
+            {isLoading && <Loader />}
         </div>
     )
 }

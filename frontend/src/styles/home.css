@@ -129,7 +129,8 @@
     color: var(--green);
 }
 
-.thumb-up--clicked {
+.thumb-up--clicked,
+.thumb-up:hover {
     font-variation-settings: 'FILL' 1;
 }
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import BlogBox from './BlogBox';
+import { Link } from 'react-router-dom';
 
 export default function HomeBlogs({ title, blogs, addClass }) {
     const [blogsElement, setBlogsElement] = React.useState([]);
@@ -30,7 +31,7 @@ export default function HomeBlogs({ title, blogs, addClass }) {
         <div className={`home-blogs--container${addClass && addClass !== "" ? ` ${addClass}`: ""}`}>
             <div className="home-blogs--full-title">
                 <h6 className="home-blogs--title">{title}</h6>
-                <button className="green-button">Show All Posts</button>
+                <Link className="green-button" to="/blogs">Show All Posts</Link>
             </div>
             <div className="home-blogs">
                 {blogsElement}

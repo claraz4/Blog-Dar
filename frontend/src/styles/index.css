@@ -33,6 +33,7 @@ body {
   border: none;
   font-size: 1.2rem;
   align-self: center;
+  text-decoration: none;
 }
 
 .green-button:hover {

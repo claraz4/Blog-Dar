@@ -3,8 +3,11 @@ import "../styles/write-blog.css";
 import categories from "../data/categories";
 import FormParagraph from '../components/FormParagraph';
 import RevealOnScroll from '../components/RevealOnScroll';
+import { CategoriesContext } from '../context/CategoriesContext';
 
 export default function WriteBlog() {
+    // const { categories, categoriesDispatch } = React.useContext(CategoriesContext);
+
     const [categoriesOptions, setCategoriesOptions] = React.useState([]);
     const [formData, setFormData] = React.useState({
         "title": "",
