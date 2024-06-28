@@ -1,42 +1,47 @@
 // NavBar.js
 import React from 'react';
 import '../styles/NavBar.css';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 const NavBar = () => {
   return (
     <div className="topnav">
       <div className="nav-title">The Blog Mix</div>
-      <Link className="active" to="/">
+
+      <NavLink to="/" className={({ isActive }) => (isActive ? "active" : 'none')}>
         <div className="icon-text">
           <span className="material-symbols-outlined">home</span>
           <span className="text">Home</span>
         </div>
-      </Link>
-      <Link to="/write">
+      </NavLink>
+
+      <NavLink to="/write" className={({ isActive }) => (isActive ? "active" : 'none')}>
         <div className="icon-text">
           <span className="material-symbols-outlined">edit_square</span>
           <span className="text">Post</span>
         </div>
-      </Link>
-      <Link to="/account">
+      </NavLink>
+
+      <NavLink to="/account" className={({ isActive }) => (isActive ? "active" : 'none')}>
         <div className="icon-text">
           <span className="material-symbols-outlined">person</span>
-          <span className="text">Account</span>
+          <span className="text">Profile</span>
         </div>
-      </Link>
-      <Link to="/logout">
+      </NavLink>
+
+      <NavLink to="/logout" className={({ isActive }) => (isActive ? "active" : 'none')}>
         <div className="icon-text">
           <span className="material-symbols-outlined">logout</span>
           <span className="text">Logout</span>
         </div>
-      </Link>
-      <Link to="/signup"> {/* Add this block for Signup */}
+      </NavLink>
+
+      <NavLink to="/signup" className={({ isActive }) => (isActive ? "active" : 'none')}>
         <div className="icon-text">
           <span className="material-symbols-outlined">person_add</span>
           <span className="text">Signup</span>
         </div>
-      </Link>
+      </NavLink>
     </div>
   );
 };

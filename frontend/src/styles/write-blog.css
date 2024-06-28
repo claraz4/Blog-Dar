@@ -1,0 +1,122 @@
+.form--container {
+    margin: auto;
+    margin-top: 100px;
+    width: 70%;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+    padding: 30px;
+}
+
+.form--subcontainer {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 30px;
+    width: 100%;
+}
+
+.new-paragraph--all-title {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.new-paragraph--all-title h6 {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.form--subcontainer label {
+    font-size: 1.7rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: var(--green);
+}
+
+.form--subcontainer select,
+.form--subcontainer input,
+.form--subcontainer textarea {
+    padding: 10px;
+    width: 100%;
+    border: 1.4px var(--green) solid;
+    height: fit-content;
+    border-radius: 10px;
+    color: var(--grey) !important;
+    box-sizing: border-box;
+    outline-color: var(--green);
+    font-family: 'Segoe UI';
+}
+
+.form--subcontainer textarea {
+    height: 100px;
+    width: 100%;
+}
+
+.form-paragraph {
+    border: 1.4px var(--green) solid;
+    border-radius: 15px;
+    padding: 20px;
+    padding-top: 10px;
+}
+
+.no-margin {
+    margin: 0;
+}
+
+.small-bottom-margin {
+    margin-bottom: 10px;
+}
+
+.form-paragraph--subtitle {
+    font-size: 1.2rem !important;
+}
+
+.form-paragraph {
+    margin-bottom: 20px;
+}
+
+.fadein {
+    animation: fadein 0.8s ease-in-out;
+}
+
+.fadeout {
+    animation: fadeout 0.8s ease-in-out;
+}
+
+#remove-paragraph--button,
+#add-p--button {
+    font-size: 0.8rem;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+@keyframes fadein {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeout {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+#add-p--button {
+    align-self: flex-end;
+    margin-top: -10px;
+}
+
+#post-blog--button {
+    width: 100%;
+    margin-top: 10px;
+}

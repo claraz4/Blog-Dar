@@ -20,21 +20,21 @@ const blogSchema = new Schema({
         type:String,
         required:true
     },
-    Like:{
-        type:Boolean,
-        default:false
-    },
-    Dislike:{
-        type:Boolean,
-        default:false
-    },
+    // likedBy:{
+
+    // }
     nbOfLikes:{
         type:Number,
         default: 0
+    },
+    nbOfDislikes:{
+        type:Number,
+        default: 0
+    },
+    datePublished:{
+        type:Date,
+        default: Date.now()
     }
-    // datePublished:{
-
-    // }
 }, {timestamps:true} 
 )
 
