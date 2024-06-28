@@ -2,6 +2,8 @@
     margin: auto;
     margin-top: 100px;
     width: 70%;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+    padding: 30px;
 }
 
 .form--subcontainer {
@@ -21,7 +23,8 @@
 
 .new-paragraph--all-title h6 {
     margin: 0;
-    font-size: 1rem;
+    font-size: 1.1rem;
+    font-weight: 600;
 }
 
 .form--subcontainer label {
@@ -36,7 +39,7 @@
 .form--subcontainer textarea {
     padding: 10px;
     width: 100%;
-    border: 1.3px var(--grey) solid;
+    border: 1.4px var(--green) solid;
     height: fit-content;
     border-radius: 10px;
     color: var(--grey) !important;
@@ -51,7 +54,7 @@
 }
 
 .form-paragraph {
-    border: 1.3px var(--green) solid;
+    border: 1.4px var(--green) solid;
     border-radius: 15px;
     padding: 20px;
     padding-top: 10px;
@@ -73,8 +76,47 @@
     margin-bottom: 20px;
 }
 
-#remove-paragraph--button {
+.fadein {
+    animation: fadein 0.8s ease-in-out;
+}
+
+.fadeout {
+    animation: fadeout 0.8s ease-in-out;
+}
+
+#remove-paragraph--button,
+#add-p--button {
     font-size: 0.8rem;
     padding-left: 10px;
     padding-right: 10px;
+}
+
+@keyframes fadein {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeout {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+#add-p--button {
+    align-self: flex-end;
+    margin-top: -10px;
+}
+
+#post-blog--button {
+    width: 100%;
+    margin-top: 10px;
 }
