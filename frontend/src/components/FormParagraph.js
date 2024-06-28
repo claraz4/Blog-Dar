@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function FormParagraph({ id, content, setContent, removeParagraph, totalParagraphs }) {
+export default function FormParagraph({ id, content, setContent, removeParagraph, totalParagraphs, animation }) {
     const subtitleHTML = `subtitle${id}`;
     const contentHTML = `content${id}`;
 
@@ -16,7 +16,7 @@ export default function FormParagraph({ id, content, setContent, removeParagraph
     }
 
     return (
-        <div className="form-paragraph">
+        <div className={`form-paragraph ${animation}`}>
             <div className="new-paragraph--all-title">
                 <h6>Paragraph {id/2 + 1}</h6>
                 {totalParagraphs === id && id > 0 && <button type="button" className="green-button" id="remove-paragraph--button" onClick={removeParagraph} name={id}>Remove</button>}

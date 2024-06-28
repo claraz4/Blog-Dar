@@ -2,6 +2,7 @@ import React from 'react';
 import "../styles/write-blog.css";
 import categories from "../data/categories";
 import FormParagraph from '../components/FormParagraph';
+import RevealOnScroll from '../components/RevealOnScroll';
 
 export default function WriteBlog() {
     const [categoriesOptions, setCategoriesOptions] = React.useState([]);
@@ -47,11 +48,43 @@ export default function WriteBlog() {
 
     // Remove an added paragraph
     function removeParagraph() {
-        // Remove the last paragraph
-        setParagraphs(prev => prev.filter((p, idx) => idx !== prev.length - 1));
+        setParagraphsElement(() => paragraphs.map((p, idx) => {
+            if (idx === paragraphs.length-1) {
+                // change the animation to fadeout to prepare for the removal of the paragraph
+                return (
+                    <FormParagraph
+                        key={p} 
+                        id={p}
+                        content={content}
+                        setContent={setContent}
+                        removeParagraph={removeParagraph}
+                        totalParagraphs={paragraphs[paragraphs.length - 1]}
+                        animation="fadeout"
+                    />
+                )
+            }
 
-        // Remove the last subtitle and the last body
-        setContent(prev => prev.filter((p, idx) => idx !== prev.length && idx + 1 !== prev.length))
+            return (
+                <FormParagraph
+                    key={p} 
+                    id={p}
+                    content={content}
+                    setContent={setContent}
+                    removeParagraph={removeParagraph}
+                    totalParagraphs={paragraphs[paragraphs.length - 1]}
+                    animation="fadein"
+                />
+            )
+        }))
+
+        // delete the paragraph when the animation is finished
+        setTimeout(() => {
+            // Remove the last paragraph
+            setParagraphs(prev => prev.filter((p, idx) => idx !== prev.length - 1));
+
+            // Remove the last subtitle and the last body
+            setContent(prev => prev.filter((p, idx) => idx !== prev.length && idx + 1 !== prev.length));
+        }, 700);
     }
 
     // Generate the rendering array for paragraphs
@@ -65,31 +98,41 @@ export default function WriteBlog() {
                     setContent={setContent}
                     removeParagraph={removeParagraph}
                     totalParagraphs={paragraphs[paragraphs.length - 1]}
+                    animation="fadein"
                 />
             )
         }))
-    }, [paragraphs, content])
+    }, [paragraphs, content]);
+
+    // Handle the submission of the form
+    function handleSubmit(event) {
+        event.preventDefault();
+    }
 
     return (
-        <form className="form--container">
-            <div className="form--subcontainer">
-                <label htmlFor="title">Blog Title</label>
-                <input type="text" placeholder="Title" name="title" value={formData.title} onChange={handleChange} />
-            </div>
+        <RevealOnScroll>
+            <form className="form--container">
+                <div className="form--subcontainer">
+                    <label htmlFor="title">Blog Title</label>
+                    <input type="text" placeholder="Title" name="title" value={formData.title} onChange={handleChange} />
+                </div>
 
-            <div className="form--subcontainer">
-                <label htmlFor="category">Category</label>
-                <select name="category" value={formData.category} onChange={handleChange}>
-                    <option value="">Categories</option>
-                    {categoriesOptions}
-                </select>
-            </div>
+                <div className="form--subcontainer">
+                    <label htmlFor="category">Category</label>
+                    <select name="category" value={formData.category} onChange={handleChange}>
+                        <option value="">Categories</option>
+                        {categoriesOptions}
+                    </select>
+                </div>
 
-            <div className="form--subcontainer">
-                <label>Content</label>
-                {paragraphsElement}
-                <button type="button" onClick={addParagraph} className="green-button">Add a paragraph</button>
-            </div>
-        </form>
+                <div className="form--subcontainer">
+                    <label>Content</label>
+                    {paragraphsElement}
+                    <button type="button" onClick={addParagraph} className="green-button" id="add-p--button">Add paragraph</button>
+                </div>
+
+                <button className='green-button' id="post-blog--button" onClick={handleSubmit}>Post Blog</button>
+            </form>
+        </RevealOnScroll>
     )
 }
