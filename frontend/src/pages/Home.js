@@ -1,7 +1,7 @@
 import HomeBlogs from "../components/HomeBlogs";
 import RevealOnScroll from "../components/RevealOnScroll";
 import { LoadingContext } from "../context/LoadingContext";
-import popularBlogs from "../data/popularBlogs";
+import blogs from "../data/blogs";
 import React from 'react';
 import Loader from "../components/Loader";
 
@@ -44,7 +44,7 @@ export default function Home() {
             <RevealOnScroll>
                 <HomeBlogs
                     title="Popular Blogs"
-                    blogs={popularBlogs}
+                    blogs={blogs}
                 />
             </RevealOnScroll>
 

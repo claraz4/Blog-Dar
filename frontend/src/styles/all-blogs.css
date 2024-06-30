@@ -71,3 +71,54 @@
 .fast-fadein {
     animation: 0.5s fadein ease-in-out;
 }
+
+.blog-box-all--img {
+    height: 100%;
+    width: 45%;
+}
+
+.blog-box-all--container {
+    flex-direction: row;
+    z-index: 9;
+}
+
+.all-blogs {
+    row-gap: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+    margin-top: 40px;
+}
+
+.blog-box-all--info-post {
+    padding: 15px 25px 15px 25px;
+    justify-content: space-between;
+    display: flex;
+    flex-direction: column;
+}
+
+.blog-box-all-category {
+    font-size: 1.15rem;
+    margin-bottom: 25px;
+}
+
+.blog-box-all-title {
+    font-size: 1.6rem;
+}
+
+.blog-box-all--info p {
+    font-size: 1rem;
+}
+
+.likes-all--container {
+    width: 20%;
+    height: fit-content;
+    margin-top: 8px;
+    z-index: 10;
+}
+
+.likes-all--container span {
+    font-size: 1.7rem;
+}

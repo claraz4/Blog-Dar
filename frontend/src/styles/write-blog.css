@@ -77,11 +77,11 @@
 }
 
 .fadein {
-    animation: fadein 0.8s ease-in-out;
+    animation: fadein 0.8s ease-in;
 }
 
 .fadeout {
-    animation: fadeout 0.8s ease-in-out;
+    animation: fadeout 0.8s ease-out;
 }
 
 #remove-paragraph--button,
