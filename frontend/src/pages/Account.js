@@ -34,9 +34,9 @@ export default function Account() {
     return (
         <div className="account--container">
             <div className="profile--container">
-                <span class="material-symbols-outlined profile-icon">account_circle</span>
 
                 <h3 className="acount-settings--title">Profile Settings</h3>
+                <span class="material-symbols-outlined profile-icon">account_circle</span>
 
                 <div className="account-settings-section">
                     <div className="section-subtitle--container">

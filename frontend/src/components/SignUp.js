@@ -58,6 +58,7 @@ function SignUp() {
           onChange={handleChange}
           placeholder="First Name"
           required
+          className="input-sign-in-up"
         />
         <input  
           type="text"
@@ -66,6 +67,7 @@ function SignUp() {
           onChange={handleChange}
           placeholder="Last Name"
           required
+          className="input-sign-in-up"
         />
         <input
           type="email"
@@ -74,6 +76,7 @@ function SignUp() {
           onChange={handleChange}
           placeholder="Email"
           required
+          className="input-sign-in-up"
         />
         <input
           type="password"
@@ -82,8 +85,9 @@ function SignUp() {
           onChange={handleChange}
           placeholder="Password"
           required
+          className="input-sign-in-up"
         />
-        <button type="submit" onClick={handleOnSubmit}>Sign Up</button>
+        <button type="submit" onClick={handleOnSubmit} className="sign-in-up-button">Sign Up</button>
       </formal>
     </div>
   );
