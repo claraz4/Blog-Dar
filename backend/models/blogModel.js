@@ -25,13 +25,13 @@ const blogSchema = new Schema(
     likedby: [
       {
         type: Schema.Types.ObjectId,
-        ref: User,
+        ref: "User",
       },
     ],
     dislikedby: [
       {
         type: Schema.Types.ObjectId,
-        ref: User,
+        ref: "User",
       },
     ],
     datePublished: {
