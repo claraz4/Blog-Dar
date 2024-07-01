@@ -36,7 +36,7 @@ const NavBar = () => {
         </div>
       </NavLink>
 
-      <NavLink to="/signup" className={({ isActive }) => (isActive ? "active" : 'none')}>
+      <NavLink to="/signInUp" className={({ isActive }) => (isActive ? "active" : 'none')}>
         <div className="icon-text">
           <span className="material-symbols-outlined">person_add</span>
           <span className="text">Signup</span>
