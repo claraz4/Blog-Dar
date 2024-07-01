@@ -1,0 +1,27 @@
+.account--container {
+    margin-top: 80px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100vw;
+}
+
+/* .profile-icon {
+    color: var(--green);
+    font-weight: 300;
+    font-size: 4rem;
+} */
+
+.profile--container {
+    flex: 1.5;
+    padding: 20px;
+}
+
+.profile-blogs--container {
+    flex: 2;
+    padding: 20px;
+}
+
+.margin-bottom-15 {
+    margin-bottom: 15px;
+}

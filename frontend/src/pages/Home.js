@@ -33,7 +33,7 @@ export default function Home() {
     }, [])
 
     return (
-        <div>
+        <div className="home--container">
             <RevealOnScroll>
                 <HomeBlogs
                     title="Latest Blogs"

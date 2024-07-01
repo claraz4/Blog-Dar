@@ -13,9 +13,11 @@ import './styles/NavBar.css';
 import './styles/write-blog.css';
 import './styles/single-blog.css';
 import './styles/all-blogs.css';
+import './styles/account.css';
 import { LoadingContextProvider } from './context/LoadingContext';
 import { CategoriesContextProvider } from './context/CategoriesContext';
 import ScrollToTop from './components/ScrollToTop';
+import Account from './pages/Account';
 
 function App() {
   return (
@@ -31,6 +33,7 @@ function App() {
               <Route exact path="/write" element={<WriteBlog />} />
               <Route exact path="/signup" element={<SignupForm />} /> 
               <Route exact path="/blogs" element={<AllBlogs />} /> 
+              <Route exact path="/account" element={<Account />} /> 
             </Routes>
           </Router>
         </CategoriesContextProvider>
