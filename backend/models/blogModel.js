@@ -25,7 +25,6 @@ const blogSchema = new Schema({
     likedby:[{
         type: Schema.Types.ObjectId,
         ref: User,
-        default:'Hello'
     }],
     dislikedby: [{
         type: Schema.Types.ObjectId,
