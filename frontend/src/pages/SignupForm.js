@@ -1,6 +1,7 @@
 // SignupForm.js
 import React, { useState } from 'react';
 import '../styles/SignupForm.css'; // Ensure to create and link your CSS file for styling
+import LoginForm from './LoginForm';
 
 const SignupForm = ({ history }) => {
   const [fullName, setFullName] = useState('');
@@ -135,6 +136,8 @@ const SignupForm = ({ history }) => {
           <input type="submit" value="Signup" />
         </form>
       </div>
+
+      <LoginForm />
     </section>
   );
 };
