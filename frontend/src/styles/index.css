@@ -9,6 +9,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   font-size: 16px;
   box-sizing: border-box;
+  width: 100vw;
 }
 
 :root {
@@ -19,8 +20,6 @@ body {
 }
 
 .App {
-  width: 80vw;
-  padding: 20px;
   margin: auto;
   margin-bottom: 100px;
 }
@@ -39,5 +38,5 @@ body {
 .green-button:hover {
   cursor: pointer;
   background-color: var(--green-hover);
-  border: none;
+  /* border: none; */
 }

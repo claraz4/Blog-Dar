@@ -2,6 +2,8 @@ const mongoose = require('mongoose')
 
 const Schema = mongoose.Schema
 
+const {User} = require('./userModel');
+
 const blogSchema = new Schema({
     title:{
         type:String,
@@ -9,28 +11,25 @@ const blogSchema = new Schema({
     },
     author:{
         type:String,
-        required:true
-    
+        required:true,
+        default: "Jane Doe"
     },
     category:{
-        type: Array,
+        type: String,
         required:true
     },
     content:{
-        type:String,
+        type:Array,
         required:true
     },
-    // likedBy:{
-
-    // }
-    nbOfLikes:{
-        type:Number,
-        default: 0
-    },
-    nbOfDislikes:{
-        type:Number,
-        default: 0
-    },
+    likedby:[{
+        type: Schema.Types.ObjectId,
+        ref: User,
+    }],
+    dislikedby: [{
+        type: Schema.Types.ObjectId,
+        ref: User
+    }],
     datePublished:{
         type:Date,
         default: Date.now()

@@ -71,3 +71,136 @@
     margin-top: 10px;
     font-family: fantasy;
 }
+
+.nav-links--container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.hamburger {
+    display: none;
+}
+
+.bar {
+    display: block;
+    width: 25px;
+    height: 3px;
+    margin: 5px auto;
+    -webkit-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    background-color: white;
+}
+
+.space-between {
+    justify-content: space-between;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+}
+
+/* RESPONSIVENESS */
+@media (max-width: 1024px) {
+    .nav-title {
+        position: static;
+        transform: none;
+        margin-left: 40px;
+        margin-top: 5px;
+    }
+
+    .topnav {
+        justify-content: space-between;
+    }
+}
+
+@media (max-width: 710px) {
+    .hamburger {
+        display: block;
+        cursor: pointer;
+    }
+
+    .hamburger.active .bar:nth-child(2) {
+        opacity: 0;
+    }
+
+    .hamburger.active .bar:nth-child(1) {
+        transform: translateY(8px) rotate(45deg);
+    }
+
+    .hamburger.active .bar:nth-child(3) {
+        transform: translateY(-8px) rotate(-45deg);
+    }
+
+    .nav-title {
+        margin-left: 0;
+    }
+
+    .topnav {
+        padding: 5px 20px 5px 20px;
+        align-items: center;
+    }
+
+    .topnav-active {
+        height: 100vh;
+        background-color: #333;
+        align-items: flex-start;
+    }
+
+    .topnav-active {
+        flex-direction: column;
+    }
+
+    .topnav-active div a .icon-text {
+        flex-direction: row;
+    }
+
+    .topnav-active .nav-links-mobile {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .topnav a.active {
+        background-color: transparent;
+    }
+
+    .topnav a {
+        width: fit-content;
+        display: block;
+    }
+
+    .topnav a span {
+        font-size: 2rem;
+    }
+
+    .icon-text .material-symbols-outlined {
+        margin-right: 10px;
+    }
+    
+    .topnav a.active span {
+        color: var(--green) !important;
+        font-weight: 700;
+    }
+
+    .icon-text {
+        align-items: center;
+    }
+
+    .text {
+        margin: 0;
+    }
+}
+
+@media (max-width: 600px) {
+    .topnav {
+        width: 100vw;
+    }
+}
+
+@media (max-width: 400px) {
+    .nav-title {
+        font-size: 2rem;
+    }
+}

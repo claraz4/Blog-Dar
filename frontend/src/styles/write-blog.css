@@ -120,3 +120,29 @@
     width: 100%;
     margin-top: 10px;
 }
+
+@media (max-width: 870px) {
+    .form--container {
+        width: 90%;
+    }
+}
+
+@media (max-width: 600px) {
+    .form--container {
+        width: 100%;
+        padding: 0;
+        box-shadow: none;
+    }
+}
+
+@media (max-width: 500px) {
+    .form--container {
+        margin-top: 80px;
+    }
+}
+
+@media (max-width: 400px) {
+    .form-paragraph {
+        padding: 13px;
+    }
+}

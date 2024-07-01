@@ -5,6 +5,11 @@ const createToken = (_id) => {
   return jwt.sign({_id}, process.env.SECRET, { expiresIn: '3d' })
 }
 
+const users = async (req,res) => {
+  const user = await User.find({})
+  return res.status(200).json(user)
+}
+
 // login a user
 const loginUser = async (req, res) => {
   const {email, password} = req.body
@@ -37,4 +42,4 @@ const signupUser = async (req, res) => {
   }
 }
 
-module.exports = { signupUser, loginUser }
+module.exports = { users, loginUser , signupUser}
