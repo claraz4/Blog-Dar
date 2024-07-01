@@ -7,6 +7,39 @@ const getBlogs = async (req, res) => {
     res.status(200).json(blogs)
 };
 
+const filterByPopularity = [
+    {
+        $project: {
+            title: 1,                 // Field for direct display
+            author: 1,                // Field for direct display
+            category: 1,              // Field for direct display
+            content: 1,               // Field for direct display
+            likedBy: 1,               // Field for computation (to calculate size)
+            dislikedBy: 1,            // Field for computation (to calculate size)
+            likedByCount: { $size: "$likedBy" },         // Computed field
+            datePublished: 1,         // Field for direct display
+            createdAt: 1,             // Field for direct display (if needed)
+            updatedAt: 1              // Field for direct display (if needed)
+        }
+    },
+    {
+        $sort: { likedByCount: -1 }  // Sort by likedByCount in descending order
+    },
+    {
+        $limit: 10  // Limit to 10 documents
+    }
+];
+
+const getPopularBlogs = async (req,res) => {
+    try {
+        const blogs = await blog.aggregate(filterByPopularity)
+
+        res.status(200).json(blogs);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+}
+
 const getSingleBlog = async (req,res) => {
     const {id} = req.params
     if(!mongoose.Types.ObjectId.isValid(id)){
@@ -21,14 +54,32 @@ const getSingleBlog = async (req,res) => {
 }
 
 const getBlogByCategory = async (req,res) => {
-    const {category} = req.params
-    const categories = category.split(',');
 
-    const Blog = await blog.find({category: { $in: categories }})
+    const {category} = req.params
+
+    const Blog = await blog.find({category: category})
     if(!Blog){
         return res.status(404).json({error: 'No such blog'})
     }
     return res.status(200).json(Blog)
+}
+
+const getBlogByTitle = async (req,res) => {
+
+    const {title} = req.params
+
+    try {
+        const blogs = await blog.find({ title: { $regex: title, $options: 'i' } });
+
+        if (blogs.length === 0) {
+            return res.status(404).json({ error: 'No such blog' });
+        }
+
+        return res.status(200).json(blogs);
+        
+    } catch (error) {
+        return res.status(500).json({ error: 'Internal server error' });
+    }
 }
 
 const createBlog = async (req,res) => {
@@ -69,4 +120,4 @@ const updateBlog = async (req,res) => {
     return res.status(200).json(Blog)
 }
 
-module.exports = {getBlogs, getSingleBlog, getBlogByCategory, createBlog, deleteBlog, updateBlog}
+module.exports = {getBlogs, getSingleBlog, getBlogByCategory, getBlogByTitle, getPopularBlogs, createBlog, deleteBlog, updateBlog}
