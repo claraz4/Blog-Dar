@@ -8,6 +8,8 @@ const router = express.Router()
 
 router.get('/', getBlogs)
 
+router.get('/popularBlogs', getPopularBlogs)
+
 router.get('/:id', getSingleBlog)
 
 router.get('/nbOfLikes', getNbOfLikes)
@@ -20,7 +22,6 @@ router.get('/category/:category', getBlogByCategory)
 
 router.get('/title/:title', getBlogByTitle)
 
-router.get('/popularBlogs', getPopularBlogs)
 
 router.post('/createBlog', createBlog)
 

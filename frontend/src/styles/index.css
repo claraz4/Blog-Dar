@@ -38,5 +38,5 @@ body {
 .green-button:hover {
   cursor: pointer;
   background-color: var(--green-hover);
-  border: none;
+  /* border: none; */
 }

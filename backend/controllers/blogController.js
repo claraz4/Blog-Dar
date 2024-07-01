@@ -11,7 +11,7 @@ const filterByPopularity = [
       content: 1, // Field for direct display
       likedBy: 1, // Field for computation (to calculate size)
       dislikedBy: 1, // Field for computation (to calculate size)
-      likedByCount: { $size: "$likedBy" }, // Computed field
+      likedByCount: { $size: { $ifNull: ["$likedBy", []] } }, // Computed field
       datePublished: 1, // Field for direct display
       createdAt: 1, // Field for direct display (if needed)
       updatedAt: 1, // Field for direct display (if needed)

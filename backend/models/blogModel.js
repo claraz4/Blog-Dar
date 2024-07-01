@@ -11,8 +11,8 @@ const blogSchema = new Schema({
     },
     author:{
         type:String,
-        required:true
-    
+        required:true,
+        default: "Jane Doe"
     },
     category:{
         type: String,

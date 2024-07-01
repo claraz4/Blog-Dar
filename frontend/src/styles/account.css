@@ -14,7 +14,7 @@
 
 .profile--container {
     flex: 1.5;
-    padding: 20px;
+    padding: 30px;
 }
 
 .profile-blogs--container {
@@ -22,6 +22,83 @@
     padding: 20px;
 }
 
-.margin-bottom-15 {
+.section-subtitle--account {
+    color: var(--green);
+    font-weight: 500;
+}
+
+.label-account {
+    margin-right: 5px;
+}
+
+.section-subtitle--container {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.edit-icon {
+    color: var(--green);
+    font-size: 1.3rem;
+    margin-top: 3px;
+    cursor: pointer;
+}
+
+.edit-icon:hover {
+    color: rgb(23, 98, 44);
+}
+
+.section-subtitle {
+    margin: 0;
+    margin-right: 40px;
+}
+
+.acount-settings--title {
+    margin-bottom: 30px;
+}
+
+.account-settings-section {
+    margin-bottom: 55px;
+}
+
+.save-settings,
+.cancel-settings {
+    font-size: 0.9rem;
+    padding: 1px 6px;
+    border-radius: 5px;
+    border: 1.5px var(--green) solid;
+}
+
+.account--field {
+    color: var(--grey);
+    margin: 0;
+}
+
+.subsection-account {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
     margin-bottom: 15px;
+}
+
+.account-input {
+    border: 1.5px var(--green) solid;
+    border-radius: 5px;
+    padding: 2px 4px 2px 4px;
+    outline-color: var(--green);
+}
+
+.cancel-settings {
+    background-color: transparent;
+    color: var(--green);
+    margin-left: 5px;
+}
+
+.save-settings:hover {
+    border: 1.5px var(--green-hover) solid;
+}
+
+.cancel-settings:hover {
+    background-color: rgba(116, 116, 116, 0.1)
 }

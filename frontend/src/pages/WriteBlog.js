@@ -1,13 +1,11 @@
 import React from 'react';
 import "../styles/write-blog.css";
-import categories from "../data/categories";
 import FormParagraph from '../components/FormParagraph';
 import RevealOnScroll from '../components/RevealOnScroll';
-import { CategoriesContext } from '../context/CategoriesContext';
+import axios from "axios";
 
 export default function WriteBlog() {
-    // const { categories, categoriesDispatch } = React.useContext(CategoriesContext);
-
+    const [categories, setCategories] = React.useState([]);
     const [categoriesOptions, setCategoriesOptions] = React.useState([]);
     const [formData, setFormData] = React.useState({
         "title": "",
@@ -16,11 +14,39 @@ export default function WriteBlog() {
     const [content, setContent] = React.useState(["", ""]);
     const [paragraphs, setParagraphs] = React.useState([0]);
     const [paragraphsElement, setParagraphsElement] = React.useState([]);
+
+    // Post a blog
+    const addBlog = async () => {
+        try {
+            await axios.post('/blogs/createBlog', {
+                ...formData,
+                content
+            });
+        } catch (error) {
+            console.log(error);
+        }
+    }
     
+    // Fetch categories
+    React.useEffect(() => {
+        // Fetch the categories
+        const fetchCategories = async () => {
+            try {
+                const res = await fetch('/categories/');
+                const data = await res.json();
+                setCategories(data);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+        fetchCategories();
+    }, []);
+
     // Create the categories options
     React.useEffect(() => {
-        setCategoriesOptions(categories.map((category, id) => <option key={id} value={category}>{category}</option>))
-    }, []);
+        setCategoriesOptions(categories.map((category) => <option key={category.id} value={category.name}>{category.name}</option>))
+    }, [categories]);
 
     // Handle the change of the form
     function handleChange(event) {
@@ -110,6 +136,7 @@ export default function WriteBlog() {
     // Handle the submission of the form
     function handleSubmit(event) {
         event.preventDefault();
+        addBlog();
     }
 
     return (
