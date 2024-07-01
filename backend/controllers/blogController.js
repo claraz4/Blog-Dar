@@ -2,23 +2,15 @@ const mongoose = require("mongoose");
 
 const blog = require("../models/blogModel");
 
-const nbOfLikes = {
+const additionalFields = {
   $addFields: {
     likedByCount: { $size: { $ifNull: ["$likedby", []] } },
-    // Add more common fields if needed
-  },
-};
-
-const nbOfDislikes = {
-  $addFields: {
     dislikedByCount: { $size: { $ifNull: ["$dislikedby", []] } },
-    // Add more common fields if needed
   },
 };
 
 const filterByPopularity = [
-  nbOfLikes,
-  nbOfDislikes,
+  additionalFields,
   {
     $project: {
       title: 1, // Field for direct display
@@ -93,7 +85,7 @@ const getBlogByTitle = async (req, res) => {
   }
 };
 const createBlog = async (req, res) => {
-  const { title, author, category, content, likedby, dislikedby } = req.body;
+  const { title, author, category, content } = req.body;
   try {
     const user_id = req.user._id;
     const Blog = await blog.create({
@@ -101,8 +93,6 @@ const createBlog = async (req, res) => {
       author,
       category,
       content,
-      likedby,
-      dislikedby,
       user_id,
     });
     res.status(200).json(Blog);
