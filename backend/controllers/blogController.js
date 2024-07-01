@@ -43,7 +43,17 @@ const filterByPopularity = [
 ];
 
 const getBlogs = async (req, res) => {
-  const blogs = await blog.find({ $sort: { createdAt: -1 } }); // sort newest to oldest
+  try {
+    const blogs = await blog.find().sort({ createdAt: -1 }); // Sort newest to oldest
+    res.status(200).json(blogs);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+const getUserBlogs = async (req, res) => {
+  const user_id = req.user._id;
+  const blogs = await blog.find({ user_id }).sort({ createdAt: -1 });
   res.status(200).json(blogs);
 };
 
@@ -56,19 +66,6 @@ const getPopularBlogs = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
-
-// const getSingleBlog = async (req, res) => {
-//   const { id } = req.params;
-//   if (!mongoose.Types.ObjectId.isValid(id)) {
-//     return res.status(404).json({ error: "No such blog" });
-//   }
-//   const Blog = await blog.findById(id);
-//   if (!Blog) {
-//     return res.status(404).json({ error: "No such blog" });
-//   } else {
-//     res.status(200).json(Blog);
-//   }
-// };
 
 const getBlogByCategory = async (req, res) => {
   const { category } = req.params;
@@ -98,6 +95,7 @@ const getBlogByTitle = async (req, res) => {
 const createBlog = async (req, res) => {
   const { title, author, category, content, likedby, dislikedby } = req.body;
   try {
+    const user_id = req.user._id;
     const Blog = await blog.create({
       title,
       author,
@@ -105,6 +103,7 @@ const createBlog = async (req, res) => {
       content,
       likedby,
       dislikedby,
+      user_id,
     });
     res.status(200).json(Blog);
   } catch (error) {
@@ -144,7 +143,7 @@ const updateBlog = async (req, res) => {
 
 module.exports = {
   getBlogs,
-  //getSingleBlog,
+  getUserBlogs,
   getBlogByCategory,
   getBlogByTitle,
   getPopularBlogs,

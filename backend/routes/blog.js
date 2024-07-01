@@ -1,31 +1,40 @@
-const express = require('express')
+const express = require("express");
 
-const {getBlogs, getSingleBlog, getNbOfLikes, getNbOfDislikes, getBlogByCategory, getBlogByTitle, getPopularBlogs, createBlog, deleteBlog, updateBlog} = require('../controllers/blogController');
+const auth = require("../middleware/requireAuth");
+
+const {
+  getBlogs,
+  getUserBlogs,
+  getBlogByCategory,
+  getBlogByTitle,
+  getPopularBlogs,
+  createBlog,
+  deleteBlog,
+  updateBlog,
+} = require("../controllers/blogController");
 // 1 point means folder in directory backend
 //2 points means folder is in same folder as backend
 
-const router = express.Router()
+// require auth for all workout routes
 
-router.get('/', getBlogs)
+const router = express.Router();
 
-router.get('/:id', getSingleBlog)
+//router.use(auth);
 
-router.get('/nbOfLikes', getNbOfLikes)
+router.get("/", getBlogs);
 
-router.get('/nbOfDislikes', getNbOfDislikes)
+router.get("/popularBlogs", getPopularBlogs);
 
-router.get('/:id', getSingleBlog)
+router.get("/userBlogs", auth, getUserBlogs);
 
-router.get('/category/:category', getBlogByCategory)
+router.get("/category/:category", getBlogByCategory);
 
-router.get('/title/:title', getBlogByTitle)
+router.get("/title/:title", getBlogByTitle);
 
-router.get('/popularBlogs', getPopularBlogs)
+router.post("/createBlog", createBlog);
 
-router.post('/createBlog', createBlog)
+router.delete("/deleteBlog/:id", deleteBlog);
 
-router.delete('/deleteBlog/:id', deleteBlog)
-
-router.patch('/updateBlog/:id', updateBlog)
+router.patch("/updateBlog/:id", updateBlog);
 
 module.exports = router;
