@@ -26,7 +26,7 @@ export default function SignInUp() {
                 To keep connected with us please login with your personal info
               </par>
               <button
-                className="ghost"
+                className="ghost sign-in-up-button"
                 id="signIn"
                 onClick={() => handleOnClick("signIn")}
               >
@@ -37,7 +37,7 @@ export default function SignInUp() {
               <j1>Hello, Friend!</j1>
               <par>Enter your personal details and start journey with us</par>
               <button
-                className="ghost "
+                className="ghost sign-in-up-button"
                 id="signUp"
                 onClick={() => handleOnClick("signUp")}
               >

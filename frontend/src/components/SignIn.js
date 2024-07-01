@@ -43,6 +43,7 @@ function SignIn() {
           onChange={handleChange}
           placeholder="Email"
           required
+          className="input-sign-in-up"
         />
         <input 
           type="password"
@@ -51,9 +52,10 @@ function SignIn() {
           onChange={handleChange}
           placeholder="Password"
           required
+          className="input-sign-in-up"
         />
         <a href="#">Forgot your password?</a>
-        <button type="submit">Sign In</button>
+        <button type="submit" className="sign-in-up-button">Sign In</button>
       </formal>
     </div>
   );
