@@ -2,10 +2,6 @@ const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
-const { Img } = require("./imgModel");
-
-const { User } = require("./userModel");
-
 const blogSchema = new Schema(
   {
     title: {
