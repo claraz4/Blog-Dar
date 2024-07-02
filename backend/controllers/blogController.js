@@ -4,8 +4,6 @@ const blog = require("../models/blogModel");
 
 const User = require("../models/userModel");
 
-const multer = require("multer");
-
 const additionalFields = {
   $addFields: {
     likedByCount: { $size: { $ifNull: ["$likedby", []] } },
@@ -155,7 +153,7 @@ const updateBlog = async (req, res) => {
   }
   const Blog = await blog.findOneAndUpdate({ _id: id }, req.body, {
     new: true,
-  }); // the new is to update the Blog directly
+  }); // the 'new' is to update the Blog directly when returning it instead of refreshing to get it updated
 
   if (!Blog) {
     return res.status(404).json({ error: "No such blog" });

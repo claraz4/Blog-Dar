@@ -45,33 +45,28 @@ const signupUser = async (req, res) => {
 };
 
 const uploadProfilePic = async (req, res) => {
-  const user_id = req.user._id; // Assuming you have authentication middleware setting req.user
+  const user_id = req.user._id;
 
   try {
-    // Find the user by ID
     const user = await User.findById(user_id);
     if (!user) {
       return res.status(404).json({ error: "User not found" });
     }
 
-    // Check if req.file exists and the path is correct
     if (!req.file || !req.file.buffer) {
       return res
         .status(400)
         .json({ error: "No file uploaded or file data missing" });
     }
 
-    // Create a new Image document in MongoDB
     const newImage = new Img({
       data: req.file.buffer, // Store file data as Buffer
       contentType: req.file.mimetype, // MIME type of the file
       uploadedby: user_id,
     });
 
-    // Save the new Image document
     await newImage.save();
 
-    // Update user's profilePic field with the new Image document's ID
     user.profilePic = newImage._id;
 
     // Save the updated user document
@@ -101,8 +96,26 @@ const getUserInfo = async (req, res) => {
   }
 };
 
+const updateInfo = async (req, res) => {
+  const user_id = req.user._id;
+
+  try {
+    const updatedUser = await User.findByIdAndUpdate(user_id, req.body, {
+      new: true,
+    });
+
+    if (!updatedUser) {
+      res.status(400).json("No user was found");
+    }
+    return res.status(200).json(updatedUser);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 module.exports = {
   getUserInfo,
+  updateInfo,
   loginUser,
   signupUser,
   uploadProfilePic,
