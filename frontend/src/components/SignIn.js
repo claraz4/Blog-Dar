@@ -2,7 +2,7 @@ import React from "react";
 import { Navigate } from "react-router-dom";
 import useLogin from "../hooks/useLogin";
 
-function SignIn() {
+function SignIn({ isPhone, type, handleOnClick }) {
   const [state, setState] = React.useState({
     email: "",
     password: ""
@@ -47,6 +47,16 @@ function SignIn() {
         />
 
         <button type="submit" className="sign-in-up-button">Sign In</button>
+        {isPhone && type === "signIn" && 
+          <button
+          style={{ 
+            "border": "2px rgb(4, 170, 109) solid", "color":'rgb(4, 170, 109)', "backgroundColor":'transparent' }}
+            className="sign-in-up-button"
+            onClick={() => handleOnClick("signUp")}
+          >
+            Click to Sign Up
+          </button>
+        }
       </form>
     </div>
   );

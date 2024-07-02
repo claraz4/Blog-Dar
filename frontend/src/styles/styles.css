@@ -144,6 +144,7 @@
 .form-container .sign-in-up-button {
   margin: 20px 0;
   border: none;
+  width: fit-content;
 }
 
 .sign-in-up-button:hover {
@@ -293,6 +294,13 @@ footer a {
 @media (max-width: 940px) {
   .sign-in-up--container {
     width: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .form-container input {
+    width: 100%;
+    max-width: none;
   }
 }
 
@@ -300,8 +308,51 @@ footer a {
   .sign-in-up--container {
     width: 90%;
   }
+  .overlay-panel {
+    padding: 0 0px;
+  }
 }
 
 @media (max-width: 500px) {
+  .sign-in-up--container.right-panel-active .sign-up-container {
+    transform: none;
+  }
   
+  .sign-in-up--container {
+    width: 100%;
+    height: 70%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: none; 
+    border-radius: 0px; 
+  }
+
+  .form-container {
+    width: 90%;
+    max-width: none;
+    position: relative;
+  }
+
+  .sign-in-up-title,
+  .sign-in-up-opening {
+    font-size: 1.4rem;
+  }
+
+  .sign-in-up-p {
+    font-size: 12px;
+  }
+
+  .sign-in-up-button {
+    font-size: 10px;
+    padding: 10px 30px;
+  }
+
+  .form-container input {
+    padding: 8px 10px;
+  }
+
+  .overlay-container {
+    display: none;
+  }
 }

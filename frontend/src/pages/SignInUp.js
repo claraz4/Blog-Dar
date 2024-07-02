@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import SignIn from "../components/SignIn";
 import SignUp from "../components/SignUp";
+import { useMediaQuery } from "@mui/material";
 
 export default function SignInUp() {
   const [type, setType] = useState("signIn");
@@ -10,15 +11,17 @@ export default function SignInUp() {
       return;
     }
   };
+
+  const isPhone = useMediaQuery('(max-width: 500px');
   const containerClass =
     "sign-in-up--container" + (type === "signUp" ? " right-panel-active" : "");
-    
+  
   return (
     <div className="sign-in-up--big-container">
       <h2 className="align-center">Sign in/up Form</h2>
       <div className={containerClass} id="container">
-        <SignUp />
-        <SignIn />
+        {(!isPhone || type === "signUp") && <SignUp isPhone={isPhone} type={type} handleOnClick={handleOnClick} />}
+        {(!isPhone || type === "signIn") && <SignIn isPhone={isPhone} type={type} handleOnClick={handleOnClick} />}
         <div className="overlay-container">
           <div className="overlay">
             <div className="overlay-panel overlay-left">
@@ -33,6 +36,7 @@ export default function SignInUp() {
               >
                 Sign In
               </button>
+        
             </div>
             <div className="overlay-panel overlay-right">
               <h1 className="sign-in-up-opening">Hello, Friend!</h1>

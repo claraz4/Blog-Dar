@@ -10,16 +10,9 @@ const blogSchema = new Schema(
       type: String,
       required: true,
     },
-<<<<<<< HEAD
-    author:{
-        type:String,
-        required:true,
-        default: "Jane Doe"
-=======
     author: {
       type: String,
       required: true,
->>>>>>> Roni
     },
     category: {
       type: String,

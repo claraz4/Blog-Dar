@@ -19,13 +19,7 @@ const {
 
 const router = express.Router();
 
-<<<<<<< HEAD
-router.get('/popularBlogs', getPopularBlogs)
-
-router.get('/:id', getSingleBlog)
-=======
 //router.use(auth);
->>>>>>> Roni
 
 router.get("/", getBlogs);
 
@@ -37,10 +31,7 @@ router.get("/category/:category", getBlogByCategory);
 
 router.get("/title/:title", getBlogByTitle);
 
-<<<<<<< HEAD
-=======
 router.post("/createBlog", createBlog);
->>>>>>> Roni
 
 router.delete("/deleteBlog/:id", deleteBlog);
 
