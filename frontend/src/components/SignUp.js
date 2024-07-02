@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import useSignup from "../hooks/useSignup";
 
 function SignUp() {
   const [state, setState] = React.useState({
@@ -16,16 +17,7 @@ function SignUp() {
     });
   };
 
-  // Senda request to the database to save the user
-  const signup = async() => {
-    try{
-      await axios.post('/user/signup', {
-        ...state,
-      })
-    } catch (error){
-      console.log(error);
-    }
-  }
+  const { signup, error, isLoading } = useSignup();
 
   const handleOnSubmit = (evt) => {
     evt.preventDefault();
@@ -43,29 +35,26 @@ function SignUp() {
 
   return (
     <div className="form-container sign-up-container">
-      <formal onSubmit={handleOnSubmit}>
-        <j1>Create Account</j1>
-        <div className="social-container">
-          <alo href="#" className="social"><i className="fab fa-facebook-f" /></alo>
-          <alo href="#" className="social"><i className="fab fa-google-plus-g" /></alo>
-          <alo href="#" className="social"><i className="fab fa-linkedin-in" /></alo>
-        </div>
-        <spand>Use your email for registration</spand>
+      <form className="sign-in-up-form" onSubmit={handleOnSubmit}>
+        <h1 className="sign-in-up-title">Create Account</h1>
+        {/* <span className="sign-in-up-span">Use your email for registration</span> */}
         <input  
           type="text"
-          name="Fname"
-          value={state.Fname}
+          name="first_name"
+          value={state.first_name}
           onChange={handleChange}
           placeholder="First Name"
           required
+          className="input-sign-in-up"
         />
         <input  
           type="text"
-          name="Lname"
-          value={state.Lname}
+          name="last_name"
+          value={state.last_name}
           onChange={handleChange}
           placeholder="Last Name"
           required
+          className="input-sign-in-up"
         />
         <input
           type="email"
@@ -74,6 +63,7 @@ function SignUp() {
           onChange={handleChange}
           placeholder="Email"
           required
+          className="input-sign-in-up"
         />
         <input
           type="password"
@@ -82,9 +72,10 @@ function SignUp() {
           onChange={handleChange}
           placeholder="Password"
           required
+          className="input-sign-in-up"
         />
-        <button type="submit" onClick={handleOnSubmit}>Sign Up</button>
-      </formal>
+        <button type="submit" onClick={handleOnSubmit} className="sign-in-up-button">Sign Up</button>
+      </form>
     </div>
   );
 }

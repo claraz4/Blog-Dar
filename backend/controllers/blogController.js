@@ -2,19 +2,30 @@ const mongoose = require("mongoose");
 
 const blog = require("../models/blogModel");
 
+const User = require("../models/userModel");
+
+const additionalFields = {
+  $addFields: {
+    likedByCount: { $size: { $ifNull: ["$likedby", []] } },
+    dislikedByCount: { $size: { $ifNull: ["$dislikedby", []] } },
+  },
+};
+
 const filterByPopularity = [
+  additionalFields,
   {
     $project: {
       title: 1, // Field for direct display
-      author: 1, // Field for direct display
-      category: 1, // Field for direct display
-      content: 1, // Field for direct display
-      likedBy: 1, // Field for computation (to calculate size)
-      dislikedBy: 1, // Field for computation (to calculate size)
-      likedByCount: { $size: { $ifNull: ["$likedBy", []] } }, // Computed field
-      datePublished: 1, // Field for direct display
-      createdAt: 1, // Field for direct display (if needed)
-      updatedAt: 1, // Field for direct display (if needed)
+      author: 1,
+      category: 1,
+      content: 1,
+      likedby: 1,
+      dislikedby: 1,
+      likedByCount: 1, // Computed field
+      dislikedByCount: 1, // Computed field
+      datePublished: 1,
+      createdAt: 1,
+      updatedAt: 1,
     },
   },
   {
@@ -26,16 +37,36 @@ const filterByPopularity = [
 ];
 
 const getBlogs = async (req, res) => {
-  const blogs = await blog.find({}).sort({ createdAt: -1 }); // descending order newest to oldest
-  res.status(200).json(blogs);
+  try {
+    const blogs = await blog.find().sort({ createdAt: -1 }); // Sort newest to oldest
+    res.status(200).json(blogs);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 };
 
-const getNbOfLikes = async (req, res) => {
-  res.json("5");
-};
+// const getUserBlogs = async (req, res) => {
+//   const user_id = req.user._id;
+//   const blogs = await blog.find({ user_id }).sort({ createdAt: -1 });
+//   res.status(200).json(blogs);
+// };
 
-const getNbOfDislikes = async (req, res) => {
-  res.json("6");
+const getUserBlogs = async (req, res) => {
+  const user_id = req.user._id;
+
+  try {
+    const user = await User.findById(user_id).populate({
+      path: "userBlogs",
+      options: { sort: { createdAt: -1 } }, // Sort them newest to old
+    });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.status(200).json(user.postedBlogs);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 };
 
 const getPopularBlogs = async (req, res) => {
@@ -45,19 +76,6 @@ const getPopularBlogs = async (req, res) => {
     res.status(200).json(blogs);
   } catch (err) {
     res.status(500).json({ message: err.message });
-  }
-};
-
-const getSingleBlog = async (req, res) => {
-  const { id } = req.params;
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({ error: "No such blog" });
-  }
-  const Blog = await blog.findById(id);
-  if (!Blog) {
-    return res.status(404).json({ error: "No such blog" });
-  } else {
-    res.status(200).json(Blog);
   }
 };
 
@@ -87,15 +105,31 @@ const getBlogByTitle = async (req, res) => {
   }
 };
 const createBlog = async (req, res) => {
-  const { title, author, category, content, likedby } = req.body;
+  const { title, category, content } = req.body;
+  const user_id = req.user._id;
+
+  const user = await User.findById(user_id);
+  if (!user) {
+    return res.status(404).json({ message: "User not found" });
+  }
+
+  const author = user.first_name.concat(" ", user.last_name);
+
   try {
+    //Create the blog and add it to the blogs
     const Blog = await blog.create({
       title,
       author,
       category,
       content,
-      likedby,
+      user_id,
     });
+
+    // Add the blog to the user's postedBlogs array
+
+    user.userBlogs.push(Blog._id);
+    await user.save();
+
     res.status(200).json(Blog);
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -134,9 +168,7 @@ const updateBlog = async (req, res) => {
 
 module.exports = {
   getBlogs,
-  getSingleBlog,
-  getNbOfLikes,
-  getNbOfDislikes,
+  getUserBlogs,
   getBlogByCategory,
   getBlogByTitle,
   getPopularBlogs,
