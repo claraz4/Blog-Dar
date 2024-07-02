@@ -52,7 +52,6 @@ function SignIn() {
           placeholder="Password"
           required
         />
-        <a href="#">Forgot your password?</a>
         <button type="submit">Sign In</button>
       </formal>
     </div>
