@@ -1,18 +1,20 @@
 import React from 'react';
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export default function BlogBoxUser() {
     const blog = {
         title: "Title",
         category: "Health",
         content: ["hi", "hi", "hi", "hi"],
-        date: new Date(Date.now())
+        date: new Date(Date.now()),
+        id: 1
     }
 
     // Delete a blog
     const deleteBlog = async () => {
         try {
-            await axios.delete(`/blogs/deleteBlog/${id}`);
+            await axios.delete(`/blogs/deleteBlog/${blog.id}`);
         } catch (error) {
             console.log(error);
         }
