@@ -1,5 +1,12 @@
 const User = require("../models/userModel");
+
 const jwt = require("jsonwebtoken");
+
+const multer = require("multer");
+
+const Img = require("../models/imgModel");
+
+const upload = multer({});
 
 const createToken = (_id) => {
   return jwt.sign({ _id }, process.env.SECRET, { expiresIn: "3d" });
@@ -37,20 +44,40 @@ const signupUser = async (req, res) => {
   }
 };
 
-const uploadProfilePic = async (req, res, next) => {
+const uploadProfilePic = async (req, res) => {
+  const user_id = req.user._id; // Assuming you have authentication middleware setting req.user
+
   try {
-    const user = await User.findById(req.params.userId); // Adjust how you fetch user based on your route setup
+    // Find the user by ID
+    const user = await User.findById(user_id);
     if (!user) {
       return res.status(404).json({ error: "User not found" });
     }
 
-    // Example of updating profile picture
-    user.profilePicture.data = fs.readFileSync(
-      path.join(__dirname + "/uploads/" + req.file.filename)
-    );
-    user.profilePicture.contentType = "image/png"; // Adjust content type based on file type
+    // Check if req.file exists and the path is correct
+    if (!req.file || !req.file.buffer) {
+      return res
+        .status(400)
+        .json({ error: "No file uploaded or file data missing" });
+    }
 
+    // Create a new Image document in MongoDB
+    const newImage = new Img({
+      data: req.file.buffer, // Store file data as Buffer
+      contentType: req.file.mimetype, // MIME type of the file
+      uploadedby: user_id,
+    });
+
+    // Save the new Image document
+    await newImage.save();
+
+    // Update user's profilePic field with the new Image document's ID
+    user.profilePic = newImage._id;
+
+    // Save the updated user document
     await user.save();
+
+    // Respond with success message
     res.status(200).json({ message: "Profile picture uploaded successfully" });
   } catch (err) {
     console.error(err);
@@ -58,4 +85,12 @@ const uploadProfilePic = async (req, res, next) => {
   }
 };
 
-module.exports = { loginUser, signupUser, uploadProfilePic };
+const getUserInfo = async (req, res) => {};
+
+module.exports = {
+  getUserInfo,
+  loginUser,
+  signupUser,
+  uploadProfilePic,
+  upload: upload.single("profilePic"),
+};

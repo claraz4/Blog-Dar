@@ -4,35 +4,20 @@ const auth = require("../middleware/requireAuth");
 
 const userRoutes = express.Router();
 
-const multer = require("multer");
-
 const {
+  getUserInfo,
   loginUser,
   signupUser,
   uploadProfilePic,
+  upload,
 } = require("../controllers/userController");
 
-//Multer setup for file upload
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "uploads");
-  },
-  filename: (req, file, cb) => {
-    cb(null, file.fieldname + "-" + Date.now());
-  },
-});
-
-const upload = multer({ storage });
-
-// Route for uploading profile picture
-userRoutes.post(
-  "/users/:userId/upload-picture",
-  upload.single("profilePic"),
-  uploadProfilePic
-);
+userRoutes.get("/info", auth, getUserInfo);
 
 userRoutes.post("/login", loginUser);
 
 userRoutes.post("/signup", signupUser);
+
+userRoutes.post("/uploadPic", auth, upload, uploadProfilePic);
 
 module.exports = userRoutes;

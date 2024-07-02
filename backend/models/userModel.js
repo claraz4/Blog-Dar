@@ -3,6 +3,8 @@ const bcrypt = require("bcrypt");
 const validator = require("validator");
 const { blog } = require("./blogModel");
 
+const { Img } = require("./userModel");
+
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
@@ -23,9 +25,9 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
-  img: {
-    data: Buffer,
-    contentType: String,
+  profilePic: {
+    type: Schema.Types.ObjectId,
+    ref: "Img",
   },
   userBlogs: [
     {
