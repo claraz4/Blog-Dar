@@ -1,4 +1,5 @@
 import React from 'react';
+import BlogBoxUser from '../components/BlogBoxUser';
 
 export default function Account() {
     const [formData, setFormData] = React.useState({
@@ -29,14 +30,12 @@ export default function Account() {
         }))
     }
 
-    console.log(edit)
-
     return (
         <div className="account--container">
             <div className="profile--container">
 
                 <h3 className="acount-settings--title">Profile Settings</h3>
-                <span class="material-symbols-outlined profile-icon">account_circle</span>
+                <span className="material-symbols-outlined profile-icon">account_circle</span>
 
                 <div className="account-settings-section">
                     <div className="section-subtitle--container">
@@ -47,7 +46,7 @@ export default function Account() {
                                 <button className="green-button cancel-settings" onClick={() => handleEdit(0)}>Cancel</button>
                             </div>
                             : 
-                            <span class="material-symbols-outlined edit-icon" onClick={() => handleEdit(0)}>edit</span>
+                            <span className="material-symbols-outlined edit-icon" onClick={() => handleEdit(0)}>edit</span>
                         }
                     </div>
                     
@@ -81,7 +80,7 @@ export default function Account() {
                                 <button className="green-button cancel-settings" onClick={() => handleEdit(1)}>Cancel</button>
                             </div>
                             : 
-                            <span class="material-symbols-outlined edit-icon" onClick={() => handleEdit(1)}>edit</span>
+                            <span className="material-symbols-outlined edit-icon" onClick={() => handleEdit(1)}>edit</span>
                         }
                     </div>
                     
@@ -103,7 +102,8 @@ export default function Account() {
             </div>
 
             <div className="profile-blogs--container">
-
+                <h3 className="acount-settings--title">Blogs Published</h3>
+                <BlogBoxUser />
             </div>
         </div>
     )

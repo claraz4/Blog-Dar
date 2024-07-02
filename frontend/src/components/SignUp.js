@@ -23,8 +23,8 @@ function SignUp() {
     evt.preventDefault();
 
     const { first_name,last_name, email, password } = state;
-    alert(`You are signed up with name: ${first_name}, name: ${last_name}, email: ${email}, and password: ${password}`);
-    signup();
+    // alert(`You are signed up with name: ${first_name}, name: ${last_name}, email: ${email}, and password: ${password}`);
+    signup(state);
     setState({
       first_name: "",
       last_name: "",

@@ -11,7 +11,6 @@ export default function SingleBlog() {
     const month = date.getMonth();
     const day = date.getDate();
   
-
     const [content, setContent] = React.useState([]);
 
     // Display the content with respecting the subtitles and the bodies.

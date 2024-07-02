@@ -45,7 +45,7 @@ function SignIn() {
           required
           className="input-sign-in-up"
         />
-        <a href="#">Forgot your password?</a>
+        {/* <a href="#">Forgot your password?</a> */}
         <button type="submit" className="sign-in-up-button">Sign In</button>
       </form>
     </div>
