@@ -20,17 +20,24 @@
   margin: -20px 0 50px;
 } */
 
-j1 {
+.sign-in-up-title,
+.sign-in-up-opening {
   font-weight: bold;
   margin: 0;
-  font-size: 40px;
+  font-size: 1.8rem;
 }
 
-j2 {
+.sign-in-up-title {
+  margin-bottom: 20px;
+  width: 80%;
   text-align: center;
 }
 
-par {
+.align-center {
+  text-align: center;
+}
+
+.sign-in-up-p {
   font-size: 14px;
   font-weight: 150px;
   line-height: 20px;
@@ -38,15 +45,8 @@ par {
   margin: 20px 0 30px;
 }
 
-spand {
+.sign-in-up-span {
   font-size: 20px;
-}
-
-alo {
-  color: #333;
-  font-size: 14px;
-  text-decoration: none;
-  margin: 15px 0;
 }
 
 .sign-in-up-button {
@@ -75,13 +75,13 @@ alo {
   border-color: #ffffff;
 }
 
-formal {
+.sign-in-up-form {
   background-color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  padding: 0 50px;
+  /* padding: 0 50px; */
   height: 100%;
   text-align: center;
 }
@@ -89,9 +89,10 @@ formal {
 .input-sign-in-up {
   background-color: #eee;
   border: none;
-  padding: 12px 15px;
+  padding: 8px 15px;
   margin: 8px 0;
   width: 100%;
+  outline-color: var(--green);
 }
 
 .sign-in-up--container {
@@ -100,15 +101,13 @@ formal {
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
   position: absolute;
   overflow: hidden;
-  max-width: 80%;
+  /* max-width: 80%; */
   width: 60%;
-  min-height: 70%;
-  top: 20%; 
+  height: 75%;
+  top: 19%; 
   left: 50%;
   transform: translateX(-50%);
 }
-
-
 
 .form-container {
   display: flex;
@@ -132,14 +131,27 @@ formal {
 }
 
 .form-container input {
-  width: 80%;
-  margin: 10px 0;
+  /* width: 80%; */
+  width: 85%;
+  margin: 7px 0;
+}
+
+.sign-in-up-button {
+  width: 150px;
+  padding: 10px;
 }
 
 .form-container .sign-in-up-button {
-  width: 50%;
-  padding: 10px;
   margin: 20px 0;
+  border: none;
+}
+
+.sign-in-up-button:hover {
+  background-color: rgba(181, 179, 179, 0.1);
+}
+
+.form-container .sign-in-up-button:hover {
+  background-color: #09784f;
 }
 
 .sign-in-container {
@@ -250,17 +262,6 @@ formal {
   margin: 20px 0;
 }
 
-.social-container a {
-  border: 1px solid #dddddd;
-  border-radius: 50%;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0 5px;
-  height: 40px;
-  width: 40px;
-}
-
 footer {
   background-color: #222;
   color: #fff;
@@ -284,4 +285,23 @@ footer i {
 footer a {
   color: #3c97bf;
   text-decoration: none;
+}
+
+
+
+/* RESPONSIVENESS */
+@media (max-width: 940px) {
+  .sign-in-up--container {
+    width: 80%;
+  }
+}
+
+@media (max-width: 650px) {
+  .sign-in-up--container {
+    width: 90%;
+  }
+}
+
+@media (max-width: 500px) {
+  
 }
