@@ -31,10 +31,10 @@ router.get("/category/:category", getBlogByCategory);
 
 router.get("/title/:title", getBlogByTitle);
 
-router.post("/createBlog", createBlog);
+router.post("/createBlog", auth, createBlog);
 
-router.delete("/deleteBlog/:id", deleteBlog);
+router.delete("/deleteBlog/:id", auth, deleteBlog);
 
-router.patch("/updateBlog/:id", updateBlog);
+router.patch("/updateBlog/:id", auth, updateBlog);
 
 module.exports = router;

@@ -22,6 +22,10 @@ const blogSchema = new Schema(
       type: Array,
       required: true,
     },
+    img: {
+      data: Buffer,
+      contentType: String,
+    },
     likedby: [
       {
         type: Schema.Types.ObjectId,
