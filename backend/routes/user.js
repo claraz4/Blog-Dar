@@ -4,13 +4,15 @@ const auth = require("../middleware/requireAuth");
 
 const userRoutes = express.Router();
 
+const multer = require("multer");
+
 const {
   loginUser,
   signupUser,
   uploadProfilePic,
 } = require("../controllers/userController");
 
-// Multer setup for file upload
+//Multer setup for file upload
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "uploads");
