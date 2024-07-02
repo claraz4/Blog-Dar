@@ -4,6 +4,8 @@ const blog = require("../models/blogModel");
 
 const User = require("../models/userModel");
 
+const multer = require("multer");
+
 const additionalFields = {
   $addFields: {
     likedByCount: { $size: { $ifNull: ["$likedby", []] } },
@@ -55,15 +57,11 @@ const getUserBlogs = async (req, res) => {
   const user_id = req.user._id;
 
   try {
-    const user = await User.findById(user_id).populate({
-      path: "userBlogs",
-      options: { sort: { createdAt: -1 } }, // Sort them newest to old
-    });
+    const user = await User.findById(user_id).populate("userBlogs"); //By using populate, userBlogs will be an array of full Blog documents instead of just ObjectIds.
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-
-    res.status(200).json(user.postedBlogs);
+    res.status(200).json({ userBlogs: user.userBlogs });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -166,6 +164,74 @@ const updateBlog = async (req, res) => {
   return res.status(200).json(Blog);
 };
 
+const likedBlog = async (req, res) => {
+  try {
+    const user_id = req.user._id;
+    const blog_id = req.body._id;
+
+    // Find the blog by its ID
+    const Blog = await blog.findById(blog_id);
+
+    if (!Blog) {
+      return res.status(404).json({ message: "Blog not found" });
+    }
+
+    // Check if the user has already liked the blog
+    const index = blog.likedby.indexOf(user_id);
+    if (index !== -1) {
+      // User already liked the blog, so remove the user ID from the likedBy array
+      blog.likedby.pull(user_id);
+      await blog.save();
+      return res
+        .status(200)
+        .json({ message: "Blog unliked successfully", blog });
+    }
+
+    // User has not liked the blog yet, so add the user ID to the likedBy array
+    blog.likedby.push(user_id);
+    await blog.save();
+
+    return res.status(200).json({ message: "Blog liked successfully", blog });
+  } catch (error) {
+    return res.status(500).json({ message: "An error occurred", error });
+  }
+};
+
+const dislikedBlog = async (req, res) => {
+  try {
+    const user_id = req.user._id;
+    const blog_id = req.body._id;
+
+    // Find the blog by its ID
+    const Blog = await blog.findById(blog_id);
+
+    if (!Blog) {
+      return res.status(404).json({ message: "Blog not found" });
+    }
+
+    // Check if the user has already liked the blog
+    const index = blog.dislikedby.indexOf(user_id);
+    if (index !== -1) {
+      // User already disliked the blog, so remove the user ID from the likedBy array
+      blog.dislikedby.pull(user_id);
+      await blog.save();
+      return res
+        .status(200)
+        .json({ message: "Blog undisliked successfully", blog });
+    }
+
+    // User has not liked the blog yet, so add the user ID to the likedBy array
+    blog.dislikedby.push(user_id);
+    await blog.save();
+
+    return res
+      .status(200)
+      .json({ message: "Blog disliked successfully", blog });
+  } catch (error) {
+    return res.status(500).json({ message: "An error occurred", error });
+  }
+};
+
 module.exports = {
   getBlogs,
   getUserBlogs,
@@ -175,4 +241,6 @@ module.exports = {
   createBlog,
   deleteBlog,
   updateBlog,
+  likedBlog,
+  dislikedBlog,
 };
