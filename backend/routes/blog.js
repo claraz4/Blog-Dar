@@ -32,7 +32,6 @@ router.get("/category/:category", getBlogByCategory);
 router.get("/title/:title", getBlogByTitle);
 
 router.post("/createBlog", auth, createBlog);
-router.post("/createBlog", createBlog);
 
 router.delete("/deleteBlog/:id", auth, deleteBlog);
 

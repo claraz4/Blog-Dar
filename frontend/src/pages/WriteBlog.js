@@ -4,11 +4,13 @@ import FormParagraph from '../components/FormParagraph';
 import RevealOnScroll from '../components/RevealOnScroll';
 import axios from "axios";
 import { useLocation } from 'react-router-dom';
+import useAuthContext from '../hooks/useAuthContext';
+import Alert from 'react-bootstrap/Alert';
 
 export default function WriteBlog() {
     const location = useLocation();
     const prevBlog = location.state ? location.state.blog : null;
-    console.log(prevBlog)
+    const { user } = useAuthContext();
 
     const [categories, setCategories] = React.useState([]);
     const [categoriesOptions, setCategoriesOptions] = React.useState([]);
@@ -19,6 +21,7 @@ export default function WriteBlog() {
     const [content, setContent] = React.useState(["", ""]);
     const [paragraphs, setParagraphs] = React.useState([0]);
     const [paragraphsElement, setParagraphsElement] = React.useState([]);
+    const [isUploaded, setIsUploaded] = React.useState(false);
 
     // Post a blog
     const addBlog = async () => {
@@ -26,7 +29,25 @@ export default function WriteBlog() {
             await axios.post('/blogs/createBlog', {
                 ...formData,
                 content
+            }, {
+                headers: {
+                    "Authorization": `Bearer ${user.token}`
+                }
             });
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            setIsUploaded(true);
+
+            setFormData({
+                "title": "",
+                "category": ""
+            });
+            setContent(["", ""]);
+            setParagraphs([0]);
+
+            setTimeout(() => {
+                setIsUploaded(false);
+            }, 2000);
         } catch (error) {
             console.log(error);
         }
@@ -180,6 +201,9 @@ export default function WriteBlog() {
     return (
         <RevealOnScroll>
             <form className="form--container">
+                {isUploaded && <Alert key="success" variant="success">
+                    Blog added successfully!
+                </Alert>}
                 <div className="form--subcontainer">
                     <label htmlFor="title">Blog Title</label>
                     <input type="text" placeholder="Title" name="title" value={formData.title} onChange={handleChange} />

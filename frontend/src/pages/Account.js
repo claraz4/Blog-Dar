@@ -1,5 +1,6 @@
 import React from 'react';
 import BlogBoxUser from '../components/BlogBoxUser';
+import useAuthContext from '../hooks/useAuthContext';
 
 export default function Account() {
     const [formData, setFormData] = React.useState({
@@ -10,6 +11,31 @@ export default function Account() {
         confirmPassword: ""
     });
     const [edit, setEdit] = React.useState([false, false]);
+    const { user } = useAuthContext();
+    console.log(user)
+
+    React.useEffect(() => {
+        // Get the user info
+        const getInfo = async () => {
+            try {
+                console.log("here")
+                const response = await fetch('/user/info', {
+                    headers: {
+                        "Authorization": `Bearer ${user.token}`
+                    }
+                });
+                console.log("here2")
+                const json = await response.json();
+                console.log(json)
+
+                setFormData(json);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+        if (user) getInfo();
+    }, [user])
 
     // Handle form change
     function handleChange(event) {
