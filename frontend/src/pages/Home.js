@@ -6,7 +6,7 @@ import React from 'react';
 import Loader from "../components/Loader";
 
 export default function Home() {
-    const { isLoading, dispatch } = React.useContext(LoadingContext);
+    const { dispatch } = React.useContext(LoadingContext);
     // const { allBlogs:latestBlogs, dispatch:blogsDispatch } = React.useContext(BlogsContext);
     const [latestBlogs, setLatestBlogs] = React.useState([]);
     const [popularBlogs, setPopularBlogs] = React.useState([]);
@@ -64,7 +64,7 @@ export default function Home() {
                 />
             </RevealOnScroll>
 
-            {isLoading && <Loader />}
+            {/* {isLoading && <Loader />} */}
         </div>
     )
 }

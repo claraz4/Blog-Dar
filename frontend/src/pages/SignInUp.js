@@ -11,20 +11,21 @@ export default function SignInUp() {
     }
   };
   const containerClass =
-    "sign-in-up--container " + (type === "signUp" ? "right-panel-active" : "");
+    "sign-in-up--container" + (type === "signUp" ? " right-panel-active" : "");
+    
   return (
-    <div className="App">
-      <j2>Sign in/up Form</j2>
+    <div className="sign-in-up--big-container">
+      <h2 className="align-center">Sign in/up Form</h2>
       <div className={containerClass} id="container">
         <SignUp />
         <SignIn />
         <div className="overlay-container">
           <div className="overlay">
             <div className="overlay-panel overlay-left">
-              <j1>Welcome Back!</j1>
-              <par>
+              <h1 className="sign-in-up-opening">Welcome Back!</h1>
+              <p className="sign-in-up-p">
                 To keep connected with us please login with your personal info
-              </par>
+              </p>
               <button
                 className="ghost sign-in-up-button"
                 id="signIn"
@@ -34,8 +35,8 @@ export default function SignInUp() {
               </button>
             </div>
             <div className="overlay-panel overlay-right">
-              <j1>Hello, Friend!</j1>
-              <par>Enter your personal details and start journey with us</par>
+              <h1 className="sign-in-up-opening">Hello, Friend!</h1>
+              <p className="sign-in-up-p">Enter your personal details and start journey with us</p>
               <button
                 className="ghost sign-in-up-button"
                 id="signUp"

@@ -19,9 +19,9 @@ export default function SingleBlog() {
         setContent(() => contentArr.map((c, idx) => {
             if (idx % 2 === 0) {
                 // this is a subtitle
-                return <h3 className="single-blog--subtitle">{c}</h3>
+                return <h3 key={idx} className="single-blog--subtitle">{c}</h3>
             } else {
-                return <p className="single-blog--p">{c}</p>
+                return <p key={idx} className="single-blog--p">{c}</p>
             }
         }))
     }, [])

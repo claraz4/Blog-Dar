@@ -36,7 +36,7 @@ export default function AllBlogs() {
         setBlogsElement(blogs.map((blog) => {
             return <BlogBoxAll blog={blog} />
         }))
-    })
+    }, [])
 
     return (
         <div className="all-blogs--container">

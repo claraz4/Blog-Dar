@@ -1,10 +1,13 @@
 import React from "react";
+import { Navigate } from "react-router-dom";
+import useLogin from "../hooks/useLogin";
 
 function SignIn() {
   const [state, setState] = React.useState({
     email: "",
     password: ""
   });
+  const { login } = useLogin();
 
   const handleChange = (evt) => {
     const value = evt.target.value;
@@ -14,28 +17,16 @@ function SignIn() {
     });
   };
 
-  const handleOnSubmit = (evt) => {
-    evt.preventDefault();
-
-    const { email, password } = state;
-    alert(`You are logged in with email: ${email} and password: ${password}`);
-
-    setState({
-      email: "",
-      password: ""
-    });
+  const handleOnSubmit = (event) => {
+    event.preventDefault();
+    login(state);
   };
 
   return (
     <div className="form-container sign-in-container">
-      <formal onSubmit={handleOnSubmit}>
-        <j1>Sign In</j1>
-        <div className="social-container">
-          <alo href="#" className="social"><i className="fab fa-facebook-f" /></alo>
-          <alo href="#" className="social"><i className="fab fa-google-plus-g" /></alo>
-          <alo href="#" className="social"><i className="fab fa-linkedin-in" /></alo>
-        </div>
-        <spand>Use your account</spand>
+      <form className="sign-in-up-form" onSubmit={handleOnSubmit}>
+        <h1 className="sign-in-up-title">Sign In</h1>
+        {/* <span className="sign-in-up-span">Use your account</span> */}
         <input 
           type="email"
           name="email"
@@ -56,7 +47,7 @@ function SignIn() {
         />
         <a href="#">Forgot your password?</a>
         <button type="submit" className="sign-in-up-button">Sign In</button>
-      </formal>
+      </form>
     </div>
   );
 }
