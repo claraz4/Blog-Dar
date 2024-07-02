@@ -3,8 +3,13 @@ import "../styles/write-blog.css";
 import FormParagraph from '../components/FormParagraph';
 import RevealOnScroll from '../components/RevealOnScroll';
 import axios from "axios";
+import { useLocation } from 'react-router-dom';
 
 export default function WriteBlog() {
+    const location = useLocation();
+    const prevBlog = location.state ? location.state.blog : null;
+    console.log(prevBlog)
+
     const [categories, setCategories] = React.useState([]);
     const [categoriesOptions, setCategoriesOptions] = React.useState([]);
     const [formData, setFormData] = React.useState({
@@ -26,9 +31,37 @@ export default function WriteBlog() {
             console.log(error);
         }
     }
+
+    const updateBlog = async () => {
+        try {
+            await axios.patch('/blogs/updateBlog', {
+                ...formData,
+                content
+            });
+        } catch (error) {
+            console.log(error);
+        }
+    }
     
     // Fetch categories
     React.useEffect(() => {
+        if (prevBlog) {
+            setFormData(() => {
+                return { 
+                    title: prevBlog.title, 
+                    category: prevBlog.category 
+                }
+            });
+            setContent(() => prevBlog.content);
+            setParagraphs(() => {
+                const arr = [];
+                for (let i = 0; i < prevBlog.content.length; i+=2) {
+                    arr.push(i);
+                }
+                return arr;
+            })
+        }
+
         // Fetch the categories
         const fetchCategories = async () => {
             try {
@@ -136,7 +169,12 @@ export default function WriteBlog() {
     // Handle the submission of the form
     function handleSubmit(event) {
         event.preventDefault();
-        addBlog();
+
+        if (prevBlog) {
+            updateBlog();
+        } else {
+            addBlog();
+        }
     }
 
     return (
