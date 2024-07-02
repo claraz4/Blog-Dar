@@ -85,7 +85,21 @@ const uploadProfilePic = async (req, res) => {
   }
 };
 
-const getUserInfo = async (req, res) => {};
+const getUserInfo = async (req, res) => {
+  const user_id = req.user._id;
+  try {
+    const user = await User.findById(user_id)
+      .populate("userBlogs")
+      .populate("profilePic");
+
+    if (!user) {
+      return res.status(404).json("User not found");
+    }
+    return res.status(200).json(user);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 
 module.exports = {
   getUserInfo,
