@@ -161,8 +161,8 @@ module.exports = {
   updateInfo,
   loginUser,
   signupUser,
-  uploadPic,
-  getImage,
+  // uploadPic,
+  // getImage,
   //uploadProfilePic,
   //upload: upload.single("profilePic"),
 };

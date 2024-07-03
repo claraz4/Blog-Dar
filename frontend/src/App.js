@@ -35,15 +35,15 @@ export default function App() {
               <Router>
                 <ScrollToTop />
                 <NavBar />
-                <Routes>
-                  <Route exact path="/" element={<Home />} />
-                  <Route exact path="/blog" element={<SingleBlog />} />
-                  <Route exact path="/write" element={<WriteBlog />} />
-                  <Route exact path="/blogs" element={<AllBlogs />} /> 
-                  <Route exact path="/account" element={<Account />} /> 
-                  <Route exact path="/signInUp" element={<SignInUp />} />
-                  <Route exact path="/logout" element={<Logout />} />
-                </Routes>
+                  <Routes>
+                    <Route exact path="/" element={<Home />} />
+                    <Route exact path="/blog" element={<SingleBlog />} />
+                    <Route exact path="/write" element={<WriteBlog />} />
+                    <Route exact path="/blogs" element={<AllBlogs />} /> 
+                    <Route exact path="/account" element={<Account />} /> 
+                    <Route exact path="/signInUp" element={<SignInUp />} />
+                    <Route exact path="/logout" element={<Logout />} />
+                  </Routes>
                 <Footer />
               </Router>
             </LatestBlogsContextProvider>
