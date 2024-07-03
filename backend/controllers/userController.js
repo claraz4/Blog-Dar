@@ -53,15 +53,15 @@ const uploadProfilePic = async (req, res) => {
       return res.status(404).json({ error: "User not found" });
     }
 
-    if (!req.file || !req.file.buffer) {
+    if (!req.body.file || !req.body.file.buffer) {
       return res
         .status(400)
         .json({ error: "No file uploaded or file data missing" });
     }
 
     const newImage = new Img({
-      data: req.file.buffer, // Store file data as Buffer
-      contentType: req.file.mimetype, // MIME type of the file
+      data: req.body.file.buffer, // Store file data as Buffer
+      contentType: req.body.file.mimetype, // MIME type of the file
       uploadedby: user_id,
     });
 

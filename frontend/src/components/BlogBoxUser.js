@@ -1,20 +1,33 @@
 import React from 'react';
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import axios from "axios";
+import useAuthContext from '../hooks/useAuthContext';
+import { LoadingContext } from '../context/LoadingContext';
+import months from "../data/months";
 
-export default function BlogBoxUser() {
-    const blog = {
-        title: "Title",
-        category: "Health",
-        content: ["hi", "hi", "hi", "hi"],
-        date: new Date(Date.now()),
-        id: 1
-    }
+export default function BlogBoxUser({ blog }) {
+    const { user } = useAuthContext();
+    const { dispatch } = React.useContext(LoadingContext);
+    const date = new Date(blog.datePublished);
+
+    const year = date.getFullYear();
+    const month = date.getMonth();
+    const day = date.getDate();
 
     // Delete a blog
     const deleteBlog = async () => {
         try {
-            await axios.delete(`/blogs/deleteBlog/${blog.id}`);
+            dispatch({ type: 'LOAD' });
+            await axios.delete(`/blogs/deleteBlog/${blog._id}`,{
+                headers: {
+                    "Authorization": `Bearer ${user.token}`
+                }
+            });
+            window.location.reload();
+
+            setTimeout(() => {
+                dispatch({ type: 'STOP_LOAD' });
+            }, 300);
         } catch (error) {
             console.log(error);
         }
@@ -22,8 +35,10 @@ export default function BlogBoxUser() {
 
     function handleDelete(event) {
         event.preventDefault();
-        
+        deleteBlog();
     }
+
+    console.log(blog)
 
     return (
         <Link className="blog-box-user--container" state={{ blog }} to="/blog">
@@ -32,8 +47,8 @@ export default function BlogBoxUser() {
             <div className="box-user--info">
                 <div className="box-user-full-title">
                     <div className="box-user-title">
-                        <h1 className="blog-box-title">Title of the blog</h1>
-                        <div className="blog-box-category">Technology</div>
+                        <h1 className="blog-box-title">{blog.title}</h1>
+                        <div className="blog-box-category">{blog.category}</div>
                     </div>
                     <div>
                         <Link to="/write" state={{ blog }}>
@@ -49,12 +64,12 @@ export default function BlogBoxUser() {
                 </div>
 
                 <div className="box-user-date-likes">
-                    <p className="blog-box-date">July 2, 2024</p>
+                    <p className="blog-box-date">{`${months[month]} ${day}, ${year}`}</p>
 
                     <div className="likes--container">
-                        <p>300</p>
+                        <p>{blog.likedby.length}</p>
                         <span className="material-symbols-rounded thumb-up thumb--clicked">thumb_up</span>
-                        <p>100</p>
+                        <p>{blog.dislikedby.length}</p>
                         <span className="material-symbols-rounded thumb-up thumb--clicked">thumb_down</span>
                     </div>
                 </div>

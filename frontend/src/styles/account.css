@@ -18,6 +18,7 @@
     align-self: center;
     margin-bottom: 20px;
     text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
+    cursor: pointer;
 
     font-variation-settings:
         'wght' 200
@@ -153,6 +154,7 @@
     flex-direction: row;
     text-decoration: none;
     color: #333;
+    margin-bottom: 20px;
 }
 
 .blog-box-user--container:hover {
@@ -216,4 +218,14 @@
     color: var(--grey);
     font-size: 0.9rem;
     margin-top: 3px;
+}
+
+.profile-img {
+    width: 192px;
+    height: 192px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 50%;
+    align-self: center;
+    margin-bottom: 20px;
 }
