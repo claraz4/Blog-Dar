@@ -3,10 +3,11 @@ import { LoadingContext } from '../context/LoadingContext';
 import Loader from '../components/Loader';
 import SearchBar from '../components/SearchBar';
 import BlogBoxAll from "../components/BlogBoxAll";
+import { LatestBlogsContext } from '../context/LatestBlogsContext';
 
 export default function AllBlogs() {
     const { isLoading, dispatch } = React.useContext(LoadingContext);
-    const [blogs, setAllBlogs] = React.useState([]);
+    const { latestBlogs, dispatch:blogsDispatch } = React.useContext(LatestBlogsContext);
     const [blogsElement, setBlogsElement] = React.useState([]);
 
     // Fetch latest blogs
@@ -18,7 +19,7 @@ export default function AllBlogs() {
 
             if (res.ok) {
                 // blogsDispatch({ type: 'UPDATE', newBlogs: data });
-                setAllBlogs(data);
+                blogsDispatch({ type: 'SET_BLOGS', blogs: data });
                 dispatch({ type: 'STOP_LOAD' });
             }
         } catch (error) {
@@ -33,10 +34,10 @@ export default function AllBlogs() {
 
     // Create the blogs elements to be rendered
     React.useEffect(() => {
-        setBlogsElement(blogs.map((blog) => {
+        setBlogsElement(latestBlogs.map((blog) => {
             return <BlogBoxAll blog={blog} />
         }))
-    }, [])
+    }, [latestBlogs])
 
     return (
         <div className="all-blogs--container">
@@ -45,6 +46,7 @@ export default function AllBlogs() {
                 {blogsElement}
             </div>
             {isLoading && <Loader />}
+            {blogsElement}
         </div>
     )
 }

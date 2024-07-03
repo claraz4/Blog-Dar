@@ -25,12 +25,7 @@ userRoutes.post("/login", loginUser);
 
 userRoutes.post("/signup", signupUser);
 
-//userRoutes.post("/uploadPic", auth, upload, uploadProfilePic);
-
-// POST route to upload an image
-userRoutes.post("/uploadPic", uploadPic);
-
-// GET route to retrieve all images
-userRoutes.get("/getImage", getImage);
+userRoutes.post("/uploadPic", upload, uploadProfilePic);
+// userRoutes.post("/uploadPic", auth, upload, uploadProfilePic);
 
 module.exports = userRoutes;
