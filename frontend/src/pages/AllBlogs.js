@@ -9,7 +9,10 @@ export default function AllBlogs({ setDisplayFooter }) {
     const { isLoading, dispatch } = React.useContext(LoadingContext);
     const { latestBlogs, dispatch:blogsDispatch } = React.useContext(LatestBlogsContext);
     const [blogsElement, setBlogsElement] = React.useState([]);
-    setDisplayFooter(true);
+    
+    React.useEffect(() => {
+        setDisplayFooter(true);
+    }, [])
 
     // Fetch latest blogs
     const fetchLatest = async () => {

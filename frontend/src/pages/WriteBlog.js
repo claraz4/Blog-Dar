@@ -11,7 +11,10 @@ export default function WriteBlog({ setDisplayFooter}) {
     const location = useLocation();
     const prevBlog = location.state ? location.state.blog : null;
     const { user } = useAuthContext();
-    setDisplayFooter(false);
+    
+    React.useEffect(() => {
+        setDisplayFooter(false);
+    }, [])
 
     const [categories, setCategories] = React.useState([]);
     const [categoriesOptions, setCategoriesOptions] = React.useState([]);

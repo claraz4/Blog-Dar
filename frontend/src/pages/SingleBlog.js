@@ -11,7 +11,9 @@ export default function SingleBlog({ setDisplayFooter }) {
     const month = date.getMonth();
     const day = date.getDate();
 
-    setDisplayFooter(true);
+    React.useEffect(() => {
+        setDisplayFooter(true);
+    }, [])
   
     const [content, setContent] = React.useState([]);
 

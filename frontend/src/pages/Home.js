@@ -10,7 +10,10 @@ export default function Home({ setDisplayFooter }) {
     const { dispatch } = React.useContext(LoadingContext);
     const { latestBlogs, dispatch:latestBlogsDispatch } = React.useContext(LatestBlogsContext);
     const { popularBlogs, dispatch:popularBlogsDispatch } = React.useContext(PopularBlogsContext);
-    setDisplayFooter(true);
+    
+    React.useEffect(() => {
+        setDisplayFooter(true);
+    }, [])
 
     // Fetch latest blogs
     const fetchLatest = async () => {

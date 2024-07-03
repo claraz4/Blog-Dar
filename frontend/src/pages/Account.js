@@ -20,7 +20,9 @@ export default function Account({ setDisplayFooter }) {
     const [error, setError] = React.useState("");
     const [isUpdated, setIsUpdated] = React.useState(false);
 
-    setDisplayFooter(false);
+    React.useEffect(() => {
+        setDisplayFooter(false);
+    }, [])
     
     const [FORM, SETFORM] = React.useState(null);
     // On image click
@@ -184,7 +186,7 @@ export default function Account({ setDisplayFooter }) {
                     :
                     <span className="material-symbols-outlined profile-icon" onClick={handleImageClick}>account_circle</span>
                 }
-                <form enctype="multipart/form-data" name="image">
+                <form encType="multipart/form-data" name="image">
                     <input
                         type="file"
                         ref={fileInputRef}

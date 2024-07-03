@@ -11,7 +11,10 @@ export default function SignInUp({ setDisplayFooter }) {
       return;
     }
   };
-  setDisplayFooter(true);
+  
+  React.useEffect(() => {
+    setDisplayFooter(true);
+}, [])
 
   const isPhone = useMediaQuery('(max-width: 500px');
   const containerClass =
