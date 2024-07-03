@@ -6,10 +6,11 @@ import React from 'react';
 import { LatestBlogsContext } from "../context/LatestBlogsContext";
 import { PopularBlogsContext } from "../context/PopularBlogsContext";
 
-export default function Home() {
+export default function Home({ setDisplayFooter }) {
     const { dispatch } = React.useContext(LoadingContext);
     const { latestBlogs, dispatch:latestBlogsDispatch } = React.useContext(LatestBlogsContext);
     const { popularBlogs, dispatch:popularBlogsDispatch } = React.useContext(PopularBlogsContext);
+    setDisplayFooter(true);
 
     // Fetch latest blogs
     const fetchLatest = async () => {

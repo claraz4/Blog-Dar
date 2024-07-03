@@ -55,21 +55,24 @@ export default function BlogBox({ blog }) {
             <div className="blog-box--info-post blog-box-all--info-post">
                 
                 <div>
-                    <p className="blog-box-category blog-box-all-category">{category}</p>
-                    <h6 className="blog-box-title blog-box-all-title">{title}</h6>
+                    <div style={{ display: "flex", flexDirection: "row", alignItems: "flex-start", justifyContent: "space-between" }}>
+                        <div>
+                            <p className="blog-box-category blog-box-all-category">{category}</p>
+                            <h6 className="blog-box-title blog-box-all-title">{title}</h6>
+                        </div>
+                        <div className="likes--container">
+                            <p>{blog.likedby.length}</p>
+                            <span className={`material-symbols-rounded thumb-up${blog.likedby.includes(user.id) ? " thumb--clicked" : ""}`} onClick={handleLike}>thumb_up</span>
+                            <p>{blog.dislikedby.length}</p>
+                            <span className={`material-symbols-rounded thumb-up${blog.dislikedby.includes(user.id) ? " thumb--clicked" : ""}`} onClick={handleDislike}>thumb_down</span>
+                        </div>
+                    </div>
                 </div>
 
                 <div>
                     <div className="blog-box--info blog-box-all--info">
                         <p className="blog-box-author">{author}</p>
                         <p className="blog-box-date">{`${months[month]} ${day}, ${year}`}</p>
-                    </div>
-
-                    <div className="likes--container">
-                        <p>{blog.likedby.length}</p>
-                        <span className={`material-symbols-rounded thumb-up${blog.likedby.includes(user.id) ? " thumb--clicked" : ""}`} onClick={handleLike}>thumb_up</span>
-                        <p>{blog.dislikedby.length}</p>
-                        <span className={`material-symbols-rounded thumb-up${blog.dislikedby.includes(user.id) ? " thumb--clicked" : ""}`} onClick={handleDislike}>thumb_down</span>
                     </div>
                 </div>
             </div>

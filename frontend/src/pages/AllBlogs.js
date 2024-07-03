@@ -5,10 +5,11 @@ import SearchBar from '../components/SearchBar';
 import BlogBoxAll from "../components/BlogBoxAll";
 import { LatestBlogsContext } from '../context/LatestBlogsContext';
 
-export default function AllBlogs() {
+export default function AllBlogs({ setDisplayFooter }) {
     const { isLoading, dispatch } = React.useContext(LoadingContext);
     const { latestBlogs, dispatch:blogsDispatch } = React.useContext(LatestBlogsContext);
     const [blogsElement, setBlogsElement] = React.useState([]);
+    setDisplayFooter(true);
 
     // Fetch latest blogs
     const fetchLatest = async () => {
@@ -45,8 +46,6 @@ export default function AllBlogs() {
             <div className="all-blogs">
                 {blogsElement}
             </div>
-            {isLoading && <Loader />}
-            {blogsElement}
         </div>
     )
 }

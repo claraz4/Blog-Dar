@@ -28,6 +28,8 @@ import { PopularBlogsContextProvider } from './context/PopularBlogsContext';
 import { UserBlogsContextProvider } from './context/UserBlogsContext';
 
 export default function App() {
+  const [displayFooter, setDisplayFooter] = React.useState(true);
+
   return (
     <div className="App">
       <LoadingContextProvider>
@@ -40,15 +42,15 @@ export default function App() {
                   <ScrollToTop />
                   <NavBar />
                     <Routes>
-                      <Route exact path="/" element={<Home />} />
-                      <Route exact path="/blog" element={<SingleBlog />} />
-                      <Route exact path="/write" element={<WriteBlog />} />
-                      <Route exact path="/blogs" element={<AllBlogs />} /> 
-                      <Route exact path="/account" element={<Account />} /> 
-                      <Route exact path="/signInUp" element={<SignInUp />} />
-                      <Route exact path="/logout" element={<Logout />} />
+                      <Route exact path="/" element={<Home setDisplayFooter={setDisplayFooter} />} />
+                      <Route exact path="/blog" element={<SingleBlog setDisplayFooter={setDisplayFooter} />} />
+                      <Route exact path="/write" element={<WriteBlog setDisplayFooter={setDisplayFooter} />} />
+                      <Route exact path="/blogs" element={<AllBlogs setDisplayFooter={setDisplayFooter} />} /> 
+                      <Route exact path="/account" element={<Account setDisplayFooter={setDisplayFooter} />} /> 
+                      <Route exact path="/signInUp" element={<SignInUp setDisplayFooter={setDisplayFooter} />} />
+                      <Route exact path="/logout" element={<Logout setDisplayFooter={setDisplayFooter} />} />
                     </Routes>
-                  <Footer />
+                  {displayFooter && <Footer />}
                 </Router>
               </UserBlogsContextProvider>
               </PopularBlogsContextProvider>

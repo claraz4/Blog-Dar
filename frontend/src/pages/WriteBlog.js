@@ -7,10 +7,11 @@ import { useLocation } from 'react-router-dom';
 import useAuthContext from '../hooks/useAuthContext';
 import Alert from 'react-bootstrap/Alert';
 
-export default function WriteBlog() {
+export default function WriteBlog({ setDisplayFooter}) {
     const location = useLocation();
     const prevBlog = location.state ? location.state.blog : null;
     const { user } = useAuthContext();
+    setDisplayFooter(false);
 
     const [categories, setCategories] = React.useState([]);
     const [categoriesOptions, setCategoriesOptions] = React.useState([]);

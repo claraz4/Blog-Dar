@@ -6,7 +6,7 @@ import { LoadingContext } from "../context/LoadingContext";
 import { Alert } from "react-bootstrap";
 import { UserBlogsContext } from '../context/UserBlogsContext';
 
-export default function Account() {
+export default function Account({ setDisplayFooter }) {
     const [formData, setFormData] = React.useState(null);
     const [edit, setEdit] = React.useState([false, false]);
     const { user } = useAuthContext();
@@ -19,6 +19,8 @@ export default function Account() {
     const { userBlogs, dispatch:userBlogsDispatch } = React.useContext(UserBlogsContext);
     const [error, setError] = React.useState("");
     const [isUpdated, setIsUpdated] = React.useState(false);
+
+    setDisplayFooter(false);
     
     const [FORM, SETFORM] = React.useState(null);
     // On image click
