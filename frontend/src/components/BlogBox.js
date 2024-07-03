@@ -61,9 +61,9 @@ export default function BlogBox({ blog }) {
                     <p className="blog-box-category">{category}</p>
                     <div className="likes--container">
                         <p>{blog.likedby.length}</p>
-                        <span className={`material-symbols-rounded thumb-up${blog.likedby.includes(user.id) ? " thumb--clicked" : ""}`} onClick={handleLike}>thumb_up</span>
+                        <span className={`material-symbols-rounded thumb-up${user && blog.likedby.includes(user.id) ? " thumb--clicked" : ""}`} onClick={handleLike}>thumb_up</span>
                         <p>{blog.dislikedby.length}</p>
-                        <span className={`material-symbols-rounded thumb-up${blog.dislikedby.includes(user.id) ? " thumb--clicked" : ""}`} onClick={handleDislike}>thumb_down</span>
+                        <span className={`material-symbols-rounded thumb-up${user && blog.dislikedby.includes(user.id) ? " thumb--clicked" : ""}`} onClick={handleDislike}>thumb_down</span>
                     </div>
                 </div>
                 <h6 className="blog-box-title">{title}</h6>

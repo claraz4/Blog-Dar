@@ -1,6 +1,10 @@
+import { Link } from 'react-router-dom';
 import '../styles/footer.css'
+import useAuthContext from '../hooks/useAuthContext';
 
 const Footer = () => {
+  const { user } = useAuthContext();
+
     return (
       <footer className="footerComp">
         <div className="footer-container">
@@ -14,9 +18,9 @@ const Footer = () => {
             <div>
               <p className="footer-section-title">Usefull links</p>
               <ul className="footer-link-list">
-                <li><a href="#Account.js" className="footer-link"><span class="material-symbols-outlined">person</span>Your account</a></li>
-                <li><a href="#" className="footer-link"><span class="material-symbols-outlined">apps</span>All blogs</a></li>
-                <li><a href="#SignInUp.js" className="footer-link"><span class="material-symbols-outlined">login</span>Sign In</a></li>
+                {user && <li><Link to="/account" className="footer-link"><span class="material-symbols-outlined">person</span>Your account</Link></li>}
+                {user && <li><Link to="/blogs" className="footer-link"><span class="material-symbols-outlined">apps</span>All blogs</Link></li>}
+                {!user && <li><Link to="/signInUp" className="footer-link"><span class="material-symbols-outlined">login</span>Sign In</Link></li>}
               </ul>
             </div>
             <div>
