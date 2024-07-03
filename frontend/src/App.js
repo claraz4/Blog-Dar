@@ -24,6 +24,8 @@ import Logout from './pages/Logout';
 import Loader from "./components/Loader";
 import Footer from "./components/footer";
 import { LatestBlogsContextProvider } from './context/LatestBlogsContext';
+import { PopularBlogsContextProvider } from './context/PopularBlogsContext';
+import { UserBlogsContextProvider } from './context/UserBlogsContext';
 
 export default function App() {
   return (
@@ -32,20 +34,24 @@ export default function App() {
         <CategoriesContextProvider>
           <AuthContextProvider>
             <LatestBlogsContextProvider>
-              <Router>
-                <ScrollToTop />
-                <NavBar />
-                  <Routes>
-                    <Route exact path="/" element={<Home />} />
-                    <Route exact path="/blog" element={<SingleBlog />} />
-                    <Route exact path="/write" element={<WriteBlog />} />
-                    <Route exact path="/blogs" element={<AllBlogs />} /> 
-                    <Route exact path="/account" element={<Account />} /> 
-                    <Route exact path="/signInUp" element={<SignInUp />} />
-                    <Route exact path="/logout" element={<Logout />} />
-                  </Routes>
-                <Footer />
-              </Router>
+              <PopularBlogsContextProvider>
+                <UserBlogsContextProvider>
+                <Router>
+                  <ScrollToTop />
+                  <NavBar />
+                    <Routes>
+                      <Route exact path="/" element={<Home />} />
+                      <Route exact path="/blog" element={<SingleBlog />} />
+                      <Route exact path="/write" element={<WriteBlog />} />
+                      <Route exact path="/blogs" element={<AllBlogs />} /> 
+                      <Route exact path="/account" element={<Account />} /> 
+                      <Route exact path="/signInUp" element={<SignInUp />} />
+                      <Route exact path="/logout" element={<Logout />} />
+                    </Routes>
+                  <Footer />
+                </Router>
+              </UserBlogsContextProvider>
+              </PopularBlogsContextProvider>
             </LatestBlogsContextProvider>
             <Loader />
           </AuthContextProvider>

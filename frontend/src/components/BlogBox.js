@@ -4,12 +4,14 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import useAuthContext from '../hooks/useAuthContext';
 import { LatestBlogsContext } from '../context/LatestBlogsContext';
+import { PopularBlogsContext } from '../context/PopularBlogsContext';
 
 export default function BlogBox({ blog }) {
     const { title, author, category, datePublished } = blog;
     const date = new Date(datePublished);
     const { user } = useAuthContext();
-    const { dispatch } = React.useContext(LatestBlogsContext);
+    const { dispatch:latestBlogsDispatch } = React.useContext(LatestBlogsContext);
+    const { dispatch:popularBlogsDispatch } = React.useContext(PopularBlogsContext);
 
     const year = date.getYear() + 1900;
     const month = date.getMonth();
@@ -26,7 +28,8 @@ export default function BlogBox({ blog }) {
                   "Authorization": `Bearer ${user.token}`
                 }
               });
-              dispatch({ type: 'UPDATE_LIKE', blog_id: blog._id, user_id: user.id})
+              latestBlogsDispatch({ type: 'UPDATE_LIKE', blog_id: blog._id, user_id: user.id})
+              popularBlogsDispatch({ type: 'UPDATE_LIKE', blog_id: blog._id, user_id: user.id})
             } catch (error) {
                 console.log(error);
             }
@@ -43,7 +46,8 @@ export default function BlogBox({ blog }) {
                         "Authorization": `Bearer ${user.token}`
                     }
                 });
-                dispatch({ type: 'UPDATE_DISLIKE', blog_id: blog._id, user_id: user.id})
+                latestBlogsDispatch({ type: 'UPDATE_DISLIKE', blog_id: blog._id, user_id: user.id})
+                popularBlogsDispatch({ type: 'UPDATE_DISLIKE', blog_id: blog._id, user_id: user.id})
             } catch (error) {
             console.log(error);
         }

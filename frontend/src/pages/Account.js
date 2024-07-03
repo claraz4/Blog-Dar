@@ -4,6 +4,7 @@ import useAuthContext from '../hooks/useAuthContext';
 import axios from "axios";
 import { LoadingContext } from "../context/LoadingContext";
 import { Alert } from "react-bootstrap";
+import { UserBlogsContext } from '../context/UserBlogsContext';
 
 export default function Account() {
     const [formData, setFormData] = React.useState(null);
@@ -15,6 +16,7 @@ export default function Account() {
     const [fetched, setFetched] = React.useState(false);
     const [blogsElement, setBlogsElement] = React.useState([]);
     const { dispatch } = React.useContext(LoadingContext);
+    const { userBlogs, dispatch:userBlogsDispatch } = React.useContext(UserBlogsContext);
     const [error, setError] = React.useState("");
     const [isUpdated, setIsUpdated] = React.useState(false);
     
@@ -69,7 +71,9 @@ export default function Account() {
             }
         }
         
-        if (user) getInfo();
+        if (user) {
+            getInfo()
+        };
     }, [user])
     
     // Handle form change
@@ -103,7 +107,7 @@ export default function Account() {
     // Create the rendering element for the blogs published by the user
     React.useEffect(() => {
         if (fetched) {
-            setBlogsElement(formData.userBlogs.map((blog) => {
+            setBlogsElement(userBlogs.map((blog) => {
                 return (
                     <BlogBoxUser 
                         blog={blog}
@@ -111,7 +115,13 @@ export default function Account() {
                 )
             }))
         }
-    }, [fetched]);
+    }, [fetched, userBlogs]);
+
+    React.useEffect(() => {
+        if (formData) {
+            userBlogsDispatch({ type: 'SET_BLOGS', blogs: formData.userBlogs});
+        }
+    }, [formData]);
 
     // Upload the image to the database
     const uploadImage = async () => {

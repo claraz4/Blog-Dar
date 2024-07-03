@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const LatestBlogsContext = React.createContext();
+export const PopularBlogsContext = React.createContext();
 
 const reduceBlogs = (state, action) => {
     switch (action.type) {
@@ -50,12 +50,14 @@ const reduceBlogs = (state, action) => {
     }
 }
 
-export const LatestBlogsContextProvider = ({ children }) => {
-    const [latestBlogs, dispatch] = React.useReducer(reduceBlogs, []);
+export const PopularBlogsContextProvider = ({ children }) => {
+    const [popularBlogs, dispatch] = React.useReducer(reduceBlogs, []);
 
     return (
-        <LatestBlogsContext.Provider value={{ latestBlogs, dispatch }}>
+        <PopularBlogsContext.Provider value={{ popularBlogs, dispatch }}>
             { children }
-        </LatestBlogsContext.Provider>
+        </PopularBlogsContext.Provider>
     )
 }
+
+export default { PopularBlogsContext, PopularBlogsContextProvider };

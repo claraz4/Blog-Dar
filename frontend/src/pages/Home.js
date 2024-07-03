@@ -4,15 +4,12 @@ import { LoadingContext } from "../context/LoadingContext";
 // import blogs from "../data/blogs";
 import React from 'react';
 import { LatestBlogsContext } from "../context/LatestBlogsContext";
+import { PopularBlogsContext } from "../context/PopularBlogsContext";
 
 export default function Home() {
     const { dispatch } = React.useContext(LoadingContext);
-    const { latestBlogs:blogs, dispatch:latestBlogsDispatch } = React.useContext(LatestBlogsContext);
-    // const { allBlogs:latestBlogs, dispatch:blogsDispatch } = React.useContext(BlogsContext);
-    const [latestBlogs, setLatestBlogs] = React.useState([]);
-    const [popularBlogs, setPopularBlogs] = React.useState([]);
-
-    console.log(blogs)
+    const { latestBlogs, dispatch:latestBlogsDispatch } = React.useContext(LatestBlogsContext);
+    const { popularBlogs, dispatch:popularBlogsDispatch } = React.useContext(PopularBlogsContext);
 
     // Fetch latest blogs
     const fetchLatest = async () => {
@@ -20,25 +17,26 @@ export default function Home() {
             dispatch({ type: 'LOAD' });
             const res = await fetch('/blogs/');
             const data = await res.json();
-
+            
             if (res.ok) {
-                latestBlogsDispatch({ type: 'SET_LATEST', blogs: data });
-                setLatestBlogs(data);
+                latestBlogsDispatch({ type: 'SET_BLOGS', blogs: data });
                 dispatch({ type: 'STOP_LOAD' });
             }
         } catch (error) {
             console.log(error);
         }
     }
-
+    
     // Fetch popular blogs
     const fetchPopular = async () => {
         try {
+            dispatch({ type: 'LOAD' });
             const res = await fetch('/blogs/popularBlogs');
             const data = await res.json();
 
             if (res.ok) {
-                setPopularBlogs(data);
+                popularBlogsDispatch({ type: 'SET_BLOGS', blogs: data });
+                dispatch({ type: 'STOP_LOAD' });
             }
         } catch (error) {
             console.log(error);
@@ -56,7 +54,7 @@ export default function Home() {
             <RevealOnScroll>
                 <HomeBlogs
                     title="Latest Blogs"
-                    blogs={blogs}
+                    blogs={latestBlogs}
                 />
             </RevealOnScroll>
             
@@ -66,8 +64,6 @@ export default function Home() {
                     blogs={popularBlogs}
                 />
             </RevealOnScroll>
-
-            {/* {isLoading && <Loader />} */}
         </div>
     )
 }
