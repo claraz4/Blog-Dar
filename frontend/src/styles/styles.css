@@ -7,6 +7,8 @@
 
 * {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 /* body {
@@ -25,6 +27,12 @@
   font-weight: bold;
   margin: 0;
   font-size: 1.8rem;
+}
+
+.sign-in-up--big-container {
+  display: flex;
+  height: 100vh;
+  width: 100%;
 }
 
 .sign-in-up-title {
@@ -263,30 +271,31 @@
   margin: 20px 0;
 }
 
-footer {
+/* .footer {
   background-color: #222;
   color: #fff;
-  font-size: 14px;
-  bottom: 0;
-  position: fixed;
+  font-size: 16px;
+  bottom: 0; 
+  position:fixed;
   left: 0;
-  right: 0;
+  right: 0; 
   text-align: center;
   z-index: 999;
+
 }
 
-footer p {
+.footer p {
   margin: 10px 0;
 }
 
-footer i {
+.footer i {
   color: red;
 }
 
-footer a {
+.footer a {
   color: #3c97bf;
   text-decoration: none;
-}
+}  */
 
 
 

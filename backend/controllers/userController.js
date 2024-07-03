@@ -16,7 +16,7 @@ const loginUser = async (req, res) => {
     // create a token
     const token = createToken(user._id);
 
-    res.status(200).json({ email, token });
+    res.status(200).json({ email, token, id: user._id });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -32,7 +32,7 @@ const signupUser = async (req, res) => {
     // create a token
     const token = createToken(user._id);
 
-    res.status(200).json({ email, token });
+    res.status(200).json({ email, token, id: user._id });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -66,6 +66,12 @@ const updateInfo = async (req, res) => {
   const user_id = req.user._id;
 
   try {
+    if (req.body.password !== "") {
+      const salt = await bcrypt.genSalt(10);
+      const hash = await bcrypt.hash(req.body.password, salt);
+      req.body.password = hash;
+    }
+
     const updatedUser = await User.findByIdAndUpdate(user_id, req.body, {
       new: true,
     });

@@ -11,6 +11,8 @@ const {
   createBlog,
   deleteBlog,
   updateBlog,
+  likedBlog,
+  dislikedBlog,
 } = require("../controllers/blogController");
 // 1 point means folder in directory backend
 //2 points means folder is in same folder as backend
@@ -32,6 +34,10 @@ router.get("/category/:category", getBlogByCategory);
 router.get("/title/:title", getBlogByTitle);
 
 router.post("/createBlog", auth, createBlog);
+
+router.post("/like", auth, likedBlog);
+
+router.post("/dislike", auth, dislikedBlog);
 
 router.delete("/deleteBlog/:id", auth, deleteBlog);
 

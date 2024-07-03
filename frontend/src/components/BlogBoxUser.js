@@ -2,12 +2,13 @@ import React from 'react';
 import { Link } from "react-router-dom";
 import axios from "axios";
 import useAuthContext from '../hooks/useAuthContext';
-import { LoadingContext } from '../context/LoadingContext';
 import months from "../data/months";
+import { UserBlogsContext } from '../context/UserBlogsContext';
 
 export default function BlogBoxUser({ blog }) {
     const { user } = useAuthContext();
-    const { dispatch } = React.useContext(LoadingContext);
+    // const { dispatch } = React.useContext(LoadingContext);
+    const { dispatch:userBlogsDispatch } = React.useContext(UserBlogsContext);
     const date = new Date(blog.datePublished);
 
     const year = date.getFullYear();
@@ -17,17 +18,13 @@ export default function BlogBoxUser({ blog }) {
     // Delete a blog
     const deleteBlog = async () => {
         try {
-            dispatch({ type: 'LOAD' });
             await axios.delete(`/blogs/deleteBlog/${blog._id}`,{
                 headers: {
                     "Authorization": `Bearer ${user.token}`
                 }
             });
-            window.location.reload();
-
-            setTimeout(() => {
-                dispatch({ type: 'STOP_LOAD' });
-            }, 300);
+            userBlogsDispatch({ type: 'DELETE_BLOG', id: blog._id })
+            
         } catch (error) {
             console.log(error);
         }
@@ -37,8 +34,6 @@ export default function BlogBoxUser({ blog }) {
         event.preventDefault();
         deleteBlog();
     }
-
-    console.log(blog)
 
     return (
         <Link className="blog-box-user--container" state={{ blog }} to="/blog">

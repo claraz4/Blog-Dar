@@ -221,11 +221,28 @@
 }
 
 .profile-img {
-    width: 192px;
-    height: 192px;
+    width: 155px;
+    min-height: 155px;
+    max-height: 155px;
     background-size: cover;
     background-position: center;
     border-radius: 50%;
     align-self: center;
     margin-bottom: 20px;
+    margin-top: 15px;
+    border: 1px var(--grey) solid;
+}
+
+.profile-pic--container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.account-error {
+    color: rgb(238, 47, 47);
+    margin-top: -5px;
+    font-weight: 500;
 }

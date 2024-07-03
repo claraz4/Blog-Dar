@@ -3,7 +3,7 @@ import SignIn from "../components/SignIn";
 import SignUp from "../components/SignUp";
 import { useMediaQuery } from "@mui/material";
 
-export default function SignInUp() {
+export default function SignInUp({ setDisplayFooter }) {
   const [type, setType] = useState("signIn");
   const handleOnClick = text => {
     if (text !== type) {
@@ -11,6 +11,10 @@ export default function SignInUp() {
       return;
     }
   };
+  
+  React.useEffect(() => {
+    setDisplayFooter(true);
+}, [])
 
   const isPhone = useMediaQuery('(max-width: 500px');
   const containerClass =

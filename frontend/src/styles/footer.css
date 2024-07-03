@@ -1,0 +1,81 @@
+.footerComp {
+    background-color: #333333;
+    color: white;
+    font-family: Arial, sans-serif;
+    width: 100%;
+    margin-top: 150px;
+  }
+  
+  .footer-container {
+    padding: 2rem 1rem;
+    max-width: 80rem;
+    margin: 0 auto;
+  }
+  
+  .footer-grid {
+    display: flex;
+    justify-content: space-between;
+    gap: 5px;
+    flex-wrap: wrap;
+  }
+  
+  .footer-section {
+    width: 100%; 
+    margin-bottom: 1rem;
+  }
+  
+  .footer-text {
+    line-height: 1.8;
+    font-size: 1.125rem;
+    color: white;
+  }
+  
+  .footer-section-title {
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.875rem;
+    letter-spacing: 0.1em;
+    margin-bottom: 1rem;
+    color: white;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+  }
+  
+  .footer-link-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .footer-link {
+    color: white;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  
+  .footer-link:hover,
+  .footer-link:focus {
+    color: #04aa6d;
+  }
+  
+  .footer-divider {
+    margin: 2rem 0;
+    border-top: 1px solid #e2e8f0;
+  }
+  
+  .footer-bottom-text,
+  .footer-copyright {
+    color: white;
+    font-size: 0.875rem;
+    text-align: center;
+  }
+  
+  .footer-copyright {
+    margin-top: 1rem;
+  }
+  
+  .material-symbols-outlined {
+    display: inline-block; 
+    vertical-align: middle; 
+    margin-right: 5px; 
+  }
+  

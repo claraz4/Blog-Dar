@@ -175,19 +175,20 @@ const likedBlog = async (req, res) => {
     }
 
     // Check if the user has already liked the blog
-    const index = blog.likedby.indexOf(user_id);
+    const index = Blog.likedby.indexOf(user_id);
+
     if (index !== -1) {
       // User already liked the blog, so remove the user ID from the likedBy array
-      blog.likedby.pull(user_id);
-      await blog.save();
+      Blog.likedby.pull(user_id);
+      await Blog.save();
       return res
         .status(200)
         .json({ message: "Blog unliked successfully", blog });
     }
 
     // User has not liked the blog yet, so add the user ID to the likedBy array
-    blog.likedby.push(user_id);
-    await blog.save();
+    Blog.likedby.push(user_id);
+    await Blog.save();
 
     return res.status(200).json({ message: "Blog liked successfully", blog });
   } catch (error) {
@@ -208,19 +209,19 @@ const dislikedBlog = async (req, res) => {
     }
 
     // Check if the user has already liked the blog
-    const index = blog.dislikedby.indexOf(user_id);
+    const index = Blog.dislikedby.indexOf(user_id);
     if (index !== -1) {
       // User already disliked the blog, so remove the user ID from the likedBy array
-      blog.dislikedby.pull(user_id);
-      await blog.save();
+      Blog.dislikedby.pull(user_id);
+      await Blog.save();
       return res
         .status(200)
         .json({ message: "Blog undisliked successfully", blog });
     }
 
     // User has not liked the blog yet, so add the user ID to the likedBy array
-    blog.dislikedby.push(user_id);
-    await blog.save();
+    Blog.dislikedby.push(user_id);
+    await Blog.save();
 
     return res
       .status(200)
