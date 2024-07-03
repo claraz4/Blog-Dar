@@ -9,7 +9,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   font-size: 16px;
   box-sizing: border-box;
-  width: 98vw;
+  width: 100%;
 }
 
 :root {
@@ -21,7 +21,6 @@ body {
 
 .App {
   margin: auto;
-  margin-bottom: 100px;
 }
 
 .green-button {

@@ -15,12 +15,14 @@ import './styles/single-blog.css';
 import './styles/all-blogs.css';
 import './styles/account.css';
 import './styles/styles.css'; 
+import './styles/footer.css';
 import { LoadingContextProvider } from './context/LoadingContext';
 import { CategoriesContextProvider } from './context/CategoriesContext';
 import Account from './pages/Account';
 import { AuthContextProvider } from './context/AuthContext';
 import Logout from './pages/Logout';
 import Loader from "./components/Loader";
+import Footer from "./components/footer";
 
 export default function App() {
   return (
@@ -40,11 +42,14 @@ export default function App() {
                 <Route exact path="/signInUp" element={<SignInUp />} />
                 <Route exact path="/logout" element={<Logout />} />
               </Routes>
+              <Footer />
             </Router>
             <Loader />
           </AuthContextProvider>
         </CategoriesContextProvider>
       </LoadingContextProvider>
     </div>
+
+    
   );
 }
