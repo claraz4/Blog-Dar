@@ -2,8 +2,6 @@ const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
-const { User } = require("./userModel");
-
 const blogSchema = new Schema(
   {
     title: {
@@ -23,8 +21,8 @@ const blogSchema = new Schema(
       required: true,
     },
     img: {
-      data: Buffer,
-      contentType: String,
+      type: Schema.Types.ObjectId,
+      ref: "Img",
     },
     likedby: [
       {

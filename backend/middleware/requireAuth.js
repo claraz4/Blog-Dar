@@ -17,8 +17,6 @@ const requireAuth = async (req, res, next) => {
 
     req.user = await user.findOne({ _id }).select("_id");
 
-    console.log(req.user);
-
     next();
   } catch (error) {
     console.log(error);

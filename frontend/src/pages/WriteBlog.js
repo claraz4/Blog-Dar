@@ -3,8 +3,15 @@ import "../styles/write-blog.css";
 import FormParagraph from '../components/FormParagraph';
 import RevealOnScroll from '../components/RevealOnScroll';
 import axios from "axios";
+import { useLocation } from 'react-router-dom';
+import useAuthContext from '../hooks/useAuthContext';
+import Alert from 'react-bootstrap/Alert';
 
 export default function WriteBlog() {
+    const location = useLocation();
+    const prevBlog = location.state ? location.state.blog : null;
+    const { user } = useAuthContext();
+
     const [categories, setCategories] = React.useState([]);
     const [categoriesOptions, setCategoriesOptions] = React.useState([]);
     const [formData, setFormData] = React.useState({
@@ -14,11 +21,41 @@ export default function WriteBlog() {
     const [content, setContent] = React.useState(["", ""]);
     const [paragraphs, setParagraphs] = React.useState([0]);
     const [paragraphsElement, setParagraphsElement] = React.useState([]);
+    const [isUploaded, setIsUploaded] = React.useState(false);
 
     // Post a blog
     const addBlog = async () => {
         try {
             await axios.post('/blogs/createBlog', {
+                ...formData,
+                content
+            }, {
+                headers: {
+                    "Authorization": `Bearer ${user.token}`
+                }
+            });
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            setIsUploaded(true);
+
+            setFormData({
+                "title": "",
+                "category": ""
+            });
+            setContent(["", ""]);
+            setParagraphs([0]);
+
+            setTimeout(() => {
+                setIsUploaded(false);
+            }, 2000);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const updateBlog = async () => {
+        try {
+            await axios.patch('/blogs/updateBlog', {
                 ...formData,
                 content
             });
@@ -29,6 +66,23 @@ export default function WriteBlog() {
     
     // Fetch categories
     React.useEffect(() => {
+        if (prevBlog) {
+            setFormData(() => {
+                return { 
+                    title: prevBlog.title, 
+                    category: prevBlog.category 
+                }
+            });
+            setContent(() => prevBlog.content);
+            setParagraphs(() => {
+                const arr = [];
+                for (let i = 0; i < prevBlog.content.length; i+=2) {
+                    arr.push(i);
+                }
+                return arr;
+            })
+        }
+
         // Fetch the categories
         const fetchCategories = async () => {
             try {
@@ -136,12 +190,20 @@ export default function WriteBlog() {
     // Handle the submission of the form
     function handleSubmit(event) {
         event.preventDefault();
-        addBlog();
+
+        if (prevBlog) {
+            updateBlog();
+        } else {
+            addBlog();
+        }
     }
 
     return (
         <RevealOnScroll>
             <form className="form--container">
+                {isUploaded && <Alert key="success" variant="success">
+                    Blog added successfully!
+                </Alert>}
                 <div className="form--subcontainer">
                     <label htmlFor="title">Blog Title</label>
                     <input type="text" placeholder="Title" name="title" value={formData.title} onChange={handleChange} />

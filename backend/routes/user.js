@@ -4,35 +4,33 @@ const auth = require("../middleware/requireAuth");
 
 const userRoutes = express.Router();
 
-const multer = require("multer");
+const img = require("../models/imgModel");
 
 const {
+  getUserInfo,
+  updateInfo,
   loginUser,
   signupUser,
-  uploadProfilePic,
+  uploadPic,
+  getImage,
+  //uploadProfilePic,
+  //upload,
 } = require("../controllers/userController");
 
-//Multer setup for file upload
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "uploads");
-  },
-  filename: (req, file, cb) => {
-    cb(null, file.fieldname + "-" + Date.now());
-  },
-});
+userRoutes.get("/info", auth, getUserInfo);
 
-const upload = multer({ storage });
-
-// Route for uploading profile picture
-userRoutes.post(
-  "/users/:userId/upload-picture",
-  upload.single("profilePic"),
-  uploadProfilePic
-);
+userRoutes.patch("/updateInfo", auth, updateInfo);
 
 userRoutes.post("/login", loginUser);
 
 userRoutes.post("/signup", signupUser);
+
+//userRoutes.post("/uploadPic", auth, upload, uploadProfilePic);
+
+// POST route to upload an image
+userRoutes.post("/uploadPic", uploadPic);
+
+// GET route to retrieve all images
+userRoutes.get("/getImage", getImage);
 
 module.exports = userRoutes;

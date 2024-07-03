@@ -1,9 +1,15 @@
 .account--container {
-    margin-top: 80px;
+    /* margin-top: 112px; */
     display: flex;
     flex-direction: row;
     align-items: center;
-    width: 98vw;
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+}
+
+.profile-blogs--container .acount-settings--title {
+    margin-bottom: 30px;
 }
 
 .profile-icon {
@@ -12,6 +18,7 @@
     align-self: center;
     margin-bottom: 20px;
     text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
+    cursor: pointer;
 
     font-variation-settings:
         'wght' 200
@@ -49,8 +56,12 @@
 }
 
 .profile-blogs--container {
-    flex-grow: 1;
-    padding: 20px;
+    padding: 30px 50px;
+    width: 65%;
+    height: 100%;
+    position: absolute;
+    right: 0;
+    top: 80px;
 }
 
 .section-subtitle--account {
@@ -76,7 +87,8 @@
     cursor: pointer;
 }
 
-.edit-icon:hover {
+.edit-icon:hover,
+.bin-icon:hover {
     color: rgb(23, 98, 44);
 }
 
@@ -129,4 +141,91 @@
 
 .cancel-settings:hover {
     background-color: rgba(116, 116, 116, 0.1)
+}
+
+.blog-box-user--container {
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
+    height: 200px;
+    width: 100%;
+    padding: 20px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: row;
+    text-decoration: none;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.blog-box-user--container:hover {
+    background-color: rgba(0, 0, 0, 0.03);
+}
+
+.img-container--box-user {
+    height: 100%;
+    width: 55%;
+    background-color: var(--green);
+    border-radius: 5px;
+}
+
+.bin-icon {
+    color: var(--green);
+    font-size: 1.7rem;
+    margin-left: 9px;
+}
+
+.box-user-full-title {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.box-user-full-title .blog-box-title {
+    margin-bottom: 5px;
+}
+
+.box-user--info {
+    width: 100%;
+    padding: 15px 0 10px 20px;
+}
+
+.box-user--info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.box-user-date-likes {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.box-user-date-likes .blog-box-date {
+    margin: 0;
+}
+
+.box-user-date-likes .likes--container {
+    width: fit-content;
+    justify-content: center;
+}
+
+.likes--container p {
+    margin: 0 4px 0 6px;
+    color: var(--grey);
+    font-size: 0.9rem;
+    margin-top: 3px;
+}
+
+.profile-img {
+    width: 192px;
+    height: 192px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 50%;
+    align-self: center;
+    margin-bottom: 20px;
 }
