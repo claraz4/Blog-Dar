@@ -3,13 +3,16 @@ import RevealOnScroll from "../components/RevealOnScroll";
 import { LoadingContext } from "../context/LoadingContext";
 // import blogs from "../data/blogs";
 import React from 'react';
-import Loader from "../components/Loader";
+import { LatestBlogsContext } from "../context/LatestBlogsContext";
 
 export default function Home() {
     const { dispatch } = React.useContext(LoadingContext);
+    const { latestBlogs:blogs, dispatch:latestBlogsDispatch } = React.useContext(LatestBlogsContext);
     // const { allBlogs:latestBlogs, dispatch:blogsDispatch } = React.useContext(BlogsContext);
     const [latestBlogs, setLatestBlogs] = React.useState([]);
     const [popularBlogs, setPopularBlogs] = React.useState([]);
+
+    console.log(blogs)
 
     // Fetch latest blogs
     const fetchLatest = async () => {
@@ -19,7 +22,7 @@ export default function Home() {
             const data = await res.json();
 
             if (res.ok) {
-                // blogsDispatch({ type: 'UPDATE', newBlogs: data });
+                latestBlogsDispatch({ type: 'SET_LATEST', blogs: data });
                 setLatestBlogs(data);
                 dispatch({ type: 'STOP_LOAD' });
             }
@@ -53,7 +56,7 @@ export default function Home() {
             <RevealOnScroll>
                 <HomeBlogs
                     title="Latest Blogs"
-                    blogs={latestBlogs}
+                    blogs={blogs}
                 />
             </RevealOnScroll>
             

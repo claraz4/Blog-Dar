@@ -21,6 +21,7 @@ import Account from './pages/Account';
 import { AuthContextProvider } from './context/AuthContext';
 import Logout from './pages/Logout';
 import Loader from "./components/Loader";
+import { LatestBlogsContextProvider } from './context/LatestBlogsContext';
 
 export default function App() {
   return (
@@ -28,19 +29,21 @@ export default function App() {
       <LoadingContextProvider>
         <CategoriesContextProvider>
           <AuthContextProvider>
-            <Router>
-              <ScrollToTop />
-              <NavBar />
-              <Routes>
-                <Route exact path="/" element={<Home />} />
-                <Route exact path="/blog" element={<SingleBlog />} />
-                <Route exact path="/write" element={<WriteBlog />} />
-                <Route exact path="/blogs" element={<AllBlogs />} /> 
-                <Route exact path="/account" element={<Account />} /> 
-                <Route exact path="/signInUp" element={<SignInUp />} />
-                <Route exact path="/logout" element={<Logout />} />
-              </Routes>
-            </Router>
+            <LatestBlogsContextProvider>
+              <Router>
+                <ScrollToTop />
+                <NavBar />
+                <Routes>
+                  <Route exact path="/" element={<Home />} />
+                  <Route exact path="/blog" element={<SingleBlog />} />
+                  <Route exact path="/write" element={<WriteBlog />} />
+                  <Route exact path="/blogs" element={<AllBlogs />} /> 
+                  <Route exact path="/account" element={<Account />} /> 
+                  <Route exact path="/signInUp" element={<SignInUp />} />
+                  <Route exact path="/logout" element={<Logout />} />
+                </Routes>
+              </Router>
+            </LatestBlogsContextProvider>
             <Loader />
           </AuthContextProvider>
         </CategoriesContextProvider>

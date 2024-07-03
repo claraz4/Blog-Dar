@@ -5,6 +5,7 @@ const jwt = require("jsonwebtoken");
 const multer = require("multer");
 
 const Img = require("../models/imgModel");
+const bcrypt = require("bcrypt")
 
 const upload = multer({});
 
@@ -22,7 +23,7 @@ const loginUser = async (req, res) => {
     // create a token
     const token = createToken(user._id);
 
-    res.status(200).json({ email, token });
+    res.status(200).json({ email, token, id: user._id });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -38,20 +39,20 @@ const signupUser = async (req, res) => {
     // create a token
     const token = createToken(user._id);
 
-    res.status(200).json({ email, token });
+    res.status(200).json({ email, token, id: user._id });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 };
 
 const uploadProfilePic = async (req, res) => {
-  const user_id = req.user._id;
+  // const user_id = req.user._id;
 
-  try {
-    const user = await User.findById(user_id);
-    if (!user) {
-      return res.status(404).json({ error: "User not found" });
-    }
+  // try {
+  //   const user = await User.findById(user_id);
+  //   if (!user) {
+  //     return res.status(404).json({ error: "User not found" });
+  //   }
 
     if (!req.body.file || !req.body.file.buffer) {
       return res
@@ -74,10 +75,10 @@ const uploadProfilePic = async (req, res) => {
 
     // Respond with success message
     res.status(200).json({ message: "Profile picture uploaded successfully" });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Server error" });
-  }
+  // } catch (err) {
+  //   console.error(err);
+  //   res.status(500).json({ error: "Server error" });
+  // }
 };
 
 const getUserInfo = async (req, res) => {
@@ -100,6 +101,12 @@ const updateInfo = async (req, res) => {
   const user_id = req.user._id;
 
   try {
+    if (req.body.password !== "") {
+      const salt = await bcrypt.genSalt(10);
+      const hash = await bcrypt.hash(req.body.password, salt);
+      req.body.password = hash;
+    }
+
     const updatedUser = await User.findByIdAndUpdate(user_id, req.body, {
       new: true,
     });

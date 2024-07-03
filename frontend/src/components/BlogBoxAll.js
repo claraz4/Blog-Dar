@@ -1,14 +1,53 @@
 import React from 'react';
 import months from '../data/months';
 import { Link } from "react-router-dom";
+import axios from "axios";
+import useAuthContext from '../hooks/useAuthContext';
+import { LatestBlogsContext } from '../context/LatestBlogsContext';
 
 export default function BlogBox({ blog }) {
     const { title, author, category, datePublished } = blog;
+    const { user } = useAuthContext();
+    const { dispatch } = React.useContext(LatestBlogsContext);
     const date = new Date(datePublished);
 
     const year = date.getYear() + 1900;
     const month = date.getMonth();
     const day = date.getDate();
+
+    async function handleLike(event) {
+        event.preventDefault();
+
+        try {
+            await axios.post('/blogs/like', {
+                _id: blog._id
+              }, {
+                headers: {
+                  "Authorization": `Bearer ${user.token}`
+                }
+              });
+              dispatch({ type: 'UPDATE_LIKE', blog_id: blog._id, user_id: user.id})
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        
+        async function handleDislike(event) {
+            event.preventDefault();
+            
+            try {
+                await axios.post('/blogs/dislike', {
+                    _id: blog._id
+                }, {
+                    headers: {
+                        "Authorization": `Bearer ${user.token}`
+                    }
+                });
+                dispatch({ type: 'UPDATE_DISLIKE', blog_id: blog._id, user_id: user.id})
+            } catch (error) {
+            console.log(error);
+        }
+    }
   
     return (
         <Link className="blog-box--container blog-box-all--container" state={{ blog }} to="/blog">
@@ -26,9 +65,11 @@ export default function BlogBox({ blog }) {
                         <p className="blog-box-date">{`${months[month]} ${day}, ${year}`}</p>
                     </div>
 
-                    <div className="likes--container likes-all--container">
-                        <span className="material-symbols-rounded thumb-up">thumb_up</span>
-                        <span className="material-symbols-rounded thumb-up">thumb_down</span>
+                    <div className="likes--container">
+                        <p>{blog.likedby.length}</p>
+                        <span className={`material-symbols-rounded thumb-up${blog.likedby.includes(user.id) ? " thumb--clicked" : ""}`} onClick={handleLike}>thumb_up</span>
+                        <p>{blog.dislikedby.length}</p>
+                        <span className={`material-symbols-rounded thumb-up${blog.dislikedby.includes(user.id) ? " thumb--clicked" : ""}`} onClick={handleDislike}>thumb_down</span>
                     </div>
                 </div>
             </div>

@@ -9,14 +9,16 @@ export default function Account() {
     const [formData, setFormData] = React.useState(null);
     const [edit, setEdit] = React.useState([false, false]);
     const { user } = useAuthContext();
-    const [selectedFile, setSelectedFile] = React.useState("");
     const fileInputRef = React.useRef(null);
-    const [imageSrc, setImageSrc] = React.useState('');
-    const [password, setPassword] = React.useState("");
+    const profileRef = React.useRef(null);
+    const [imageSrc, setImageSrc] = React.useState("");
     const [fetched, setFetched] = React.useState(false);
     const [blogsElement, setBlogsElement] = React.useState([]);
     const { dispatch } = React.useContext(LoadingContext);
-
+    const [error, setError] = React.useState("");
+    const [isUpdated, setIsUpdated] = React.useState(false);
+    
+    const [FORM, SETFORM] = React.useState(null);
     // On image click
     const handleImageClick = () => {
         fileInputRef.current.click();
@@ -28,12 +30,20 @@ export default function Account() {
         if (file) {
             const reader = new FileReader();
             
-            reader.onload = (e) => {
-                setImageSrc(e.target.result);
-            };
             reader.readAsDataURL(file);
+            reader.onload = (e) => {
+                console.log(e.target)
+                setImageSrc(e.target.result);
+                SETFORM({ 'file': e.target.result })
+            };
         }
     };
+
+    React.useEffect(() => {
+        if (FORM){
+            uploadImage();
+        }
+    }, [FORM])
 
     // Get the user info
     React.useEffect(() => {
@@ -46,7 +56,14 @@ export default function Account() {
                     }
                 });
                 const json = await response.json();
-                setFormData({ ...json, confirmPassword: "" });
+                setFormData({ ...json });
+                setFormData(prev => {
+                    return {
+                        ...prev,
+                        password: "",
+                        confirmPassword: ""
+                    }
+                })
             } catch (error) {
                 console.log(error);
             }
@@ -57,6 +74,7 @@ export default function Account() {
     
     // Handle form change
     function handleChange(event) {
+        setError("");
         setFormData((prev) => {
             return {
                 ...prev,
@@ -76,21 +94,11 @@ export default function Account() {
     
     // Store the password and clear it from the form
     React.useEffect(() => {
-        if (fetched && formData.password === "") {
-            setPassword(formData.password);
-            setFormData(prev => {
-                return {
-                    ...prev,
-                    password: ""
-                }
-            })
-        }
-        
         if (!fetched && formData) {
             dispatch({ type: 'STOP_LOAD' });
             setFetched(true);
         };
-    }, [formData])
+    }, [formData, fetched])
 
     // Create the rendering element for the blogs published by the user
     React.useEffect(() => {
@@ -105,32 +113,43 @@ export default function Account() {
         }
     }, [fetched]);
 
-    // function handleImage(event) {
-    //     const file = event.target.files[0];
-    //     setSelectedFile(file);
-    //     console.log(file)
-
-    //     // const reader = new FileReader();
-    //     // reader.onloadend = () => {
-    //     //     const base64String = reader.result.split(',')[1]; 
-    //     //     uploadImage(base64String);
-    //     // };
-    //     // reader.readAsDataURL(file);
-    // }
-
+    // Upload the image to the database
     const uploadImage = async () => {
         try {
-            const response = await axios.post('/user/uploadPic', 
-                {
-                    file: selectedFile
-                },
+            await axios.post('/user/uploadPic',
+                FORM,
                 {
                     headers: {
-                        "Authorization": `Bearer ${user.token}`,
-                        "Content-Type": "application/json"
+                        "Content-Type": "multipart/form-data",
+                        "Authorization": `Bearer ${user.token}`
                     }
                 }
             );
+
+            setIsUpdated(true);
+            
+            setTimeout(() => setIsUpdated(false), 2000);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    // Update the user info
+    const updateInfo = async () => {
+        // Check that the passwords are equal
+        if (formData.password !== formData.confirmPassword) setError("The passwords don't match!")
+
+        try {
+            await axios.patch('/user/updateInfo', formData, {
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${user.token}`
+                }
+            })
+
+            setIsUpdated(true);
+            profileRef.current.scrollTop = 0;
+            setTimeout(() => setIsUpdated(false), 2000);
         } catch (error) {
             console.log(error);
         }
@@ -138,17 +157,22 @@ export default function Account() {
 
     return (
         fetched && <div className="account--container">
-            <div className="profile--container">
+            <div className="profile--container" ref={profileRef}>
 
+                {isUpdated && <Alert key="success" variant="success">
+                    Blog added successfully!
+                </Alert>}
                 <h3 className="acount-settings--title">Profile Settings</h3>
 
                 {imageSrc !== "" ?
-                    <div style={{ backgroundImage: `url(${imageSrc})` }} className="profile-img"></div>
-                    // <img src={imageSrc} width="192px" height="192px" style={{ "border-radius": "50%" }}></img>
+                    <div className="profile-pic--container">
+                        <div style={{ backgroundImage: `url(${imageSrc})` }} className="profile-img" onClick={handleImageClick}></div>
+                        <button className="green-button save-settings">Save</button>
+                    </div>
                     :
                     <span className="material-symbols-outlined profile-icon" onClick={handleImageClick}>account_circle</span>
                 }
-                <form>
+                <form enctype="multipart/form-data" name="image">
                     <input
                         type="file"
                         ref={fileInputRef}
@@ -161,7 +185,7 @@ export default function Account() {
                         <h4 className="section-subtitle">Name</h4>
                         {edit[0] ? 
                             <div>
-                                <button className="green-button save-settings">Save</button>
+                                <button className="green-button save-settings" onClick={updateInfo}>Save</button>
                                 <button className="green-button cancel-settings" onClick={() => handleEdit(0)}>Cancel</button>
                             </div>
                             : 
@@ -195,7 +219,7 @@ export default function Account() {
                         <h4 className="section-subtitle">Password</h4>
                         {edit[1] ? 
                             <div>
-                                <button className="green-button save-settings">Save</button>
+                                <button className="green-button save-settings" onClick={updateInfo}>Save</button>
                                 <button className="green-button cancel-settings" onClick={() => handleEdit(1)}>Cancel</button>
                             </div>
                             : 
@@ -215,8 +239,10 @@ export default function Account() {
 
                     {edit[1] && <div className="subsection-account">
                         <label htmlFor="confirmPass" className="label-account">Confirm Password:</label>
-                        <input type="password" placeholder="Confirm" name="confirmPass" className="account-input" value={formData.confirmPassword} onChange={handleChange} />
+                        <input type="password" placeholder="Confirm" name="confirmPassword" className="account-input" value={formData.confirmPassword} onChange={handleChange} />
                     </div>}
+
+                    {edit[1] && error !== "" && <p className="account-error">{error}</p>}
                 </div>
             </div>
 
