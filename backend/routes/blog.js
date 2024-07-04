@@ -5,8 +5,9 @@ const auth = require("../middleware/requireAuth");
 const {
   getBlogs,
   getUserBlogs,
-  getBlogByCategory,
-  getBlogByTitle,
+  //getBlogByCategory,
+  //getBlogByTitle,
+  getBlogsByFilter,
   getPopularBlogs,
   createBlog,
   deleteBlog,
@@ -30,9 +31,11 @@ router.get("/popularBlogs", getPopularBlogs);
 
 router.get("/userBlogs", auth, getUserBlogs);
 
-router.get("/category/:category", getBlogByCategory);
+//router.get("/category/:category", getBlogByCategory);
 
-router.get("/title/:title", getBlogByTitle);
+//router.get("/title/:title", getBlogByTitle);
+
+router.get("/filtered", getBlogsByFilter);
 
 router.get("/:title/:category", getBlogByTitleAndCategory);
 
