@@ -7,10 +7,14 @@ import { useLocation } from 'react-router-dom';
 import useAuthContext from '../hooks/useAuthContext';
 import Alert from 'react-bootstrap/Alert';
 
-export default function WriteBlog() {
+export default function WriteBlog({ setDisplayFooter}) {
     const location = useLocation();
     const prevBlog = location.state ? location.state.blog : null;
     const { user } = useAuthContext();
+    
+    React.useEffect(() => {
+        setDisplayFooter(false);
+    }, [])
 
     const [categories, setCategories] = React.useState([]);
     const [categoriesOptions, setCategoriesOptions] = React.useState([]);
@@ -53,12 +57,20 @@ export default function WriteBlog() {
         }
     }
 
+
+    // Update a blog
     const updateBlog = async () => {
         try {
-            await axios.patch('/blogs/updateBlog', {
+            await axios.patch(`/blogs/updateBlog/${prevBlog._id}`, {
                 ...formData,
                 content
+            }, {
+                headers: {
+                    "Authorization": `Bearer ${user.token}`
+                }
             });
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            setIsUploaded(true);
         } catch (error) {
             console.log(error);
         }

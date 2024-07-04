@@ -1,25 +1,17 @@
 const mongoose = require("mongoose");
 
-const schema = mongoose.Schema;
+const Schema = mongoose.Schema;
 
-const imgSchema = new mongoose.Schema(
-  {
-    image: String,
-    // data: {
-    //   type: Buffer, // Store file data as Buffer
-    //   required: true,
-    // },
-    // contentType: {
-    //   type: String, // MIME type of the file (e.g., 'image/jpeg', 'image/png')
-    //   required: true,
-    // },
-    // uploadedby: {
-    //   type: mongoose.Schema.Types.ObjectId,
-    //   ref: "User",
-    //   required: true,
-    // },
+const imgSchema = new Schema({
+  image: {
+    type: String,
+    required: true,
   },
-  { timestamps: true }
-);
+  uploadedBy: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+  },
+});
 
 module.exports = mongoose.model("Img", imgSchema);

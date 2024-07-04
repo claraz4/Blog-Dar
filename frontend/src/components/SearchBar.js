@@ -1,10 +1,36 @@
 import React from 'react';
 import categories from '../data/categories';
+import { LatestBlogsContext } from '../context/LatestBlogsContext';
+import { LoadingContext } from '../context/LoadingContext';
+import axios from "axios";
 
 export default function SearchBar() {
     const [search, setSearch] = React.useState("");
+    const [category, setCategory] = React.useState("");
     const [isArrowCliked, setIsArrowClicked] = React.useState(false);
     const [categoriesOptions, setCategoriesOptions] = React.useState([]);
+    const { dispatch:blogsDispatch } = React.useContext(LatestBlogsContext);
+    const { dispatch } = React.useContext(LoadingContext);
+
+    // Change the blogs array
+    const fetchLatest = async () => {
+        try {
+            const response = await axios.get('/blogs/filtered', {
+                params: {
+                  category: category,
+                  title: search
+                }
+              });
+
+            blogsDispatch({ type: 'SET_BLOGS', blogs: response.data });
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    React.useEffect(() => {
+        fetchLatest();
+    }, [category, search])
 
     // Create the categories options
     React.useEffect(() => {
@@ -14,6 +40,11 @@ export default function SearchBar() {
     // Handle the search
     function handleSearch(event) {
         setSearch(event.target.value);
+    }
+
+    // Handle the category
+    function handleCategory(event) {
+        setCategory(event.target.value);
     }
 
     // To switch between the down and up arrow
@@ -35,8 +66,8 @@ export default function SearchBar() {
             </div>
 
             <div className="category-filter--container">
-                <select className="category-filtering" onClick={handleSelect}>
-                    <option>All Categories</option>
+                <select className="category-filtering" onClick={handleSelect} onChange={handleCategory}>
+                    <option value="">All Categories</option>
                     {categoriesOptions}
                 </select>
                 {!isArrowCliked ?

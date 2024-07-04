@@ -1,15 +1,18 @@
 import HomeBlogs from "../components/HomeBlogs";
 import RevealOnScroll from "../components/RevealOnScroll";
 import { LoadingContext } from "../context/LoadingContext";
-// import blogs from "../data/blogs";
 import React from 'react';
-import Loader from "../components/Loader";
+import { LatestBlogsContext } from "../context/LatestBlogsContext";
+import { PopularBlogsContext } from "../context/PopularBlogsContext";
 
-export default function Home() {
+export default function Home({ setDisplayFooter }) {
     const { dispatch } = React.useContext(LoadingContext);
-    // const { allBlogs:latestBlogs, dispatch:blogsDispatch } = React.useContext(BlogsContext);
-    const [latestBlogs, setLatestBlogs] = React.useState([]);
-    const [popularBlogs, setPopularBlogs] = React.useState([]);
+    const { latestBlogs, dispatch:latestBlogsDispatch } = React.useContext(LatestBlogsContext);
+    const { popularBlogs, dispatch:popularBlogsDispatch } = React.useContext(PopularBlogsContext);
+    
+    React.useEffect(() => {
+        setDisplayFooter(true);
+    }, [])
 
     // Fetch latest blogs
     const fetchLatest = async () => {
@@ -17,25 +20,27 @@ export default function Home() {
             dispatch({ type: 'LOAD' });
             const res = await fetch('/blogs/');
             const data = await res.json();
-
+            console.log(data)
+            
             if (res.ok) {
-                // blogsDispatch({ type: 'UPDATE', newBlogs: data });
-                setLatestBlogs(data);
+                latestBlogsDispatch({ type: 'SET_BLOGS', blogs: data });
                 dispatch({ type: 'STOP_LOAD' });
             }
         } catch (error) {
             console.log(error);
         }
     }
-
+    
     // Fetch popular blogs
     const fetchPopular = async () => {
         try {
+            dispatch({ type: 'LOAD' });
             const res = await fetch('/blogs/popularBlogs');
             const data = await res.json();
 
             if (res.ok) {
-                setPopularBlogs(data);
+                popularBlogsDispatch({ type: 'SET_BLOGS', blogs: data });
+                dispatch({ type: 'STOP_LOAD' });
             }
         } catch (error) {
             console.log(error);
@@ -63,8 +68,6 @@ export default function Home() {
                     blogs={popularBlogs}
                 />
             </RevealOnScroll>
-
-            {/* {isLoading && <Loader />} */}
         </div>
     )
 }

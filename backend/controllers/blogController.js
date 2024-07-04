@@ -4,6 +4,8 @@ const blog = require("../models/blogModel");
 
 const User = require("../models/userModel");
 
+const Img = require("../models/imgModel");
+
 const additionalFields = {
   $addFields: {
     likedByCount: { $size: { $ifNull: ["$likedby", []] } },
@@ -75,33 +77,60 @@ const getPopularBlogs = async (req, res) => {
   }
 };
 
-const getBlogByCategory = async (req, res) => {
-  const { category } = req.params;
+// const getBlogByCategory = async (req, res) => {
+//   const { category } = req.params;
 
-  const Blog = await blog.find({ category: category });
-  if (!Blog) {
-    return res.status(404).json({ error: "No such blog" });
+//   const Blog = await blog.find({ category: category });
+//   if (!Blog) {
+//     return res.status(404).json({ error: "No such blog" });
+//   }
+//   return res.status(200).json(Blog);
+// };
+
+// const getBlogByTitle = async (req, res) => {
+//   const { title } = req.params;
+
+//   try {
+//     const blogs = await blog.find({ title: { $regex: title, $options: "i" } });
+
+//     if (blogs.length === 0) {
+//       return res.status(404).json({ error: "No such blog" });
+//     }
+
+//     return res.status(200).json(blogs);
+//   } catch (error) {
+//     return res.status(500).json({ error: "Internal server error" });
+//   }
+// };
+
+const getBlogsByFilter = async (req, res) => {
+  const { category, title } = req.query;
+
+  let searchCriteria = {};
+
+  if (category) {
+    searchCriteria.category = category;
   }
-  return res.status(200).json(Blog);
-};
 
-const getBlogByTitle = async (req, res) => {
-  const { title } = req.params;
+  if (title) {
+    searchCriteria.title = { $regex: title, $options: "i" };
+  }
 
   try {
-    const blogs = await blog.find({ title: { $regex: title, $options: "i" } });
+    const blogs = await blog.find(searchCriteria);
 
-    if (blogs.length === 0) {
-      return res.status(404).json({ error: "No such blog" });
-    }
+    // if (blogs.length === 0) {
+    //   return res.status(404).json({ error: "No such blog" });
+    // }
 
     return res.status(200).json(blogs);
   } catch (error) {
     return res.status(500).json({ error: "Internal server error" });
   }
 };
+
 const createBlog = async (req, res) => {
-  const { title, category, content } = req.body;
+  const { title, category, content, image } = req.body;
   const user_id = req.user._id;
 
   const user = await User.findById(user_id);
@@ -111,6 +140,13 @@ const createBlog = async (req, res) => {
 
   const author = user.first_name.concat(" ", user.last_name);
 
+  let newImg = new Img({
+    image,
+    uploadedBy: user_id,
+  });
+
+  newImg = await newImg.save();
+
   try {
     //Create the blog and add it to the blogs
     const Blog = await blog.create({
@@ -118,6 +154,7 @@ const createBlog = async (req, res) => {
       author,
       category,
       content,
+      image,
       user_id,
     });
 
@@ -175,21 +212,30 @@ const likedBlog = async (req, res) => {
     }
 
     // Check if the user has already liked the blog
-    const index = blog.likedby.indexOf(user_id);
-    if (index !== -1) {
-      // User already liked the blog, so remove the user ID from the likedBy array
-      blog.likedby.pull(user_id);
-      await blog.save();
-      return res
-        .status(200)
-        .json({ message: "Blog unliked successfully", blog });
+    const liked = Blog.likedby.includes(user_id); // return true or false
+
+    if (liked) {
+      // User has already liked the blog
+      Blog.likedby.pull(user_id);
+      await Blog.save();
+      return res.status(200).json({ message: "Blog already liked", Blog });
     }
 
-    // User has not liked the blog yet, so add the user ID to the likedBy array
-    blog.likedby.push(user_id);
-    await blog.save();
+    // Check if the user has disliked the blog
+    const disliked = Blog.dislikedby.includes(user_id);
 
-    return res.status(200).json({ message: "Blog liked successfully", blog });
+    if (disliked) {
+      // Remove user from dislikedby array
+      Blog.dislikedby.pull(user_id);
+    }
+
+    // Add user to likedby array
+    Blog.likedby.push(user_id);
+
+    // Save the updated blog
+    await Blog.save();
+
+    return res.status(200).json({ message: "Blog liked successfully", Blog });
   } catch (error) {
     return res.status(500).json({ message: "An error occurred", error });
   }
@@ -207,24 +253,33 @@ const dislikedBlog = async (req, res) => {
       return res.status(404).json({ message: "Blog not found" });
     }
 
-    // Check if the user has already liked the blog
-    const index = blog.dislikedby.indexOf(user_id);
-    if (index !== -1) {
-      // User already disliked the blog, so remove the user ID from the likedBy array
-      blog.dislikedby.pull(user_id);
-      await blog.save();
-      return res
-        .status(200)
-        .json({ message: "Blog undisliked successfully", blog });
+    // Check if the user has already disliked the blog
+    const disliked = Blog.dislikedby.includes(user_id);
+
+    if (disliked) {
+      // User already disliked the blog
+      Blog.dislikedby.pull(user_id);
+      await Blog.save();
+      return res.status(200).json({ message: "Blog already disliked", Blog });
     }
 
-    // User has not liked the blog yet, so add the user ID to the likedBy array
-    blog.dislikedby.push(user_id);
-    await blog.save();
+    // Check if the user has liked the blog
+    const liked = Blog.likedby.includes(user_id);
+
+    if (liked) {
+      // Remove user from likedby array
+      Blog.likedby.pull(user_id);
+    }
+
+    // Add user to dislikedby array
+    Blog.dislikedby.push(user_id);
+
+    // Save the updated blog
+    await Blog.save();
 
     return res
       .status(200)
-      .json({ message: "Blog disliked successfully", blog });
+      .json({ message: "Blog disliked successfully", Blog });
   } catch (error) {
     return res.status(500).json({ message: "An error occurred", error });
   }
@@ -233,8 +288,7 @@ const dislikedBlog = async (req, res) => {
 module.exports = {
   getBlogs,
   getUserBlogs,
-  getBlogByCategory,
-  getBlogByTitle,
+  getBlogsByFilter,
   getPopularBlogs,
   createBlog,
   deleteBlog,

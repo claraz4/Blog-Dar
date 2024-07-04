@@ -3,13 +3,17 @@ import { useLocation } from 'react-router-dom';
 import '../styles/single-blog.css';
 import months from '../data/months';
 
-export default function SingleBlog() {
+export default function SingleBlog({ setDisplayFooter }) {
     const blog = useLocation().state.blog;
     const { title, content:contentArr, category, author, datePublished } = blog;
     const date = new Date(datePublished);
     const year = date.getYear() + 1900;
     const month = date.getMonth();
     const day = date.getDate();
+
+    React.useEffect(() => {
+        setDisplayFooter(true);
+    }, [])
   
     const [content, setContent] = React.useState([]);
 

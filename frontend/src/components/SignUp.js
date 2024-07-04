@@ -7,30 +7,33 @@ function SignUp({ isPhone, type, handleOnClick }) {
     first_name: "",
     last_name: "",
     email: "",
-    password: ""
+    password: "",
   });
   const handleChange = (evt) => {
     const value = evt.target.value;
     setState({
       ...state,
-      [evt.target.name]: value
+      [evt.target.name]: value,
     });
   };
 
-  const { signup, error, isLoading } = useSignup();
+  const { signup, error } = useSignup();
 
   const handleOnSubmit = (evt) => {
     evt.preventDefault();
 
-    const { first_name,last_name, email, password } = state;
+    const { first_name, last_name, email, password } = state;
     // alert(`You are signed up with name: ${first_name}, name: ${last_name}, email: ${email}, and password: ${password}`);
     signup(state);
-    setState({
-      first_name: "",
-      last_name: "",
-      email: "",
-      password: ""
-    });
+
+    if (error === "") {
+      setState({
+        first_name: "",
+        last_name: "",
+        email: "",
+        password: "",
+      });
+    }
   };
 
   return (
@@ -38,7 +41,7 @@ function SignUp({ isPhone, type, handleOnClick }) {
       <form className="sign-in-up-form" onSubmit={handleOnSubmit}>
         <h1 className="sign-in-up-title">Create Account</h1>
         {/* <span className="sign-in-up-span">Use your email for registration</span> */}
-        <input  
+        <input
           type="text"
           name="first_name"
           value={state.first_name}
@@ -47,7 +50,7 @@ function SignUp({ isPhone, type, handleOnClick }) {
           required
           className="input-sign-in-up"
         />
-        <input  
+        <input
           type="text"
           name="last_name"
           value={state.last_name}
@@ -74,18 +77,28 @@ function SignUp({ isPhone, type, handleOnClick }) {
           required
           className="input-sign-in-up"
         />
-        <button type="submit" onClick={handleOnSubmit} className="sign-in-up-button">Sign Up</button>
-        {isPhone && type === "signUp" && 
+        {error !== "" && <p className="account-error" style={{ alignSelf: "flex-start", marginTop: "5px" }}>{error}</p>}
+        <button
+          type="submit"
+          onClick={handleOnSubmit}
+          className="sign-in-up-button"
+        >
+          Sign Up
+        </button>
+        {isPhone && type === "signUp" && (
           <button
             className="sign-in-up-button"
-            style={{ 
-              "border": "2px rgb(4, 170, 109) solid", "color":'rgb(4, 170, 109)', "backgroundColor":'transparent' }}
+            style={{
+              border: "2px rgb(4, 170, 109) solid",
+              color: "rgb(4, 170, 109)",
+              backgroundColor: "transparent",
+            }}
             type="button"
             onClick={() => handleOnClick("signIn")}
           >
             Click to Sign In
           </button>
-        }
+        )}
       </form>
     </div>
   );

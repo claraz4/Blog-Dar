@@ -3,11 +3,16 @@ import { LoadingContext } from '../context/LoadingContext';
 import Loader from '../components/Loader';
 import SearchBar from '../components/SearchBar';
 import BlogBoxAll from "../components/BlogBoxAll";
+import { LatestBlogsContext } from '../context/LatestBlogsContext';
 
-export default function AllBlogs() {
-    const { isLoading, dispatch } = React.useContext(LoadingContext);
-    const [blogs, setAllBlogs] = React.useState([]);
+export default function AllBlogs({ setDisplayFooter }) {
+    const { dispatch } = React.useContext(LoadingContext);
+    const { latestBlogs, dispatch:blogsDispatch } = React.useContext(LatestBlogsContext);
     const [blogsElement, setBlogsElement] = React.useState([]);
+    
+    React.useEffect(() => {
+        setDisplayFooter(true);
+    }, [])
 
     // Fetch latest blogs
     const fetchLatest = async () => {
@@ -17,8 +22,7 @@ export default function AllBlogs() {
             const data = await res.json();
 
             if (res.ok) {
-                // blogsDispatch({ type: 'UPDATE', newBlogs: data });
-                setAllBlogs(data);
+                blogsDispatch({ type: 'SET_BLOGS', blogs: data });
                 dispatch({ type: 'STOP_LOAD' });
             }
         } catch (error) {
@@ -33,18 +37,17 @@ export default function AllBlogs() {
 
     // Create the blogs elements to be rendered
     React.useEffect(() => {
-        setBlogsElement(blogs.map((blog) => {
+        setBlogsElement(latestBlogs.map((blog) => {
             return <BlogBoxAll blog={blog} />
         }))
-    }, [])
+    }, [latestBlogs])
 
     return (
         <div className="all-blogs--container">
             <SearchBar />
             <div className="all-blogs">
-                {blogsElement}
+                {blogsElement.length === 0 ? <p className="no-blogs-p">No blogs matches your search.</p> : blogsElement}
             </div>
-            {isLoading && <Loader />}
         </div>
     )
 }
