@@ -11,7 +11,7 @@ export default function useLogin() {
     const navigate = useNavigate();
 
     const login = async (data) => {
-        loadingDispatch({ type: 'LOAD' });;
+        // loadingDispatch({ type: 'LOAD' });;
         setError(null);
 
         const response = await fetch('/user/login', {
@@ -22,7 +22,7 @@ export default function useLogin() {
         const json = await response.json();
 
         if (!response.ok) {
-            loadingDispatch({ type: 'STOP_LOAD' });
+            // loadingDispatch({ type: 'STOP_LOAD' });
             setError(json.error);
         }
 

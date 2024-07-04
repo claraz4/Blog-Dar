@@ -17,7 +17,7 @@ function SignUp({ isPhone, type, handleOnClick }) {
     });
   };
 
-  const { signup, error, isLoading } = useSignup();
+  const { signup, error } = useSignup();
 
   const handleOnSubmit = (evt) => {
     evt.preventDefault();
@@ -25,12 +25,15 @@ function SignUp({ isPhone, type, handleOnClick }) {
     const { first_name, last_name, email, password } = state;
     // alert(`You are signed up with name: ${first_name}, name: ${last_name}, email: ${email}, and password: ${password}`);
     signup(state);
-    setState({
-      first_name: "",
-      last_name: "",
-      email: "",
-      password: "",
-    });
+
+    if (error === "") {
+      setState({
+        first_name: "",
+        last_name: "",
+        email: "",
+        password: "",
+      });
+    }
   };
 
   return (
@@ -74,6 +77,7 @@ function SignUp({ isPhone, type, handleOnClick }) {
           required
           className="input-sign-in-up"
         />
+        {error !== "" && <p className="account-error" style={{ alignSelf: "flex-start", marginTop: "5px" }}>{error}</p>}
         <button
           type="submit"
           onClick={handleOnSubmit}

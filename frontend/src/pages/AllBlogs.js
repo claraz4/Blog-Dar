@@ -6,7 +6,7 @@ import BlogBoxAll from "../components/BlogBoxAll";
 import { LatestBlogsContext } from '../context/LatestBlogsContext';
 
 export default function AllBlogs({ setDisplayFooter }) {
-    const { isLoading, dispatch } = React.useContext(LoadingContext);
+    const { dispatch } = React.useContext(LoadingContext);
     const { latestBlogs, dispatch:blogsDispatch } = React.useContext(LatestBlogsContext);
     const [blogsElement, setBlogsElement] = React.useState([]);
     
@@ -22,7 +22,6 @@ export default function AllBlogs({ setDisplayFooter }) {
             const data = await res.json();
 
             if (res.ok) {
-                // blogsDispatch({ type: 'UPDATE', newBlogs: data });
                 blogsDispatch({ type: 'SET_BLOGS', blogs: data });
                 dispatch({ type: 'STOP_LOAD' });
             }
@@ -47,7 +46,7 @@ export default function AllBlogs({ setDisplayFooter }) {
         <div className="all-blogs--container">
             <SearchBar />
             <div className="all-blogs">
-                {blogsElement}
+                {blogsElement.length === 0 ? <p className="no-blogs-p">No blogs matches your search.</p> : blogsElement}
             </div>
         </div>
     )
