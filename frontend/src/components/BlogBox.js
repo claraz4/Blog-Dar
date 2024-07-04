@@ -5,6 +5,7 @@ import axios from "axios";
 import useAuthContext from '../hooks/useAuthContext';
 import { LatestBlogsContext } from '../context/LatestBlogsContext';
 import { PopularBlogsContext } from '../context/PopularBlogsContext';
+import { useNavigate } from 'react-router-dom';
 
 export default function BlogBox({ blog }) {
     const { title, author, category, datePublished } = blog;
@@ -16,6 +17,8 @@ export default function BlogBox({ blog }) {
     const year = date.getYear() + 1900;
     const month = date.getMonth();
     const day = date.getDate();
+
+    const navigate = useNavigate();
 
     async function handleLike(event) {
         event.preventDefault();
@@ -31,7 +34,11 @@ export default function BlogBox({ blog }) {
               latestBlogsDispatch({ type: 'UPDATE_LIKE', blog_id: blog._id, user_id: user.id})
               popularBlogsDispatch({ type: 'UPDATE_LIKE', blog_id: blog._id, user_id: user.id})
             } catch (error) {
-                console.log(error);
+                if (!user) {
+                    navigate('/signInUp');
+                } else {
+                    console.log(error);
+                }
             }
         }
         
@@ -49,8 +56,12 @@ export default function BlogBox({ blog }) {
                 latestBlogsDispatch({ type: 'UPDATE_DISLIKE', blog_id: blog._id, user_id: user.id})
                 popularBlogsDispatch({ type: 'UPDATE_DISLIKE', blog_id: blog._id, user_id: user.id})
             } catch (error) {
-            console.log(error);
-        }
+                if (!user) {
+                    navigate('/signInUp');
+                } else {
+                    console.log(error);
+                }
+            }
     }
   
     return (

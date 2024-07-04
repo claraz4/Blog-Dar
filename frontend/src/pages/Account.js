@@ -104,7 +104,7 @@ export default function Account({ setDisplayFooter }) {
         if (!fetched && formData) {
             dispatch({ type: 'STOP_LOAD' });
             setFetched(true);
-            setCurrentProfile(formData.profilePic.image);
+            if (formData.profilePic) setCurrentProfile(formData.profilePic.image);
         };
     }, [formData, fetched])
 

@@ -1,7 +1,6 @@
 import HomeBlogs from "../components/HomeBlogs";
 import RevealOnScroll from "../components/RevealOnScroll";
 import { LoadingContext } from "../context/LoadingContext";
-// import blogs from "../data/blogs";
 import React from 'react';
 import { LatestBlogsContext } from "../context/LatestBlogsContext";
 import { PopularBlogsContext } from "../context/PopularBlogsContext";
