@@ -25,7 +25,6 @@ const userSchema = new Schema({
   profilePic: {
     type: Schema.Types.ObjectId,
     ref: "Img",
-    default: null,
   },
   userBlogs: [
     {

@@ -4,6 +4,8 @@ const blog = require("../models/blogModel");
 
 const User = require("../models/userModel");
 
+const Img = require("../models/imgModel");
+
 const additionalFields = {
   $addFields: {
     likedByCount: { $size: { $ifNull: ["$likedby", []] } },
@@ -278,8 +280,6 @@ const dislikedBlog = async (req, res) => {
 module.exports = {
   getBlogs,
   getUserBlogs,
-  //getBlogByCategory,
-  //getBlogByTitle,
   getBlogsByFilter,
   getPopularBlogs,
   createBlog,

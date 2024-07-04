@@ -20,10 +20,6 @@ const blogSchema = new Schema(
       type: Array,
       required: true,
     },
-    // img: {
-    //   type: Schema.Types.ObjectId,
-    //   ref: "Img",
-    // },
     likedby: [
       {
         type: Schema.Types.ObjectId,
@@ -43,6 +39,10 @@ const blogSchema = new Schema(
     user_id: {
       type: String,
       required: true,
+    },
+    image: {
+      type: Schema.Types.ObjectId,
+      ref: "Img",
     },
   },
   { timestamps: true }

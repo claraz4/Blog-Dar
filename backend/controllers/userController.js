@@ -92,10 +92,10 @@ const uploadPic = async (req, res) => {
     if (!image) {
       return res.status(400).json({ msg: "No image was found" });
     }
-    
+
     let newImg = new Img({
       image,
-      uploadedBy: id
+      uploadedBy: id,
     });
 
     newImg = await newImg.save();
