@@ -207,6 +207,7 @@ const likedBlog = async (req, res) => {
     if (liked) {
       // User has already liked the blog
       Blog.likedby.pull(user_id);
+      await Blog.save();
       return res.status(200).json({ message: "Blog already liked", Blog });
     }
 
@@ -248,6 +249,7 @@ const dislikedBlog = async (req, res) => {
     if (disliked) {
       // User already disliked the blog
       Blog.dislikedby.pull(user_id);
+      await Blog.save();
       return res.status(200).json({ message: "Blog already disliked", Blog });
     }
 

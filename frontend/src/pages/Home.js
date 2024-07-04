@@ -21,6 +21,7 @@ export default function Home({ setDisplayFooter }) {
             dispatch({ type: 'LOAD' });
             const res = await fetch('/blogs/');
             const data = await res.json();
+            console.log(data)
             
             if (res.ok) {
                 latestBlogsDispatch({ type: 'SET_BLOGS', blogs: data });
