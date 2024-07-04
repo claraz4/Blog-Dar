@@ -4,10 +4,6 @@ const auth = require("../middleware/requireAuth");
 
 const userRoutes = express.Router();
 
-const Img = require("../models/imgModel");
-
-const User = require("../models/userModel");
-
 const {
   getUserInfo,
   updateInfo,
