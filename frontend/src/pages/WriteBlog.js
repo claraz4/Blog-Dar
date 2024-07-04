@@ -26,13 +26,16 @@ export default function WriteBlog({ setDisplayFooter}) {
     const [paragraphs, setParagraphs] = React.useState([0]);
     const [paragraphsElement, setParagraphsElement] = React.useState([]);
     const [isUploaded, setIsUploaded] = React.useState(false);
+    const [image, setImage] = React.useState("");
+    const [error, setError] = React.useState("");
 
     // Post a blog
     const addBlog = async () => {
         try {
             await axios.post('/blogs/createBlog', {
                 ...formData,
-                content
+                content,
+                image
             }, {
                 headers: {
                     "Authorization": `Bearer ${user.token}`
@@ -48,12 +51,13 @@ export default function WriteBlog({ setDisplayFooter}) {
             });
             setContent(["", ""]);
             setParagraphs([0]);
+            setImage("");
 
             setTimeout(() => {
                 setIsUploaded(false);
             }, 2000);
         } catch (error) {
-            console.log(error);
+            setError("File too large");
         }
     }
 
@@ -116,6 +120,7 @@ export default function WriteBlog({ setDisplayFooter}) {
 
     // Handle the change of the form
     function handleChange(event) {
+        setError("");
         const { name, value } = event.target;
         setFormData((prev) => {
             return {
@@ -206,9 +211,26 @@ export default function WriteBlog({ setDisplayFooter}) {
         if (prevBlog) {
             updateBlog();
         } else {
-            addBlog();
+            if (formData.title === "" || formData.category === "" || image === "") {
+                setError("Please fill out all fields");
+            } else {
+                addBlog();
+            }
         }
     }
+
+    // Convert the file to a base64 string
+    const handleFileChange = (event) => {
+        const file = event.target.files[0];
+        if (file) {
+        const reader = new FileReader();
+
+        reader.readAsDataURL(file);
+        reader.onload = () => {
+            setImage(reader.result);
+        };
+        }
+    };
 
     return (
         <RevealOnScroll>
@@ -229,6 +251,19 @@ export default function WriteBlog({ setDisplayFooter}) {
                     </select>
                 </div>
 
+                {!prevBlog && <div className="form--subcontainer">
+                    <label htmlFor="picture">Cover Picture</label>
+                    <div style={{ border: "1.4px var(--green) solid", borderRadius: "20px", padding: "20px" }}>
+                        {image && <img src={image}></img>}
+                        <input
+                            accept="image/*"
+                            type="file"
+                            onChange={handleFileChange}
+                            style={{ border: "none" }}
+                        />
+                    </div>
+                </div>}
+
                 <div className="form--subcontainer">
                     <label>Content</label>
                     {paragraphsElement}
@@ -236,6 +271,7 @@ export default function WriteBlog({ setDisplayFooter}) {
                 </div>
 
                 <button className='green-button' id="post-blog--button" onClick={handleSubmit}>Post Blog</button>
+                {error !== "" && <p className="account-error" style={{ marginTop: "10px" }}>{error}</p>}
             </form>
         </RevealOnScroll>
     )

@@ -43,8 +43,13 @@ const getUserInfo = async (req, res) => {
   const user_id = req.user._id;
   try {
     const user = await User.findById(user_id)
-      .populate("userBlogs")
-      .populate("profilePic");
+      .populate("profilePic")
+      .populate({
+        path: "userBlogs",
+        populate: {
+          path: "image"
+        }
+      });
 
     if (!user) {
       return res.status(404).json("User not found");
