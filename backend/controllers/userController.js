@@ -71,6 +71,10 @@ const updateInfo = async (req, res) => {
       req.body.password = hash;
     }
 
+    if (req.body.profilePic && req.body.profilePic.data instanceof Buffer) {
+      req.body.profilePic.data = req.body.profilePic.data.toString("base64");
+    }
+
     const updatedUser = await User.findByIdAndUpdate(user_id, req.body, {
       new: true,
     });
