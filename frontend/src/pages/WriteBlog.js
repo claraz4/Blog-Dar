@@ -251,7 +251,7 @@ export default function WriteBlog({ setDisplayFooter}) {
                     </select>
                 </div>
 
-                <div className="form--subcontainer">
+                {!prevBlog && <div className="form--subcontainer">
                     <label htmlFor="picture">Cover Picture</label>
                     <div style={{ border: "1.4px var(--green) solid", borderRadius: "20px", padding: "20px" }}>
                         {image && <img src={image}></img>}
@@ -262,7 +262,7 @@ export default function WriteBlog({ setDisplayFooter}) {
                             style={{ border: "none" }}
                         />
                     </div>
-                </div>
+                </div>}
 
                 <div className="form--subcontainer">
                     <label>Content</label>

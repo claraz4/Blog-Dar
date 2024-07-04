@@ -41,7 +41,7 @@ export default function SingleBlog({ setDisplayFooter }) {
                 <p className="blog-box-date">{`${months[month]} ${day}, ${year}`}</p>
             </div>
 
-            <img className='single-blog--img'></img>
+            <img className='single-blog--img' style={{ backgroundImage: `url(${blog.image.image})`, backgroundPosition: "center", backgroundSize: "cover", alignSelf: "center" }}></img>
 
             <div>
                 {content}
