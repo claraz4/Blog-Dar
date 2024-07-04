@@ -34,8 +34,6 @@ export default function BlogBoxUser({ blog }) {
         deleteBlog();
     }
 
-    console.log(blog)
-
     return (
         <Link className="blog-box-user--container" state={{ blog }} to="/blog">
             <div className="img-container--box-user" style={{ backgroundImage: `url(${blog.image.image})`, backgroundPosition: "center", backgroundSize: "cover" }}></div>
