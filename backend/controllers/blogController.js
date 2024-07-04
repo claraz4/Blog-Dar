@@ -117,9 +117,9 @@ const getBlogsByFilter = async (req, res) => {
   try {
     const blogs = await blog.find(searchCriteria);
 
-    if (blogs.length === 0) {
-      return res.status(404).json({ error: "No such blog" });
-    }
+    // if (blogs.length === 0) {
+    //   return res.status(404).json({ error: "No such blog" });
+    // }
 
     return res.status(200).json(blogs);
   } catch (error) {

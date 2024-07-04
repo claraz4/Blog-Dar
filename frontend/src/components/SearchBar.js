@@ -2,6 +2,7 @@ import React from 'react';
 import categories from '../data/categories';
 import { LatestBlogsContext } from '../context/LatestBlogsContext';
 import { LoadingContext } from '../context/LoadingContext';
+import axios from "axios";
 
 export default function SearchBar() {
     const [search, setSearch] = React.useState("");
@@ -14,25 +15,14 @@ export default function SearchBar() {
     // Change the blogs array
     const fetchLatest = async () => {
         try {
-            // dispatch({ type: 'LOAD' });
-            let url = "/blogs/";
+            const response = await axios.get('/blogs/filtered', {
+                params: {
+                  category: category,
+                  title: search
+                }
+              });
 
-            if (search !== "" && category !== "All Categories") {
-                url += `${search}/${category}`;
-            } else if (search !== "") {
-                url += `title/${search}`
-            } else if (category !== "All Categories") {
-                url += `category/${category}`
-            }
-
-            const res = await fetch(url);
-            const data = await res.json();
-
-            if (data.error) {
-                blogsDispatch({ type: 'SET_BLOGS', blogs: [] });
-            } else {
-                blogsDispatch({ type: 'SET_BLOGS', blogs: data });
-            }
+            blogsDispatch({ type: 'SET_BLOGS', blogs: response.data });
         } catch (error) {
             console.log(error);
         }
@@ -77,7 +67,7 @@ export default function SearchBar() {
 
             <div className="category-filter--container">
                 <select className="category-filtering" onClick={handleSelect} onChange={handleCategory}>
-                    <option>All Categories</option>
+                    <option value="">All Categories</option>
                     {categoriesOptions}
                 </select>
                 {!isArrowCliked ?
