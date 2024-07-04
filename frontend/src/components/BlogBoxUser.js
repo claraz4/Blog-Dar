@@ -7,7 +7,6 @@ import { UserBlogsContext } from '../context/UserBlogsContext';
 
 export default function BlogBoxUser({ blog }) {
     const { user } = useAuthContext();
-    // const { dispatch } = React.useContext(LoadingContext);
     const { dispatch:userBlogsDispatch } = React.useContext(UserBlogsContext);
     const date = new Date(blog.datePublished);
 
@@ -35,9 +34,11 @@ export default function BlogBoxUser({ blog }) {
         deleteBlog();
     }
 
+    console.log(blog)
+
     return (
         <Link className="blog-box-user--container" state={{ blog }} to="/blog">
-            <div className="img-container--box-user"></div>
+            <div className="img-container--box-user" style={{ backgroundImage: `url(${blog.image.image})`, backgroundPosition: "center", backgroundSize: "cover" }}></div>
 
             <div className="box-user--info">
                 <div className="box-user-full-title">
