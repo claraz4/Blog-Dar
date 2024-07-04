@@ -82,13 +82,16 @@ const uploadPic = async (req, res) => {
   const id = req.user._id;
   try {
     const { image } = req.body;
+
     if (!image) {
       return res.status(400).json({ msg: "No image was found" });
     }
+
     let newImg = new Img({
       image,
       uploadedBy: id,
     });
+
     newImg = await newImg.save();
     await User.findByIdAndUpdate(req.user._id, { profilePic: newImg._id });
     res.json(newImg);

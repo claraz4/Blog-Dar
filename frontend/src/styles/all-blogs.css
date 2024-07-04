@@ -123,3 +123,55 @@
 .likes-all--container span {
   font-size: 1.7rem;
 }
+
+
+@media (max-width: 850px) {
+  .all-blogs {
+    width: 90%
+  }
+}
+
+@media (max-width: 700px) {
+  .search-bar--container {
+    width: 75%;
+  }
+}
+
+@media (max-width: 650px) {
+  .blog-box-all--container {
+    flex-direction: column;
+    height: 450px;
+  }
+
+  .blog-box-all--img {
+    width: 100%;
+    height: 200px;
+  }
+}
+
+@media (max-width: 550px) {
+  .search-bar--container {
+    width: 90%;
+  }
+}
+
+@media (max-width: 450px) {
+  .search-bar--container {
+    flex-direction: column;
+    padding: 20px 0;
+  }
+
+  .search--container {
+    border: 1.5px var(--green) solid;
+    border-radius: 10px;
+    padding: 0px 10px;
+  }
+
+  .category-filter--container {
+    margin-top: 20px;
+  }
+
+  .category-filtering {
+    border: none;
+  }
+}
