@@ -50,10 +50,6 @@ const getUserInfo = async (req, res) => {
       return res.status(404).json("User not found");
     }
 
-    if (user.profilePic && user.profilePic.data instanceof Buffer) {
-      user.profilePic.data = user.profilePic.data.toString("base64");
-    }
-
     return res.status(200).json(user);
   } catch (error) {
     console.error("Error fetching user info:", error.message);
@@ -91,22 +87,22 @@ const updateInfo = async (req, res) => {
 const uploadPic = async (req, res) => {
   const id = req.user._id;
   try {
-    const { base64 } = req.body; // Assuming base64 is sent from frontend
-    console.log(base64);
-    const buffer = Buffer.from(base64, "base64"); // Convert base64 to Buffer
+    const { image } = req.body;
 
-    const newImg = new Img({
-      image: buffer,
-      uploadedBy: id, // Assigning req.user._id to uploadedBy field
+    if (!image) {
+      return res.status(400).json({ msg: "No image was found" });
+    }
+    
+    let newImg = new Img({
+      image,
+      uploadedBy: id
     });
 
-    await newImg.save(); // Save the new image document
-    await User.findByIdAndUpdate(req.user._id, { profilePic: newImg._id }); // Update user profilePicture field
-
-    res.send({ status: "ok" });
-  } catch (error) {
-    //console.error(error);
-    res.status(500).json({ message: "Failed to upload profile picture" });
+    newImg = await newImg.save();
+    await User.findByIdAndUpdate(req.user._id, { profilePic: newImg._id });
+    res.json(newImg);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
 };
 

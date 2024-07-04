@@ -107,6 +107,7 @@
     padding: 1px 6px;
     border-radius: 5px;
     border: 1.5px var(--green) solid;
+    width: 60px;
 }
 
 .account--field {

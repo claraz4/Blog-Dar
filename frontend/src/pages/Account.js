@@ -5,7 +5,6 @@ import axios from "axios";
 import { LoadingContext } from "../context/LoadingContext";
 import { Alert } from "react-bootstrap";
 import { UserBlogsContext } from '../context/UserBlogsContext';
-import { encode } from 'base64-arraybuffer';
 
 export default function Account({ setDisplayFooter }) {
     // get the needed contexts
@@ -27,6 +26,8 @@ export default function Account({ setDisplayFooter }) {
     const fileInputRef = React.useRef(null);
     const profileRef = React.useRef(null);
     const [imageSrc, setImageSrc] = React.useState("");
+    const [currentProfile, setCurrentProfile] = React.useState("");
+    const [invalidPic, setInvalidPic] = React.useState(false);
 
     // Hide the footer from this page
     React.useEffect(() => {
@@ -51,7 +52,6 @@ export default function Account({ setDisplayFooter }) {
         }
     };
 
-    let url;
     // Get the user info
     React.useEffect(() => {
         const getInfo = async () => {
@@ -70,7 +70,6 @@ export default function Account({ setDisplayFooter }) {
                     confirmPassword: ""
                 });
                 dispatch({ type: 'STOP_LOAD' });
-                console.log(json.profilePic.image)
             } catch (error) {
                 console.log(error);
             }
@@ -81,17 +80,6 @@ export default function Account({ setDisplayFooter }) {
         };
     }, [user]);
 
-    React.useEffect(() => {
-        if (formData && formData.profilePic) displayProfile(formData.profilePic);
-    }, [formData])
-
-    console.log(formData)
-    // Display the profile pic if there is one
-    const [imageUrl, setImageUrl] = React.useState("");
-    function displayProfile(profile) {
-        console.log(profile.image)
-    }
-    
     // Handle form change
     function handleChange(event) {
         setError("");
@@ -112,11 +100,11 @@ export default function Account({ setDisplayFooter }) {
         }))
     }
     
-    // Store the password and clear it from the form
     React.useEffect(() => {
         if (!fetched && formData) {
             dispatch({ type: 'STOP_LOAD' });
             setFetched(true);
+            setCurrentProfile(formData.profilePic.image);
         };
     }, [formData, fetched])
 
@@ -145,7 +133,7 @@ export default function Account({ setDisplayFooter }) {
         try {
             await axios.post('/user/uploadPic',
                 {
-                    base64: imageSrc
+                    image: imageSrc
                 },
                 {
                     headers: {
@@ -157,9 +145,12 @@ export default function Account({ setDisplayFooter }) {
 
             // approve the update
             setIsUpdated(true);
-            setTimeout(() => setIsUpdated(false), 2000);
+            setCurrentProfile(imageSrc);
+            setTimeout(() => {
+                setIsUpdated(false);
+            }, 2000);
         } catch (error) {
-            console.log(error);
+            setInvalidPic(true);
         }
     }
 
@@ -211,8 +202,6 @@ export default function Account({ setDisplayFooter }) {
     return (
         fetched && <div className="account--container">
             <div className="profile--container" ref={profileRef}>
-                <img src={imageUrl}></img>
-
                 {isUpdated && <Alert key="success" variant="success">
                     Profile updated successfully!
                 </Alert>}
@@ -220,35 +209,43 @@ export default function Account({ setDisplayFooter }) {
 
                 <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", marginBottom: "20px" }}>
                     <input
-                    accept="image/*"
-                    type="file"
-                    ref={fileInputRef}
-                    onChange={handleFileChange}
-                    style={{ display: "none" }}
+                        accept="image/*"
+                        type="file"
+                        ref={fileInputRef}
+                        onChange={handleFileChange}
+                        style={{ display: "none" }}
                     />
-                    {imageSrc ? (
+                    {imageSrc &&
                     <img
                         src={imageSrc}
                         alt="Profile Preview"
                         className="profile-img"
                         onClick={handleImageClick}
-                    />
-                    ) : formData?.profilePicture ? (
+                    />}
+
+                    {!imageSrc && currentProfile &&
                     <img
-                        src={formData.profilePicture}
+                        src={currentProfile}
                         alt="Profile Picture"
                         className="profile-img"
                         onClick={handleImageClick}
-                    />
-                    ) : (
+                    />}
+                    
+                    {!imageSrc && !currentProfile && 
                     <span
                         className="material-symbols-outlined profile-icon"
                         onClick={handleImageClick}
                     >
                         account_circle
-                    </span>
-                    )}
-                    {imageSrc && <button className="green-button save-settings" onClick={uploadImage}>Save</button>}
+                    </span>}
+
+                    {imageSrc && 
+                    <div style={{ alignSelf: "center" }}>
+                        <button className="green-button save-settings" onClick={uploadImage} name="name">Save</button>
+                        <button className="green-button cancel-settings" onClick={() => setImageSrc("")}>Cancel</button>
+                    </div>}
+
+                    {invalidPic && <p className="account-error" style={{ marginTop: "10px", alignSelf: "center" }}>Invalid picture</p>}
                 </div>
 
                 <div className="account-settings-section">
