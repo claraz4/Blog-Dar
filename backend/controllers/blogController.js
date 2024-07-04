@@ -25,6 +25,7 @@ const filterByPopularity = [
       dislikedby: 1,
       likedByCount: 1, // Computed field
       dislikedByCount: 1, // Computed field
+      image: 1,
       datePublished: 1,
       createdAt: 1,
       updatedAt: 1,
@@ -40,7 +41,7 @@ const filterByPopularity = [
 
 const getBlogs = async (req, res) => {
   try {
-    const blogs = await blog.find().sort({ createdAt: -1 }); // Sort newest to oldest
+    const blogs = await blog.find().sort({ createdAt: -1 }).populate("image"); // Sort newest to oldest
     res.status(200).json(blogs);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -57,7 +58,9 @@ const getUserBlogs = async (req, res) => {
   const user_id = req.user._id;
 
   try {
-    const user = await User.findById(user_id).populate("userBlogs"); //By using populate, userBlogs will be an array of full Blog documents instead of just ObjectIds.
+    const user = await User.findById(user_id)
+      .populate("userBlogs")
+      .populate("image"); //By using populate, userBlogs will be an array of full Blog documents instead of just ObjectIds.
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
@@ -117,7 +120,7 @@ const getBlogsByFilter = async (req, res) => {
   }
 
   try {
-    const blogs = await blog.find(searchCriteria);
+    const blogs = await blog.find(searchCriteria).populate("image");
 
     // if (blogs.length === 0) {
     //   return res.status(404).json({ error: "No such blog" });
@@ -154,7 +157,7 @@ const createBlog = async (req, res) => {
       author,
       category,
       content,
-      image,
+      image: newImg._id,
       user_id,
     });
 
