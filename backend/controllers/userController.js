@@ -90,6 +90,7 @@ const uploadPic = async (req, res) => {
   const id = req.user._id;
   try {
     const { base64 } = req.body; // Assuming base64 is sent from frontend
+    console.log(base64)
     const buffer = Buffer.from(base64, "base64"); // Convert base64 to Buffer
 
     const newImg = new Img({

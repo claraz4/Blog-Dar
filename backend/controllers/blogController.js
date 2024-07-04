@@ -100,6 +100,23 @@ const getBlogByTitle = async (req, res) => {
     return res.status(500).json({ error: "Internal server error" });
   }
 };
+
+const getBlogByTitleAndCategory = async (req, res) => {
+  const { title, category } = req.params;
+
+  try {
+    const blogs = await blog.find({ category: category, title: { $regex: title, $options: "i" } });
+
+    if (blogs.length === 0) {
+      return res.status(404).json({ error: "No such blog" });
+    }
+  
+    return res.status(200).json(blogs);
+  } catch (error) {
+    return res.status(500).json({ error: "Internal server error" });
+  }
+}
+
 const createBlog = async (req, res) => {
   const { title, category, content } = req.body;
   const user_id = req.user._id;
@@ -255,4 +272,5 @@ module.exports = {
   updateBlog,
   likedBlog,
   dislikedBlog,
+  getBlogByTitleAndCategory
 };
