@@ -56,11 +56,14 @@ Welcome to our full-stack web app! In the chaos of everyday life, sharing your v
 ## Website Demo
 
 <div style="text-align:center;">
-    <img src="./demo/Home Page.png" width="300">
-    <img src="./demo/Add-Task.png" width="300">
-    <img src="./demo/All Tasks.png" width="300">
-    <img src="./demo/Delete Task.png" width="300">
-    <img src="./demo/Edit Task.png" width="300">
+    <img src="./demo/Home.png" width="300">
+    <img src="./demo/FooterSection.png" width="300">
+    <img src=".demo/BlogPage.png" width="300">
+    <img src="./demo/AllBlogs.png" width="300">
+    <img src="./demo/Profile.png" width="300">
+    <img src="./demo/WriteBlog.png" width="300">
+    <img src=".demo/SignInPage.png" width="300">
+    <img src=".demo/SignUnPage.png" width="300">
 </div>
 
 
