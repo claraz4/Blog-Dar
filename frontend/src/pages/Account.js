@@ -19,6 +19,7 @@ export default function Account({ setDisplayFooter }) {
     const { userBlogs, dispatch:userBlogsDispatch } = React.useContext(UserBlogsContext);
     const [error, setError] = React.useState("");
     const [isUpdated, setIsUpdated] = React.useState(false);
+    const [password, setPassword] = React.useState("");
 
     React.useEffect(() => {
         setDisplayFooter(false);
@@ -62,14 +63,12 @@ export default function Account({ setDisplayFooter }) {
                     }
                 });
                 const json = await response.json();
-                setFormData({ ...json });
-                setFormData(prev => {
-                    return {
-                        ...prev,
-                        password: "",
-                        confirmPassword: ""
-                    }
-                })
+                setFormData({ 
+                    ...json,
+                    password: "",
+                    confirmPassword: ""
+                });
+                setPassword(json.password);
             } catch (error) {
                 console.log(error);
             }
@@ -111,10 +110,11 @@ export default function Account({ setDisplayFooter }) {
     // Create the rendering element for the blogs published by the user
     React.useEffect(() => {
         if (fetched) {
-            setBlogsElement(userBlogs.map((blog) => {
+            setBlogsElement(userBlogs.map((blog, idx) => {
                 return (
                     <BlogBoxUser 
                         blog={blog}
+                        key={idx}
                     />
                 )
             }))
@@ -149,23 +149,47 @@ export default function Account({ setDisplayFooter }) {
     }
 
     // Update the user info
-    const updateInfo = async () => {
-        // Check that the passwords are equal
-        if (formData.password !== formData.confirmPassword) setError("The passwords don't match!")
+    const updateInfo = async (event) => {
+        let toSend = {};
+        let isError = false;
 
-        try {
-            await axios.patch('/user/updateInfo', formData, {
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${user.token}`
-                }
-            })
+        if (event.target.name === "password") {
+            // Check the passwords
+            if (formData.password !== formData.confirmPassword) {
+                setError("The passwords don't match!");
+                isError = true;
+            };
 
-            setIsUpdated(true);
-            profileRef.current.scrollTop = 0;
-            setTimeout(() => setIsUpdated(false), 2000);
-        } catch (error) {
-            console.log(error);
+            if (formData.password === "" && formData.confirmPassword === "") {
+                setError("Invalid password");
+                isError = true;
+            };
+
+            toSend = {
+                password: formData.password
+            }
+        } else {
+            toSend = {
+                first_name: formData.first_name,
+                last_name: formData.last_name
+            }
+        }
+
+        if (!isError) {
+            try {
+                await axios.patch('/user/updateInfo', toSend, {
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${user.token}`
+                    }
+                })
+    
+                setIsUpdated(true);
+                profileRef.current.scrollTop = 0;
+                setTimeout(() => setIsUpdated(false), 2000);
+            } catch (error) {
+                console.log(error);
+            }
         }
     }
 
@@ -174,7 +198,7 @@ export default function Account({ setDisplayFooter }) {
             <div className="profile--container" ref={profileRef}>
 
                 {isUpdated && <Alert key="success" variant="success">
-                    Blog added successfully!
+                    Profile updated successfully!
                 </Alert>}
                 <h3 className="acount-settings--title">Profile Settings</h3>
 
@@ -199,7 +223,7 @@ export default function Account({ setDisplayFooter }) {
                         <h4 className="section-subtitle">Name</h4>
                         {edit[0] ? 
                             <div>
-                                <button className="green-button save-settings" onClick={updateInfo}>Save</button>
+                                <button className="green-button save-settings" onClick={updateInfo} name="name">Save</button>
                                 <button className="green-button cancel-settings" onClick={() => handleEdit(0)}>Cancel</button>
                             </div>
                             : 
@@ -241,7 +265,7 @@ export default function Account({ setDisplayFooter }) {
                         <h4 className="section-subtitle">Password</h4>
                         {edit[1] ? 
                             <div>
-                                <button className="green-button save-settings" onClick={updateInfo}>Save</button>
+                                <button className="green-button save-settings" onClick={updateInfo} name="password">Save</button>
                                 <button className="green-button cancel-settings" onClick={() => handleEdit(1)}>Cancel</button>
                             </div>
                             : 
@@ -278,5 +302,4 @@ export default function Account({ setDisplayFooter }) {
         </div>
       </div>
     )
-  );
 }

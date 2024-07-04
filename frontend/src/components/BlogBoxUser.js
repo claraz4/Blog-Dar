@@ -53,7 +53,7 @@ export default function BlogBoxUser({ blog }) {
                             <span className="material-symbols-outlined bin-icon">delete</span>
                         </Link> */}
                         <button onClick={(event) => handleDelete(event)}>
-                            <span class="material-symbols-outlined bin-icon">delete</span>
+                            <span className="material-symbols-outlined bin-icon">delete</span>
                         </button>
                     </div>
                 </div>

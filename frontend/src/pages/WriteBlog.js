@@ -57,12 +57,20 @@ export default function WriteBlog({ setDisplayFooter}) {
         }
     }
 
+
+    // Update a blog
     const updateBlog = async () => {
         try {
-            await axios.patch('/blogs/updateBlog', {
+            await axios.patch(`/blogs/updateBlog/${prevBlog._id}`, {
                 ...formData,
                 content
+            }, {
+                headers: {
+                    "Authorization": `Bearer ${user.token}`
+                }
             });
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            setIsUploaded(true);
         } catch (error) {
             console.log(error);
         }

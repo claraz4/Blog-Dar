@@ -1,6 +1,7 @@
 const User = require("../models/userModel");
 const jwt = require("jsonwebtoken");
 const Img = require("../models/imgModel");
+const bcrypt = require("bcrypt");
 
 const createToken = (_id) => {
   return jwt.sign({ _id }, process.env.SECRET, { expiresIn: "3d" });
@@ -66,7 +67,7 @@ const updateInfo = async (req, res) => {
   const user_id = req.user._id;
 
   try {
-    if (req.body.password !== "") {
+    if (req.body.password && req.body.password !== "") {
       const salt = await bcrypt.genSalt(10);
       const hash = await bcrypt.hash(req.body.password, salt);
       req.body.password = hash;
