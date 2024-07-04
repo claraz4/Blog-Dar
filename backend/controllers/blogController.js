@@ -75,21 +75,47 @@ const getPopularBlogs = async (req, res) => {
   }
 };
 
-const getBlogByCategory = async (req, res) => {
-  const { category } = req.params;
+// const getBlogByCategory = async (req, res) => {
+//   const { category } = req.params;
 
-  const Blog = await blog.find({ category: category });
-  if (!Blog) {
-    return res.status(404).json({ error: "No such blog" });
+//   const Blog = await blog.find({ category: category });
+//   if (!Blog) {
+//     return res.status(404).json({ error: "No such blog" });
+//   }
+//   return res.status(200).json(Blog);
+// };
+
+// const getBlogByTitle = async (req, res) => {
+//   const { title } = req.params;
+
+//   try {
+//     const blogs = await blog.find({ title: { $regex: title, $options: "i" } });
+
+//     if (blogs.length === 0) {
+//       return res.status(404).json({ error: "No such blog" });
+//     }
+
+//     return res.status(200).json(blogs);
+//   } catch (error) {
+//     return res.status(500).json({ error: "Internal server error" });
+//   }
+// };
+
+const getBlogsByFilter = async (req, res) => {
+  const { category, title } = req.query;
+
+  let searchCriteria = {};
+
+  if (category) {
+    searchCriteria.category = category;
   }
-  return res.status(200).json(Blog);
-};
 
-const getBlogByTitle = async (req, res) => {
-  const { title } = req.params;
+  if (title) {
+    searchCriteria.title = { $regex: title, $options: "i" };
+  }
 
   try {
-    const blogs = await blog.find({ title: { $regex: title, $options: "i" } });
+    const blogs = await blog.find(searchCriteria);
 
     if (blogs.length === 0) {
       return res.status(404).json({ error: "No such blog" });
@@ -100,6 +126,7 @@ const getBlogByTitle = async (req, res) => {
     return res.status(500).json({ error: "Internal server error" });
   }
 };
+
 const createBlog = async (req, res) => {
   const { title, category, content } = req.body;
   const user_id = req.user._id;
@@ -247,8 +274,9 @@ const dislikedBlog = async (req, res) => {
 module.exports = {
   getBlogs,
   getUserBlogs,
-  getBlogByCategory,
-  getBlogByTitle,
+  //getBlogByCategory,
+  //getBlogByTitle,
+  getBlogsByFilter,
   getPopularBlogs,
   createBlog,
   deleteBlog,
