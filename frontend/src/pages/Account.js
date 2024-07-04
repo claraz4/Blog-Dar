@@ -229,8 +229,7 @@ export default function Account({ setDisplayFooter }) {
                 </Alert>}
                 <h3 className="acount-settings--title">Profile Settings</h3>
 
-                <div>
-                    <p>Let's upload an image:</p>
+                <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", marginBottom: "20px" }}>
                     <input
                     accept="image/*"
                     type="file"
@@ -242,13 +241,15 @@ export default function Account({ setDisplayFooter }) {
                     <img
                         src={imageSrc}
                         alt="Profile Preview"
-                        className="profile-image"
+                        className="profile-img"
+                        onClick={handleImageClick}
                     />
                     ) : formData?.profilePicture ? (
                     <img
                         src={formData.profilePicture}
                         alt="Profile Picture"
-                        className="profile-image"
+                        className="profile-img"
+                        onClick={handleImageClick}
                     />
                     ) : (
                     <span
@@ -258,7 +259,7 @@ export default function Account({ setDisplayFooter }) {
                         account_circle
                     </span>
                     )}
-                    <button onClick={uploadImage}>Upload Image</button>
+                    {imageSrc && <button className="green-button save-settings" onClick={uploadImage}>Save</button>}
                 </div>
 
                 <div className="account-settings-section">
