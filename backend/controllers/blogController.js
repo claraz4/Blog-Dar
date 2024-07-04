@@ -130,7 +130,7 @@ const getBlogsByFilter = async (req, res) => {
 };
 
 const createBlog = async (req, res) => {
-  const { title, category, content } = req.body;
+  const { title, category, content, image } = req.body;
   const user_id = req.user._id;
 
   const user = await User.findById(user_id);
@@ -140,6 +140,13 @@ const createBlog = async (req, res) => {
 
   const author = user.first_name.concat(" ", user.last_name);
 
+  let newImg = new Img({
+    image,
+    uploadedBy: user_id,
+  });
+
+  newImg = await newImg.save();
+
   try {
     //Create the blog and add it to the blogs
     const Blog = await blog.create({
@@ -147,6 +154,7 @@ const createBlog = async (req, res) => {
       author,
       category,
       content,
+      image,
       user_id,
     });
 
