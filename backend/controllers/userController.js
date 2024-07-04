@@ -50,11 +50,9 @@ const getUserInfo = async (req, res) => {
       return res.status(404).json("User not found");
     }
 
-    // Assuming profilePicture is stored as Buffer in MongoDB
-    // if (user.profilePic instanceof Buffer) {
-    //   user.profilePic = user.profilePic.toString("base64");
-    //   console.log(user.profilePic);
-    // }
+    if (user.profilePic && user.profilePic.data instanceof Buffer) {
+      user.profilePic.data = user.profilePic.data.toString("base64");
+    }
 
     return res.status(200).json(user);
   } catch (error) {
@@ -71,6 +69,10 @@ const updateInfo = async (req, res) => {
       const salt = await bcrypt.genSalt(10);
       const hash = await bcrypt.hash(req.body.password, salt);
       req.body.password = hash;
+    }
+
+    if (req.body.profilePic && req.body.profilePic.data instanceof Buffer) {
+      req.body.profilePic.data = req.body.profilePic.data.toString("base64");
     }
 
     const updatedUser = await User.findByIdAndUpdate(user_id, req.body, {
@@ -90,7 +92,7 @@ const uploadPic = async (req, res) => {
   const id = req.user._id;
   try {
     const { base64 } = req.body; // Assuming base64 is sent from frontend
-    console.log(base64)
+    console.log(base64);
     const buffer = Buffer.from(base64, "base64"); // Convert base64 to Buffer
 
     const newImg = new Img({
