@@ -62,7 +62,7 @@ export default function BlogBox({ blog }) {
   
     return (
         <Link className="blog-box--container blog-box-all--container" state={{ blog }} to="/blog">
-            <div className="blog-box--img blog-box-all--img"></div>
+            <div className="blog-box--img blog-box-all--img" style={{ backgroundImage: `url(${blog.image.image})`, backgroundPosition: "center", backgroundSize: "cover" }}></div>
             <div className="blog-box--info-post blog-box-all--info-post">
                 
                 <div>
