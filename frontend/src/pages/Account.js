@@ -69,7 +69,8 @@ export default function Account({ setDisplayFooter }) {
                     password: "",
                     confirmPassword: ""
                 });
-                dispatch({ type: 'STOP_LOAD' })
+                dispatch({ type: 'STOP_LOAD' });
+                console.log(json.profilePic.image)
             } catch (error) {
                 console.log(error);
             }
@@ -88,19 +89,7 @@ export default function Account({ setDisplayFooter }) {
     // Display the profile pic if there is one
     const [imageUrl, setImageUrl] = React.useState("");
     function displayProfile(profile) {
-        // let base64String = encode(profile.image.data);
-        // console.log(base64String)
-
-        // // the previous library will give me the following: dataimage/typebase64...
-        // const startIdx = base64String.indexOf("/") + 1;
-        // const endIdx = base64String.indexOf("base64");
-        // const type = base64String.substring(startIdx, endIdx);
-
-        // base64String = base64String.substring(endIdx + "base64".length);
-        let base64String = btoa(String.fromCharCode.apply(null, profile.image.data));
-        // const base64String = Buffer.from(profile.image.data).toString("base64");
-        console.log("String: " + base64String)
-        setImageUrl(`data:image/${"hi"};base64,${base64String}`);
+        console.log(profile.image)
     }
     
     // Handle form change
