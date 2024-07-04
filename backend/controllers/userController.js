@@ -42,7 +42,9 @@ const signupUser = async (req, res) => {
 const getUserInfo = async (req, res) => {
   const user_id = req.user._id;
   try {
-    const user = await User.findById(user_id).populate("userBlogs");
+    const user = await User.findById(user_id)
+      .populate("userBlogs")
+      .populate("profilePic");
 
     if (!user) {
       return res.status(404).json("User not found");
@@ -63,6 +65,10 @@ const updateInfo = async (req, res) => {
       const salt = await bcrypt.genSalt(10);
       const hash = await bcrypt.hash(req.body.password, salt);
       req.body.password = hash;
+    }
+
+    if (req.body.profilePic && req.body.profilePic.data instanceof Buffer) {
+      req.body.profilePic.data = req.body.profilePic.data.toString("base64");
     }
 
     const updatedUser = await User.findByIdAndUpdate(user_id, req.body, {

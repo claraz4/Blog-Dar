@@ -4,7 +4,7 @@ import useAuthContext from "../hooks/useAuthContext";
 import axios from "axios";
 import { LoadingContext } from "../context/LoadingContext";
 import { Alert } from "react-bootstrap";
-import { UserBlogsContext } from '../context/UserBlogsContext';
+import { UserBlogsContext } from "../context/UserBlogsContext";
 
 export default function Account({ setDisplayFooter }) {
   // get the needed contexts
@@ -20,15 +20,15 @@ export default function Account({ setDisplayFooter }) {
   const [error, setError] = React.useState("");
   const [isUpdated, setIsUpdated] = React.useState(false);
 
-    // elements to render
-    const [blogsElement, setBlogsElement] = React.useState([]);
-    
-    // used for uploading the profile
-    const fileInputRef = React.useRef(null);
-    const profileRef = React.useRef(null);
-    const [imageSrc, setImageSrc] = React.useState("");
-    const [currentProfile, setCurrentProfile] = React.useState("");
-    const [invalidPic, setInvalidPic] = React.useState(false);
+  // elements to render
+  const [blogsElement, setBlogsElement] = React.useState([]);
+
+  // used for uploading the profile
+  const fileInputRef = React.useRef(null);
+  const profileRef = React.useRef(null);
+  const [imageSrc, setImageSrc] = React.useState("");
+  const [currentProfile, setCurrentProfile] = React.useState("");
+  const [invalidPic, setInvalidPic] = React.useState(false);
 
   // Hide the footer from this page
   React.useEffect(() => {
@@ -53,61 +53,63 @@ export default function Account({ setDisplayFooter }) {
     }
   };
 
-    // Get the user info
-    React.useEffect(() => {
-        const getInfo = async () => {
-            try {
-                dispatch({ type: 'LOAD' });
-                const response = await fetch('/user/info', {
-                    headers: {
-                        "Authorization": `Bearer ${user.token}`
-                    }
-                });
-                
-                const json = await response.json();
-                setFormData({ 
-                    ...json,
-                    password: "",
-                    confirmPassword: ""
-                });
-                dispatch({ type: 'STOP_LOAD' });
-            } catch (error) {
-                console.log(error);
-            }
-        }
-        
-        if (user) {
-            getInfo();
-        };
-    }, [user]);
+  // Get the user info
+  React.useEffect(() => {
+    const getInfo = async () => {
+      try {
+        dispatch({ type: "LOAD" });
+        const response = await fetch("/user/info", {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        });
 
-    // Handle form change
-    function handleChange(event) {
-        setError("");
-        setFormData((prev) => {
-            return {
-                ...prev,
-                [event.target.name]: event.target.value
-            }
-        })
+        const json = await response.json();
+        setFormData({
+          ...json,
+          password: "",
+          confirmPassword: "",
+        });
+        dispatch({ type: "STOP_LOAD" });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    if (user) {
+      getInfo();
     }
-    
-    // Handle edit click
-    function handleEdit(section) {
-        setEdit((prev) => prev.map((s, idx) => {
-            if (idx === section) return !s;
-            
-            return s;
-        }))
+  }, [user]);
+
+  // Handle form change
+  function handleChange(event) {
+    setError("");
+    setFormData((prev) => {
+      return {
+        ...prev,
+        [event.target.name]: event.target.value,
+      };
+    });
+  }
+
+  // Handle edit click
+  function handleEdit(section) {
+    setEdit((prev) =>
+      prev.map((s, idx) => {
+        if (idx === section) return !s;
+
+        return s;
+      })
+    );
+  }
+
+  React.useEffect(() => {
+    if (!fetched && formData) {
+      dispatch({ type: "STOP_LOAD" });
+      setFetched(true);
+      if (formData.profilePic) setCurrentProfile(formData.profilePic.image);
     }
-    
-    React.useEffect(() => {
-        if (!fetched && formData) {
-            dispatch({ type: 'STOP_LOAD' });
-            setFetched(true);
-            setCurrentProfile(formData.profilePic.image);
-        };
-    }, [formData, fetched])
+  }, [formData, fetched]);
 
   // Create the rendering element for the blogs published by the user
   React.useEffect(() => {
@@ -126,31 +128,32 @@ export default function Account({ setDisplayFooter }) {
     }
   }, [formData]);
 
-    // Upload the image to the database
-    const uploadImage = async () => {
-        try {
-            await axios.post('/user/uploadPic',
-                {
-                    image: imageSrc
-                },
-                {
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Authorization": `Bearer ${user.token}`
-                    }
-                }
-            );
-
-            // approve the update
-            setIsUpdated(true);
-            setCurrentProfile(imageSrc);
-            setTimeout(() => {
-                setIsUpdated(false);
-            }, 2000);
-        } catch (error) {
-            setInvalidPic(true);
+  // Upload the image to the database
+  const uploadImage = async () => {
+    try {
+      await axios.post(
+        "/user/uploadPic",
+        {
+          image: imageSrc,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${user.token}`,
+          },
         }
+      );
+
+      // approve the update
+      setIsUpdated(true);
+      setCurrentProfile(imageSrc);
+      setTimeout(() => {
+        setIsUpdated(false);
+      }, 2000);
+    } catch (error) {
+      setInvalidPic(true);
     }
+  };
 
   // Update the user info
   const updateInfo = async (event) => {
@@ -197,54 +200,86 @@ export default function Account({ setDisplayFooter }) {
     }
   };
 
-    return (
-        fetched && <div className="account--container">
-            <div className="profile--container" ref={profileRef}>
-                {isUpdated && <Alert key="success" variant="success">
-                    Profile updated successfully!
-                </Alert>}
-                <h3 className="acount-settings--title">Profile Settings</h3>
+  return (
+    fetched && (
+      <div className="account--container">
+        <div className="profile--container" ref={profileRef}>
+          {isUpdated && (
+            <Alert key="success" variant="success">
+              Profile updated successfully!
+            </Alert>
+          )}
+          <h3 className="acount-settings--title">Profile Settings</h3>
 
-                <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", marginBottom: "20px" }}>
-                    <input
-                        accept="image/*"
-                        type="file"
-                        ref={fileInputRef}
-                        onChange={handleFileChange}
-                        style={{ display: "none" }}
-                    />
-                    {imageSrc &&
-                    <img
-                        src={imageSrc}
-                        alt="Profile Preview"
-                        className="profile-img"
-                        onClick={handleImageClick}
-                    />}
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              marginBottom: "20px",
+            }}
+          >
+            <input
+              accept="image/*"
+              type="file"
+              ref={fileInputRef}
+              onChange={handleFileChange}
+              style={{ display: "none" }}
+            />
+            {imageSrc && (
+              <img
+                src={imageSrc}
+                alt="Profile Preview"
+                className="profile-img"
+                onClick={handleImageClick}
+              />
+            )}
 
-                    {!imageSrc && currentProfile &&
-                    <img
-                        src={currentProfile}
-                        alt="Profile Picture"
-                        className="profile-img"
-                        onClick={handleImageClick}
-                    />}
-                    
-                    {!imageSrc && !currentProfile && 
-                    <span
-                        className="material-symbols-outlined profile-icon"
-                        onClick={handleImageClick}
-                    >
-                        account_circle
-                    </span>}
+            {!imageSrc && currentProfile && (
+              <img
+                src={currentProfile}
+                alt="Profile Picture"
+                className="profile-img"
+                onClick={handleImageClick}
+              />
+            )}
 
-                    {imageSrc && 
-                    <div style={{ alignSelf: "center" }}>
-                        <button className="green-button save-settings" onClick={uploadImage} name="name">Save</button>
-                        <button className="green-button cancel-settings" onClick={() => setImageSrc("")}>Cancel</button>
-                    </div>}
+            {!imageSrc && !currentProfile && (
+              <span
+                className="material-symbols-outlined profile-icon"
+                onClick={handleImageClick}
+              >
+                account_circle
+              </span>
+            )}
 
-                    {invalidPic && <p className="account-error" style={{ marginTop: "10px", alignSelf: "center" }}>Invalid picture</p>}
-                </div>
+            {imageSrc && (
+              <div style={{ alignSelf: "center" }}>
+                <button
+                  className="green-button save-settings"
+                  onClick={uploadImage}
+                  name="name"
+                >
+                  Save
+                </button>
+                <button
+                  className="green-button cancel-settings"
+                  onClick={() => setImageSrc("")}
+                >
+                  Cancel
+                </button>
+              </div>
+            )}
+
+            {invalidPic && (
+              <p
+                className="account-error"
+                style={{ marginTop: "10px", alignSelf: "center" }}
+              >
+                Invalid picture
+              </p>
+            )}
+          </div>
 
           <div className="account-settings-section">
             <div className="section-subtitle--container">

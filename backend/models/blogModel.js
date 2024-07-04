@@ -40,6 +40,10 @@ const blogSchema = new Schema(
       type: String,
       required: true,
     },
+    image: {
+      type: Schema.Types.ObjectId,
+      ref: "Img",
+    },
   },
   { timestamps: true }
 );
