@@ -76,6 +76,7 @@ const getUserBlogs = async (req, res) => {
         model: "Img",
       },
     });
+
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
