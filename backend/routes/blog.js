@@ -5,12 +5,14 @@ const auth = require("../middleware/requireAuth");
 const {
   getBlogs,
   getUserBlogs,
-  getBlogByCategory,
-  getBlogByTitle,
+  //  getBlogByCategory,
+  //  getBlogByTitle,
+  getBlogsByFilter,
   getPopularBlogs,
   createBlog,
   deleteBlog,
   updateBlog,
+  getBlogsByFilter,
 } = require("../controllers/blogController");
 // 1 point means folder in directory backend
 //2 points means folder is in same folder as backend
@@ -27,9 +29,11 @@ router.get("/popularBlogs", getPopularBlogs);
 
 router.get("/userBlogs", auth, getUserBlogs);
 
-router.get("/category/:category", getBlogByCategory);
+//router.get("/category/:category", getBlogByCategory);
 
-router.get("/title/:title", getBlogByTitle);
+//router.get("/title/:title", getBlogByTitle);
+
+router.get("/filtered", getBlogsByFilter);
 
 router.post("/createBlog", auth, createBlog);
 
