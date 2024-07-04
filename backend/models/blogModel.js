@@ -20,10 +20,6 @@ const blogSchema = new Schema(
       type: Array,
       required: true,
     },
-    // img: {
-    //   type: Schema.Types.ObjectId,
-    //   ref: "Img",
-    // },
     likedby: [
       {
         type: Schema.Types.ObjectId,

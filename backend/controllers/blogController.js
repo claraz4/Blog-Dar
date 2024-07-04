@@ -278,8 +278,6 @@ const dislikedBlog = async (req, res) => {
 module.exports = {
   getBlogs,
   getUserBlogs,
-  //getBlogByCategory,
-  //getBlogByTitle,
   getBlogsByFilter,
   getPopularBlogs,
   createBlog,
