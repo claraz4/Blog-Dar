@@ -7,7 +7,7 @@ function SignIn({ isPhone, type, handleOnClick }) {
     email: "",
     password: ""
   });
-  const { login } = useLogin();
+  const { login, error } = useLogin();
 
   const handleChange = (evt) => {
     const value = evt.target.value;
@@ -28,12 +28,11 @@ function SignIn({ isPhone, type, handleOnClick }) {
         <h1 className="sign-in-up-title">Sign In</h1>
         {/* <span className="sign-in-up-span">Use your account</span> */}
         <input 
-          type="email"
+          type="text"
           name="email"
           value={state.email}
           onChange={handleChange}
           placeholder="Email"
-          required
           className="input-sign-in-up"
         />
         <input 
@@ -42,10 +41,10 @@ function SignIn({ isPhone, type, handleOnClick }) {
           value={state.password}
           onChange={handleChange}
           placeholder="Password"
-          required
           className="input-sign-in-up"
         />
 
+        {error !== "" && <p className="account-error" style={{ alignSelf: "flex-start", marginTop: "5px" }}>{error}</p>}
         <button type="submit" className="sign-in-up-button">Sign In</button>
         {isPhone && type === "signIn" && 
           <button
