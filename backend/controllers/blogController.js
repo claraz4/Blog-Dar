@@ -89,7 +89,7 @@ const getUserBlogs = async (req, res) => {
 const getPopularBlogs = async (req, res) => {
   try {
     const blogs = await blog.aggregate(filterByPopularity);
-    console.log(blog);
+
     res.status(200).json(blogs);
   } catch (err) {
     res.status(500).json({ message: err.message });
