@@ -3,7 +3,7 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  width: 100vw;
+  width: 98vw;
   height: 100vh;
   position: relative;
 }
@@ -265,13 +265,15 @@
 @media (max-width: 800px) {
   .profile--container {
     width: 80%;
-    position: sticky;
+    position: static;
     overflow: visible;
+    margin-top: 90px;
   }
 
   .profile-blogs--container {
     width: 80%;
-    position: sticky;
+    position: static;
+    padding-top: 0;
   }
 
   .account--container {
@@ -280,6 +282,10 @@
 
   .profile-icon {
     margin-top: 20px;
+  }
+
+  .blog-box-user--container {
+    height: 270px;
   }
 }
 

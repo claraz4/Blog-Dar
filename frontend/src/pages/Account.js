@@ -37,6 +37,7 @@ export default function Account({ setDisplayFooter }) {
 
   // On image click
   const handleImageClick = () => {
+    setInvalidPic(false);
     fileInputRef.current.click();
   };
 
@@ -147,6 +148,7 @@ export default function Account({ setDisplayFooter }) {
       // approve the update
       setIsUpdated(true);
       setCurrentProfile(imageSrc);
+      setImageSrc("");
       setTimeout(() => {
         setIsUpdated(false);
       }, 2000);
