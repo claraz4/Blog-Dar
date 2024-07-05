@@ -37,7 +37,7 @@ mongoose
       () => {
         // Callback function that runs when the server starts listening
         console.log("Listening on port", process.env.PORT);
-        console.log("Connection to the Database is successful");
+        //console.log("Connection to the Database is successful");
       }
     );
   })

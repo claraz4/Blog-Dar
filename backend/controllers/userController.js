@@ -46,9 +46,10 @@ const getUserInfo = async (req, res) => {
       .populate("profilePic")
       .populate({
         path: "userBlogs",
+        options: { sort: { createdAt: -1 } },
         populate: {
-          path: "image"
-        }
+          path: "image",
+        },
       });
 
     if (!user) {

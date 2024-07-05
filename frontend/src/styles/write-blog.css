@@ -1,149 +1,166 @@
 .form--container {
-    margin: auto;
-    margin-top: 100px;
-    width: 70%;
-    box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
-    padding: 30px;
-    margin-bottom: 100px;
+  margin: auto;
+  margin-top: 100px;
+  width: 70%;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
+    rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+  padding: 30px;
+  margin-bottom: 100px;
 }
 
 .form--subcontainer {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 30px;
-    width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 30px;
+  width: 100%;
 }
 
 .new-paragraph--all-title {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 15px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
 }
 
 .new-paragraph--all-title h6 {
-    margin: 0;
-    font-size: 1.1rem;
-    font-weight: 600;
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
 }
 
 .form--subcontainer label {
-    font-size: 1.7rem;
-    font-weight: 600;
-    margin-bottom: 10px;
-    color: var(--green);
+  font-size: 1.7rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: var(--green);
 }
 
 .form--subcontainer select,
 .form--subcontainer input,
 .form--subcontainer textarea {
-    padding: 10px;
-    width: 100%;
-    border: 1.4px var(--green) solid;
-    height: fit-content;
-    border-radius: 10px;
-    box-sizing: border-box;
-    outline-color: var(--green);
-    font-family: 'Segoe UI';
-    color: rgb(51,51,51);
+  padding: 10px;
+  width: 100%;
+  border: 1.4px var(--green) solid;
+  height: fit-content;
+  border-radius: 10px;
+  box-sizing: border-box;
+  outline-color: var(--green);
+  font-family: "Segoe UI";
+  color: rgb(51, 51, 51);
 }
 
 .form--subcontainer textarea {
-    height: 140px;
-    width: 100%;
+  height: 140px;
+  width: 100%;
 }
 
 .form-paragraph {
-    border: 1.4px var(--green) solid;
-    border-radius: 15px;
-    padding: 20px;
-    padding-top: 10px;
+  border: 1.4px var(--green) solid;
+  border-radius: 15px;
+  padding: 20px;
+  padding-top: 10px;
 }
 
 .no-margin {
-    margin: 0;
+  margin: 0;
 }
 
 .small-bottom-margin {
-    margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 
 .form-paragraph--subtitle {
-    font-size: 1.2rem !important;
+  font-size: 1.2rem !important;
 }
 
 .form-paragraph {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 .fadein {
-    animation: fadein 0.8s ease-in;
+  animation: fadein 0.8s ease-in;
 }
 
 .fadeout {
-    animation: fadeout 0.8s ease-out;
+  animation: fadeout 0.8s ease-out;
 }
 
 #remove-paragraph--button,
 #add-p--button {
-    font-size: 0.8rem;
-    padding-left: 10px;
-    padding-right: 10px;
+  font-size: 0.8rem;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.write-blog-title--container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  align-items: flex-start;
+}
+
+.asterix {
+  color: red;
+  margin: 0;
+  margin-left: 10px;
+  font-weight: 800;
+  font-size: 1rem;
+  margin-top: 6px;
 }
 
 @keyframes fadein {
-    0% {
-        opacity: 0;
-    }
+  0% {
+    opacity: 0;
+  }
 
-    100% {
-        opacity: 1;
-    }
+  100% {
+    opacity: 1;
+  }
 }
 
 @keyframes fadeout {
-    0% {
-        opacity: 1;
-    }
+  0% {
+    opacity: 1;
+  }
 
-    100% {
-        opacity: 0;
-    }
+  100% {
+    opacity: 0;
+  }
 }
 
 #add-p--button {
-    align-self: flex-end;
-    margin-top: -10px;
+  align-self: flex-end;
+  margin-top: -10px;
 }
 
 #post-blog--button {
-    width: 100%;
-    margin-top: 10px;
+  width: 100%;
+  margin-top: 10px;
 }
 
 @media (max-width: 870px) {
-    .form--container {
-        width: 90%;
-    }
+  .form--container {
+    width: 90%;
+  }
 }
 
 @media (max-width: 600px) {
-    .form--container {
-        width: 100%;
-        padding: 0;
-        box-shadow: none;
-    }
+  .form--container {
+    width: 100%;
+    padding: 0;
+    box-shadow: none;
+  }
 }
 
 @media (max-width: 500px) {
-    .form--container {
-        margin-top: 80px;
-    }
+  .form--container {
+    margin-top: 80px;
+  }
 }
 
 @media (max-width: 400px) {
-    .form-paragraph {
-        padding: 13px;
-    }
+  .form-paragraph {
+    padding: 13px;
+  }
 }

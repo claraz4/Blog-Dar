@@ -5,7 +5,7 @@ import useLogin from "../hooks/useLogin";
 function SignIn({ isPhone, type, handleOnClick }) {
   const [state, setState] = React.useState({
     email: "",
-    password: ""
+    password: "",
   });
   const { login, error } = useLogin();
 
@@ -13,7 +13,7 @@ function SignIn({ isPhone, type, handleOnClick }) {
     const value = evt.target.value;
     setState({
       ...state,
-      [evt.target.name]: value
+      [evt.target.name]: value,
     });
   };
 
@@ -27,35 +27,55 @@ function SignIn({ isPhone, type, handleOnClick }) {
       <form className="sign-in-up-form" onSubmit={handleOnSubmit}>
         <h1 className="sign-in-up-title">Sign In</h1>
         {/* <span className="sign-in-up-span">Use your account</span> */}
-        <input 
-          type="text"
-          name="email"
-          value={state.email}
-          onChange={handleChange}
-          placeholder="Email"
-          className="input-sign-in-up"
-        />
-        <input 
-          type="password"
-          name="password"
-          value={state.password}
-          onChange={handleChange}
-          placeholder="Password"
-          className="input-sign-in-up"
-        />
 
-        {error !== "" && <p className="account-error" style={{ alignSelf: "flex-start", marginTop: "5px" }}>{error}</p>}
-        <button type="submit" className="sign-in-up-button">Sign In</button>
-        {isPhone && type === "signIn" && 
+        <div className="write-blog-title--container">
+          <input
+            type="text"
+            name="email"
+            value={state.email}
+            onChange={handleChange}
+            placeholder="Email"
+            className="input-sign-in-up"
+          />
+          <p className="asterix">*</p>
+        </div>
+
+        <div className="write-blog-title--container">
+          <input
+            type="password"
+            name="password"
+            value={state.password}
+            onChange={handleChange}
+            placeholder="Password"
+            className="input-sign-in-up"
+          />
+          <p className="asterix">*</p>
+        </div>
+
+        {error !== "" && (
+          <p
+            className="account-error"
+            style={{ alignSelf: "flex-start", marginTop: "5px" }}
+          >
+            {error}
+          </p>
+        )}
+        <button type="submit" className="sign-in-up-button">
+          Sign In
+        </button>
+        {isPhone && type === "signIn" && (
           <button
-          style={{ 
-            "border": "2px rgb(4, 170, 109) solid", "color":'rgb(4, 170, 109)', "backgroundColor":'transparent' }}
+            style={{
+              border: "2px rgb(4, 170, 109) solid",
+              color: "rgb(4, 170, 109)",
+              backgroundColor: "transparent",
+            }}
             className="sign-in-up-button"
             onClick={() => handleOnClick("signUp")}
           >
             Click to Sign Up
           </button>
-        }
+        )}
       </form>
     </div>
   );

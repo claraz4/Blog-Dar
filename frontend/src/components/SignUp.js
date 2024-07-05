@@ -41,43 +41,67 @@ function SignUp({ isPhone, type, handleOnClick }) {
       <form className="sign-in-up-form" onSubmit={handleOnSubmit}>
         <h1 className="sign-in-up-title">Create Account</h1>
         {/* <span className="sign-in-up-span">Use your email for registration</span> */}
-        <input
-          type="text"
-          name="first_name"
-          value={state.first_name}
-          onChange={handleChange}
-          placeholder="First Name"
-          required
-          className="input-sign-in-up"
-        />
-        <input
-          type="text"
-          name="last_name"
-          value={state.last_name}
-          onChange={handleChange}
-          placeholder="Last Name"
-          required
-          className="input-sign-in-up"
-        />
-        <input
-          type="email"
-          name="email"
-          value={state.email}
-          onChange={handleChange}
-          placeholder="Email"
-          required
-          className="input-sign-in-up"
-        />
-        <input
-          type="password"
-          name="password"
-          value={state.password}
-          onChange={handleChange}
-          placeholder="Password"
-          required
-          className="input-sign-in-up"
-        />
-        {error !== "" && <p className="account-error" style={{ alignSelf: "flex-start", marginTop: "5px" }}>{error}</p>}
+
+        <div className="write-blog-title--container">
+          <input
+            type="text"
+            name="first_name"
+            value={state.first_name}
+            onChange={handleChange}
+            placeholder="First Name"
+            required
+            className="input-sign-in-up"
+          />
+          <p className="asterix">*</p>
+        </div>
+
+        <div className="write-blog-title--container">
+          <input
+            type="text"
+            name="last_name"
+            value={state.last_name}
+            onChange={handleChange}
+            placeholder="Last Name"
+            required
+            className="input-sign-in-up"
+          />
+          <p className="asterix">*</p>
+        </div>
+
+        <div className="write-blog-title--container">
+          <input
+            type="email"
+            name="email"
+            value={state.email}
+            onChange={handleChange}
+            placeholder="Email"
+            required
+            className="input-sign-in-up"
+          />
+          <p className="asterix">*</p>
+        </div>
+
+        <div className="write-blog-title--container">
+          <input
+            type="password"
+            name="password"
+            value={state.password}
+            onChange={handleChange}
+            placeholder="Password"
+            required
+            className="input-sign-in-up"
+          />
+          <p className="asterix">*</p>
+        </div>
+
+        {error !== "" && (
+          <p
+            className="account-error"
+            style={{ alignSelf: "flex-start", marginTop: "5px" }}
+          >
+            {error}
+          </p>
+        )}
         <button
           type="submit"
           onClick={handleOnSubmit}
