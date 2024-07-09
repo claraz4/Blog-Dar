@@ -62,8 +62,8 @@ Welcome to our full-stack web app! In the chaos of everyday life, sharing your v
     <img src="./demo/AllBlogs.png" width="300">
     <img src="./demo/Profile.png" width="300">
     <img src="./demo/WriteBlog.png" width="300">
-    <img src=".demo/SignInPage.png" width="300">
-    <img src=".demo/SignUnPage.png" width="300">
+    <img src="./demo//SignInPage.png" width="300">
+    <img src="./demo/SignUpPage.png" width="300">
 </div>
 
 
